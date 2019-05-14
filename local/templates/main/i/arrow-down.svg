@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="11px" height="6px" viewBox="0 0 11 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape 2</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-352.000000, -508.000000)" fill="#CCAC83" fill-rule="nonzero">
+            <g id="Group-15" transform="translate(90.000000, 327.000000)">
+                <g id="Group-6" transform="translate(0.000000, 122.000000)">
+                    <g id="Group-14">
+                        <g id="Group-3" transform="translate(0.000000, 34.000000)">
+                            <g id="Shape-2" transform="translate(262.000000, 25.000000)">
+                                <path d="M8.25829833,3.24527636 L4.14388544,7.34954275 C3.88215908,7.61075848 3.45781465,7.61075848 3.19621536,7.34954275 C2.93459488,7.08855939 2.93459488,6.66526949 3.19621536,6.40430726 L6.83683557,2.77265862 L3.19632124,-0.858863278 C2.93470077,-1.11995226 2.93470077,-1.54319991 3.19632124,-1.80418326 C3.45794171,-2.06527225 3.88226496,-2.06527225 4.14399132,-1.80418326 L8.25840422,2.3001465 C8.38921446,2.43070155 8.45454545,2.60162727 8.45454545,2.77263749 C8.45454545,2.94373221 8.38908739,3.11478468 8.25829833,3.24527636 Z" id="Shape" transform="translate(5.727273, 2.772727) rotate(90.000000) translate(-5.727273, -2.772727) "></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

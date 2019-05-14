@@ -1,0 +1,6 @@
+<?
+$sSectionName = "basket";
+$arDirProperties = Array(
+
+);
+?>

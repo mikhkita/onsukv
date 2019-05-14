@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="167px" height="235px" viewBox="0 0 167 235" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>logo-leave</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-24.4%" y="-16.1%" width="148.9%" height="131.8%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="-5" dy="6" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="4" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.1 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="logo-leave" transform="translate(17.000000, 3.000000)" fill-rule="nonzero" stroke="#F5B80A">
+            <g id="leave" filter="url(#filter-1)" transform="translate(71.500000, 108.500000) rotate(2.000000) translate(-71.500000, -108.500000) translate(4.000000, 3.000000)">
+                <path d="M59,109 C59.3865313,102.08476 59.831892,97.4048841 60.3360821,94.960371 C60.3360821,84.3884259 66.328776,84.3884259 66.328776,75.8871332 C67.2006273,71.3412205 67.7577019,64.3788428 68,55" id="Line-2" stroke-width="8" stroke-linecap="round"></path>
+                <path d="M5.89222301,117.23786 C12.4043842,97.3121267 23.7720029,83.6926909 37.2624258,72.8780161 C68.3355266,47.9680868 110.67095,37.9385334 130.87522,0 C127.923424,53.4553185 144.430201,55.4073609 126.535735,117.23786 C108.162943,163.468313 56.7147618,163.468313 18.3883154,211 C-0.809919658,187.508833 -4.97528379,156.254786 5.89222301,117.23786 Z" id="Line" stroke-width="12" stroke-linecap="square" stroke-linejoin="round"></path>
+                <path d="M17,207 C21.2588989,102.382366 77.313753,106.620222 108.465464,72.4260253 C120.632051,59.071168 129,39.854021 129,6" id="Path-2" stroke-width="8"></path>
+                <path d="M28,150 C46.1437497,142.747055 58.8934165,138.726051 66.2490004,137.936988 C95.3294188,134.817415 111,140.487052 111,140.487052" id="Path-4" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"></path>
+            </g>
+        </g>
+    </g>
+</svg>
