@@ -7,6 +7,7 @@ if(!$arResult["NavShowAlways"])
 		return;
 }
 ?>
+<noindex>
 <div class="modern-page-navigation">
 <?
 
@@ -195,3 +196,4 @@ if ($arResult["bShowAll"]):
 endif
 ?>
 </div>
+</noindex>

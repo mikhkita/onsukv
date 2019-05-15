@@ -213,6 +213,7 @@ $(document).ready(function(){
 	});
 
 	$(".ajax, .not-ajax").parents("form").submit(function(){
+		var $form = $(this);
   		if( $(this).find("input.error,select.error,textarea.error").length == 0 ){
   			var $this = $(this),
   				$thanks = $($this.attr("data-block"));
@@ -234,7 +235,6 @@ $(document).ready(function(){
 			  	url: $(this).attr("action"),
 			  	data:  $this.serialize(),
 				success: function(msg){
-					var $form;
 
 					if( isValidJSON(msg) && msg != "1" && msg != "0"){
 						var json = JSON.parse(msg);
@@ -247,7 +247,8 @@ $(document).ready(function(){
 				                break;
 				            }
 				        }else{
-				        	switch (json.action) {
+				        	$form.find(".b-popup-error").html(json.error);
+				        	switch (json.error) {
 				                case "messageError":
 				                    $(".b-popup-error").html(json.message);
 				                break;

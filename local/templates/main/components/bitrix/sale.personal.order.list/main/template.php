@@ -103,8 +103,34 @@ else
 				</h1>
 				<?
 			}
+
+			$APPLICATION->IncludeComponent("bitrix:sale.personal.order.detail","",Array(
+			        "PATH_TO_LIST" => "order_list.php",
+			        "PATH_TO_CANCEL" => "order_cancel.php",
+			        "PATH_TO_PAYMENT" => "payment.php",
+			        "PATH_TO_COPY" => "",
+			        "ID" => $order["ORDER"]["ID"],
+			        "CACHE_TYPE" => "A",
+			        "CACHE_TIME" => "3600",
+			        "CACHE_GROUPS" => "Y",
+			        "SET_TITLE" => "Y",
+			        "ACTIVE_DATE_FORMAT" => "d.m.Y",
+			        "PICTURE_WIDTH" => "110",
+			        "PICTURE_HEIGHT" => "110",
+			        "PICTURE_RESAMPLE_TYPE" => "1",
+			        "CUSTOM_SELECT_PROPS" => array(),
+			        "PROP_1" => Array(),
+			        "PROP_2" => Array()
+			    )
+			);
 			?>
-			<div class="col-md-12 col-sm-12 sale-order-list-container">
+			<!-- <pre> -->
+				<?
+				// var_dump($order["ORDER"]["ID"]);
+				?>
+			<!-- </pre> -->
+			<a class="sale-order-list-repeat-link" href="<?=htmlspecialcharsbx($order["ORDER"]["URL_TO_COPY"])?>"><?=Loc::getMessage('SPOL_TPL_REPEAT_ORDER')?></a>
+			<!-- <div class="col-md-12 col-sm-12 sale-order-list-container">
 				<div class="row">
 					<div class="col-md-12 col-sm-12 col-xs-12 sale-order-list-title-container">
 						<h2 class="sale-order-list-title">
@@ -419,7 +445,7 @@ else
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<?
 		}
 	}
@@ -435,7 +461,6 @@ else
 			</h1>
 			<?
 		}
-
 		foreach ($arResult['ORDERS'] as $key => $order)
 		{
 			if ($orderHeaderStatus !== $order['ORDER']['STATUS_ID'] && $_REQUEST["show_canceled"] !== 'Y')

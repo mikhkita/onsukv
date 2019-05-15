@@ -89,275 +89,288 @@
 	<div class="b-menu-overlay" id="b-menu-overlay" style="display: none;"></div>
 </div>
 	<div style="display:none;">
-		<a href="#b-popup-error" class="b-error-link fancy" style="display:none;"></a>
-		<div class="b-popup b-popup-auth" id="b-popup-auth">
-			<div class="b-popup-header"><h3>Войдите</h3> или <a href="#b-popup-reg" onclick="$.fancybox.close();" class="fancy dashed">зарегистрируйтесь</a></div>
-			<form action="/personal/?action=authSite&login=yes" method="POST" id="b-form-auth">
-				<div class="b-popup-error"></div>
-				<div class="b-popup-form">
-					<input type="hidden" name="AUTH_FORM" value="Y">
-	                <input type="hidden" name="TYPE" value="AUTH">
-	                <input type="hidden" name="Login" value="Войти">
-					<div class="b-input-container">
-						<div class="b-input-string">
-							<input type="text" id="login" name="USER_LOGIN" placeholder="Логин" required/>
+		<noindex>
+			<a href="#b-popup-error" class="b-error-link fancy" style="display:none;"></a>
+			<div class="b-popup b-popup-auth" id="b-popup-auth">
+				<div class="b-popup-header"><h3>Войдите</h3> или <a href="#b-popup-reg" onclick="$.fancybox.close();" class="fancy dashed">зарегистрируйтесь</a></div>
+				<form action="/personal/?action=authSite&login=yes" method="POST" id="b-form-auth">
+					<div class="b-popup-error"></div>
+					<div class="b-popup-form">
+						<input type="hidden" name="AUTH_FORM" value="Y">
+		                <input type="hidden" name="TYPE" value="AUTH">
+		                <input type="hidden" name="Login" value="Войти">
+						<div class="b-input-container">
+							<div class="b-input-string">
+								<input type="text" id="login" name="USER_LOGIN" placeholder="Логин" required/>
+							</div>
+							<div class="b-input-string">
+								<input type="password" id="password" name="USER_PASSWORD" placeholder="Пароль" required/>
+							</div>
 						</div>
-						<div class="b-input-string">
-							<input type="password" id="password" name="USER_PASSWORD" placeholder="Пароль" required/>
+						<a href="#b-popup-forget-password" class="fancy dashed forget" onclick="$.fancybox.close();">Забыли пароль?</a>
+						<input type="submit" style="display:none;">
+						<div class="b-btn-container">
+							<a href="#" class="b-btn ajax">Войти</a>
 						</div>
+						<!-- <a href="#b-popup-success" class="b-thanks-link fancy" style="display:none;"></a> -->
 					</div>
-					<a href="#b-popup-forget-password" class="fancy dashed forget" onclick="$.fancybox.close();">Забыли пароль?</a>
-					<input type="submit" style="display:none;">
-					<div class="b-btn-container">
-						<a href="#" class="b-btn ajax">Войти</a>
-					</div>
-					<!-- <a href="#b-popup-success" class="b-thanks-link fancy" style="display:none;"></a> -->
-				</div>
-			</form>
-		</div>
-		<div class="b-popup" id="b-popup-reg">
-			<div class="b-popup-header"><h3>Регистрация</h3></div>
-			<form action="/ajax/?action=REG"method="POST" id="b-form-reg">
-				<div class="b-popup-form">
-					<div class="b-input-container">
-						<div class="b-input-string">
-							<input type="text" id="email" name="email" placeholder="E-mail" required/>
+				</form>
+			</div>
+			<div class="b-popup" id="b-popup-reg">
+				<div class="b-popup-header"><h3>Регистрация</h3></div>
+				<form action="/ajax/?action=REG"method="POST" id="b-form-reg">
+					<div class="b-popup-error"></div>
+					<div class="b-popup-form">
+						<div class="b-input-container">
+							<div class="b-input-string">
+								<input type="text" id="email" name="email" placeholder="E-mail" required/>
+							</div>
+							<div class="b-input-string">
+								<input type="password" id="password" name="password" placeholder="Пароль" required/>
+							</div>
 						</div>
-						<div class="b-input-string">
-							<input type="password" id="password" name="password" placeholder="Пароль" required/>
-						</div>
-					</div>
-					<input type="text" name="MAIL"/>
-					<input type="submit" style="display:none;">
-					<div class="b-btn-container">
-						<a href="#" class="b-btn ajax">Готово</a>
-					</div>
-				</div>
-			</form>
-		</div>
-		<div class="b-popup" id="b-popup-ask">
-			<div class="b-popup-header"><h3>У Вас есть вопрос?</h3>Спросите - мы обязательно вам ответим!</div>
-			<form action="/ajax/?action=ASK" method="POST" id="b-form-ask">
-				<div class="b-popup-form">
-					<div class="b-input-container">
-						<div class="b-input-string">
-							<input type="text" id="name" name="name" placeholder="Имя" required/>
-						</div>
-						<div class="b-input-string">
-							<input type="text" id="email" name="email" placeholder="E-mail" required/>
-						</div>
-						<div class="b-input-string">
-							<input type="text" id="phone" name="phone" placeholder="Телефон" required/>
-						</div>
-						<div class="b-input-string">
-							<textarea name="question" id="question" placeholder="Ваш вопрос" rows="5"></textarea>
-						</div>
-						<div class="b-input-string">
-							<div class="b-checkbox">
-		                        <input id="politics3" type="checkbox" name="politics" checked required>
-		                        <label for="politics3">Настоящим подтверждаю, что я ознакомлен и согласен с <a href="/politics/">политикой по обработке персональных данных</a></label>
-		                    </div>
-						</div>
-						<input type="text" name="MAIL">
-					</div>
-					<input type="submit" style="display:none;">
-					<div class="b-btn-container">
-						<a href="#" class="b-btn ajax">Отправить</a>
-					</div>
-					<a href="#b-popup-success" class="b-thanks-link fancy" style="display:none;"></a>
-				</div>
-			</form>
-		</div>
-		<div class="b-popup" id="b-popup-phone">
-			<div class="b-popup-header"><h3>Не дозвонились?</h3>Оставьте заявку - мы обязательно вам перезвоним!</div>
-			<form action="/ajax/?action=PHONE" method="POST" id="b-form-ask">
-				<div class="b-popup-form">
-					<div class="b-input-container">
-						<div class="b-input-string">
-							<input type="text" id="name" name="name" placeholder="Имя" required/>
-						</div>
-						<div class="b-input-string">
-							<input type="text" id="phone" name="phone" placeholder="Телефон" required/>
-						</div>
-						<div class="b-input-string">
-							<div class="b-checkbox">
-		                        <input id="politics2" type="checkbox" name="politics" checked required>
-		                        <label for="politics2">Настоящим подтверждаю, что я ознакомлен и согласен с <a href="/politics/">политикой по обработке персональных данных</a></label>
-		                    </div>
-		                </div>
-						<input type="text" name="MAIL">
-					</div>
-					<input type="submit" style="display:none;">
-					<div class="b-btn-container">
-						<a href="#" class="b-btn ajax">Отправить</a>
-					</div>
-					<a href="#b-popup-success" class="b-thanks-link fancy" style="display:none;"></a>
-				</div>
-			</form>
-		</div>
-		<div class="b-popup b-popup-forget-password" id="b-popup-forget-password">
-			<div class="b-popup-header"><h3>Восстановление пароля</h3></div>
-			<form action="kitsend.php"method="POST" id="b-form-ask">
-				<div class="b-popup-form">
-					<div class="b-input-container">
-						<div class="b-input-string">
-							<input type="text" id="name" name="name" placeholder="Имя или e-mail" required/>
+						<input type="text" name="MAIL"/>
+						<input type="submit" style="display:none;">
+						<div class="b-btn-container">
+							<a href="#" class="b-btn ajax">Готово</a>
 						</div>
 					</div>
-					<input type="submit" style="display:none;">
-					<div class="b-btn-container">
-						<a href="#" class="b-btn not-ajax">Отправить</a>
-					</div>
-					<!-- <a href="#b-popup-success" class="b-thanks-link fancy" style="display:none;"></a> -->
-				</div>
-			</form>
-		</div>
-		<div class="b-popup b-review-popup" id="b-review-form">
-			<div class="b-popup-header"><h3>Оставьте отзыв</h3></div>
-			<?if ($urlArr[2] == "assortment"):?>
-			<form action="/ajax/?action=ADDREVIEW&review_id=1835" method="POST" id="b-form-review">
-			<?elseif($urlArr[2] == "quality"):?>
-			<form action="/ajax/?action=ADDREVIEW&review_id=1834" method="POST" id="b-form-review">
-			<?else:?>
-			<form action="/ajax/?action=ADDREVIEW&product_id=" method="POST" data-file-action="/local/templates/main/addFile.php" id="b-form-review">
-			<?endif;?>
-			<?if ($urlArr[1] == "catalog"):?>
-				<div class="b-review-input">
-					Насколько вы довольны покупкой?
-					<div class="b-stars-detail">
-						<div class="b-star"></div>
-						<div class="b-star"></div>
-						<div class="b-star"></div>
-						<div class="b-star"></div>
-						<div class="b-star"></div>
-					</div>
-					<input type="text" name="item-quality" required>
-				</div>
-			<?else:?>
-				<div class="b-review-input">
-					Насколько вы довольны магазином?
-					<div class="b-stars-detail">
-						<div class="b-star"></div>
-						<div class="b-star"></div>
-						<div class="b-star"></div>
-						<div class="b-star"></div>
-						<div class="b-star"></div>
-					</div>
-					<input type="text" name="store-quality" required>
-				</div>
-				<div class="b-review-input">
-					Оцените качество товара.
-					<div class="b-stars-detail">
-						<div class="b-star"></div>
-						<div class="b-star"></div>
-						<div class="b-star"></div>
-						<div class="b-star"></div>
-						<div class="b-star"></div>
-					</div>
-					<input type="text" name="goods-quality" required>
-				</div>
-				<div class="b-review-input">
-					Оцените вежливость и профессионализм операторов и менеджеров.
-					<div class="b-stars-detail">
-						<div class="b-star"></div>
-						<div class="b-star"></div>
-						<div class="b-star"></div>
-						<div class="b-star"></div>
-						<div class="b-star"></div>
-					</div>
-					<input type="text" name="manager-quality" required>
-				</div>
-				<div class="b-review-input">
-					Оцените качество упаковки.
-					<div class="b-stars-detail">
-						<div class="b-star"></div>
-						<div class="b-star"></div>
-						<div class="b-star"></div>
-						<div class="b-star"></div>
-						<div class="b-star"></div>
-					</div>
-					<input type="text" name="pack-quality" required>
-				</div>
-				<div class="b-review-input">
-					Оцените быстроту доставки и качество работы курьеров.
-					<div class="b-stars-detail">
-						<div class="b-star"></div>
-						<div class="b-star"></div>
-						<div class="b-star"></div>
-						<div class="b-star"></div>
-						<div class="b-star"></div>
-					</div>
-					<input type="text" name="courier-quality" required>
-				</div>
-			<?endif;?>
-				<div class="b-input-string b-review-textarea">
-					<textarea name="comment" cols="30" rows="5" placeholder="Комментарий покупателя. Опишите общее впечатление от конкретной покупки" required></textarea>
-				</div>
-				<div class="b-popup-form">
-					<? if(!isAuth()): ?>
-					<div class="b-input-container">
-						<div class="b-input-string">
-							<input type="text" name="name" placeholder="Ваше имя*" required/>
+					<a href="#b-popup-success-reg" class="b-thanks-link fancy" style="display:none;"></a>
+				</form>
+			</div>
+			<div class="b-popup" id="b-popup-ask">
+				<div class="b-popup-header"><h3>У Вас есть вопрос?</h3>Спросите - мы обязательно вам ответим!</div>
+				<form action="/ajax/?action=ASK" method="POST" id="b-form-ask">
+					<div class="b-popup-form">
+						<div class="b-input-container">
+							<div class="b-input-string">
+								<input type="text" id="name" name="name" placeholder="Имя" required/>
+							</div>
+							<div class="b-input-string">
+								<input type="text" id="email" name="email" placeholder="E-mail" required/>
+							</div>
+							<div class="b-input-string">
+								<input type="text" id="phone" name="phone" placeholder="Телефон" required/>
+							</div>
+							<div class="b-input-string">
+								<textarea name="question" id="question" placeholder="Ваш вопрос" rows="5"></textarea>
+							</div>
+							<div class="b-input-string">
+								<div class="b-checkbox">
+			                        <input id="politics3" type="checkbox" name="politics" checked required>
+			                        <label for="politics3">Настоящим подтверждаю, что я ознакомлен и согласен с <a href="/politics/">политикой по обработке персональных данных</a></label>
+			                    </div>
+							</div>
+							<input type="text" name="MAIL">
 						</div>
-						<div class="b-input-string">
-							<input type="text" name="phone" placeholder="Ваш телефон*" required/>
+						<input type="submit" style="display:none;">
+						<div class="b-btn-container">
+							<a href="#" class="b-btn ajax">Отправить</a>
 						</div>
+						<a href="#b-popup-success" class="b-thanks-link fancy" style="display:none;"></a>
 					</div>
-					<?endif;?>
-					<?if ($urlArr[1] == "catalog"):?>
-					<div id="pluploadCont" class="b-btn b-brown-btn">
-						<input id="original_filename" type="hidden" name="original_filename">
-						<input id="random_filename" type="hidden" name="random_filename">
-						<a class="attach" href="javascript:;" id="pickfiles">
-							Выберите файл
-						</a>
+				</form>
+			</div>
+			<div class="b-popup" id="b-popup-phone">
+				<div class="b-popup-header"><h3>Не дозвонились?</h3>Оставьте заявку - мы обязательно вам перезвоним!</div>
+				<form action="/ajax/?action=PHONE" method="POST" id="b-form-ask">
+					<div class="b-popup-form">
+						<div class="b-input-container">
+							<div class="b-input-string">
+								<input type="text" id="name" name="name" placeholder="Имя" required/>
+							</div>
+							<div class="b-input-string">
+								<input type="text" id="phone" name="phone" placeholder="Телефон" required/>
+							</div>
+							<div class="b-input-string">
+								<div class="b-checkbox">
+			                        <input id="politics2" type="checkbox" name="politics" checked required>
+			                        <label for="politics2">Настоящим подтверждаю, что я ознакомлен и согласен с <a href="/politics/">политикой по обработке персональных данных</a></label>
+			                    </div>
+			                </div>
+							<input type="text" name="MAIL">
+						</div>
+						<input type="submit" style="display:none;">
+						<div class="b-btn-container">
+							<a href="#" class="b-btn ajax">Отправить</a>
+						</div>
+						<a href="#b-popup-success" class="b-thanks-link fancy" style="display:none;"></a>
+					</div>
+				</form>
+			</div>
+			<div class="b-popup b-popup-forget-password" id="b-popup-forget-password">
+				<div class="b-popup-header"><h3>Восстановление пароля</h3></div>
+				<form action="kitsend.php"method="POST" id="b-form-ask">
+					<div class="b-popup-form">
+						<div class="b-input-container">
+							<div class="b-input-string">
+								<input type="text" id="name" name="name" placeholder="Имя или e-mail" required/>
+							</div>
+						</div>
+						<input type="submit" style="display:none;">
+						<div class="b-btn-container">
+							<a href="#" class="b-btn not-ajax">Отправить</a>
+						</div>
+						<!-- <a href="#b-popup-success" class="b-thanks-link fancy" style="display:none;"></a> -->
+					</div>
+				</form>
+			</div>
+			<div class="b-popup b-review-popup" id="b-review-form">
+				<div class="b-popup-header"><h3>Оставьте отзыв</h3></div>
+				<?if ($urlArr[2] == "assortment"):?>
+				<form action="/ajax/?action=ADDREVIEW&review_id=1835" method="POST" id="b-form-review">
+				<?elseif($urlArr[2] == "quality"):?>
+				<form action="/ajax/?action=ADDREVIEW&review_id=1834" method="POST" id="b-form-review">
+				<?else:?>
+				<form action="/ajax/?action=ADDREVIEW&product_id=" method="POST" data-file-action="/local/templates/main/addFile.php" id="b-form-review">
+				<?endif;?>
+				<?if ($urlArr[1] == "catalog"):?>
+					<div class="b-review-input">
+						Насколько вы довольны покупкой?
+						<div class="b-stars-detail">
+							<div class="b-star"></div>
+							<div class="b-star"></div>
+							<div class="b-star"></div>
+							<div class="b-star"></div>
+							<div class="b-star"></div>
+						</div>
+						<input type="text" name="item-quality" required>
+					</div>
+				<?else:?>
+					<div class="b-review-input">
+						Насколько вы довольны магазином?
+						<div class="b-stars-detail">
+							<div class="b-star"></div>
+							<div class="b-star"></div>
+							<div class="b-star"></div>
+							<div class="b-star"></div>
+							<div class="b-star"></div>
+						</div>
+						<input type="text" name="store-quality" required>
+					</div>
+					<div class="b-review-input">
+						Оцените качество товара.
+						<div class="b-stars-detail">
+							<div class="b-star"></div>
+							<div class="b-star"></div>
+							<div class="b-star"></div>
+							<div class="b-star"></div>
+							<div class="b-star"></div>
+						</div>
+						<input type="text" name="goods-quality" required>
+					</div>
+					<div class="b-review-input">
+						Оцените вежливость и профессионализм операторов и менеджеров.
+						<div class="b-stars-detail">
+							<div class="b-star"></div>
+							<div class="b-star"></div>
+							<div class="b-star"></div>
+							<div class="b-star"></div>
+							<div class="b-star"></div>
+						</div>
+						<input type="text" name="manager-quality" required>
+					</div>
+					<div class="b-review-input">
+						Оцените качество упаковки.
+						<div class="b-stars-detail">
+							<div class="b-star"></div>
+							<div class="b-star"></div>
+							<div class="b-star"></div>
+							<div class="b-star"></div>
+							<div class="b-star"></div>
+						</div>
+						<input type="text" name="pack-quality" required>
+					</div>
+					<div class="b-review-input">
+						Оцените быстроту доставки и качество работы курьеров.
+						<div class="b-stars-detail">
+							<div class="b-star"></div>
+							<div class="b-star"></div>
+							<div class="b-star"></div>
+							<div class="b-star"></div>
+							<div class="b-star"></div>
+						</div>
+						<input type="text" name="courier-quality" required>
 					</div>
 				<?endif;?>
-					<input type="text" name="MAIL">
-					<input type="submit" style="display:none;">
-					<div class="b-btn-container">
-						<a href="#" class="b-btn ajax">Отправить</a>
+					<div class="b-input-string b-review-textarea">
+						<textarea name="comment" cols="30" rows="5" placeholder="Комментарий покупателя. Опишите общее впечатление от конкретной покупки" required></textarea>
 					</div>
-					<a href="#b-popup-success-review" class="b-thanks-link fancy" style="display:none;"></a>
+					<div class="b-popup-form">
+						<? if(!isAuth()): ?>
+						<div class="b-input-container">
+							<div class="b-input-string">
+								<input type="text" name="name" placeholder="Ваше имя*" required/>
+							</div>
+							<div class="b-input-string">
+								<input type="text" name="phone" placeholder="Ваш телефон*" required/>
+							</div>
+						</div>
+						<?endif;?>
+						<?if ($urlArr[1] == "catalog"):?>
+						<div id="pluploadCont" class="b-btn b-brown-btn">
+							<input id="original_filename" type="hidden" name="original_filename">
+							<input id="random_filename" type="hidden" name="random_filename">
+							<a class="attach" href="javascript:;" id="pickfiles">
+								Выберите файл
+							</a>
+						</div>
+					<?endif;?>
+						<input type="text" name="MAIL">
+						<input type="submit" style="display:none;">
+						<div class="b-btn-container">
+							<a href="#" class="b-btn ajax">Отправить</a>
+						</div>
+						<a href="#b-popup-success-review" class="b-thanks-link fancy" style="display:none;"></a>
+					</div>
+				</form>
+			</div>
+			<div class="b-thanks b-popup" id="b-popup-success">
+				<div class="b-popup-header">
+					<h3>Спасибо!</h3>
+					<p>Ваша заявка успешно отправлена.<br/>Наш менеджер свяжется с Вами в течение часа.</p>
 				</div>
-			</form>
-		</div>
-		<div class="b-thanks b-popup" id="b-popup-success">
-			<div class="b-popup-header">
-				<h3>Спасибо!</h3>
-				<p>Ваша заявка успешно отправлена.<br/>Наш менеджер свяжется с Вами в течение часа.</p>
+				<div class="b-btn-container">
+					<a href="#" class="b-btn ajax" onclick="$.fancybox.close(); return false;">Закрыть</a>
+				</div>
 			</div>
-			<div class="b-btn-container">
-				<a href="#" class="b-btn ajax" onclick="$.fancybox.close(); return false;">Закрыть</a>
+			<div class="b-thanks b-popup" id="b-popup-error">
+				<div class="b-popup-header">
+					<h3>Ошибка!</h3>
+					<p>Ваша заявка успешно отправлена.<br/>Наш менеджер свяжется с Вами в течение часа.</p>
+				</div>
+				<div class="b-btn-container">
+					<a href="#" class="b-btn ajax" onclick="$.fancybox.close(); return false;">Закрыть</a>
+				</div>
 			</div>
-		</div>
-		<div class="b-thanks b-popup" id="b-popup-error">
-			<div class="b-popup-header">
-				<h3>Ошибка!</h3>
-				<p>Ваша заявка успешно отправлена.<br/>Наш менеджер свяжется с Вами в течение часа.</p>
+			<div class="b-thanks b-popup" id="b-popup-success-review">
+				<div class="b-popup-header">
+					<h3>Спасибо!</h3>
+					<p>Ваш отзыв успешно отправлен и будет опубликован после проверки модератором.</p>
+				</div>
+				<div class="b-btn-container">
+					<a href="#" class="b-btn ajax" onclick="$.fancybox.close(); return false;">Закрыть</a>
+				</div>
 			</div>
-			<div class="b-btn-container">
-				<a href="#" class="b-btn ajax" onclick="$.fancybox.close(); return false;">Закрыть</a>
+			<div class="b-thanks b-popup" id="b-popup-success-reg">
+				<div class="b-popup-header">
+					<h3>Спасибо!</h3>
+					<p>Ссылка для активации аккаунта была отправлена на Ваш e-mail.</p>
+				</div>
+				<div class="b-btn-container">
+					<a href="#" class="b-btn ajax" onclick="$.fancybox.close(); return false;">Закрыть</a>
+				</div>
 			</div>
-		</div>
-		<div class="b-thanks b-popup" id="b-popup-success-review">
-			<div class="b-popup-header">
-				<h3>Спасибо!</h3>
-				<p>Ваш отзыв успешно отправлен и будет опубликован после проверки модератором.</p>
-			</div>
-			<div class="b-btn-container">
-				<a href="#" class="b-btn ajax" onclick="$.fancybox.close(); return false;">Закрыть</a>
-			</div>
-		</div>
-		<!-- <div class="b-thanks b-popup" id="b-popup-error">
-			<div class="b-popup-header">
-				<h3>Ошибка отправки!</h3>
-				<p>Приносим свои извинения. Пожалуйста, попробуйте отправить Вашу заявку позже.</p>
-			</div>
-			<div class="b-btn-container">
-				<a href="#" class="b-btn ajax" onclick="$.fancybox.close(); return false;">Закрыть</a>
-			</div>
-		</div> -->
+			<!-- <div class="b-thanks b-popup" id="b-popup-error">
+				<div class="b-popup-header">
+					<h3>Ошибка отправки!</h3>
+					<p>Приносим свои извинения. Пожалуйста, попробуйте отправить Вашу заявку позже.</p>
+				</div>
+				<div class="b-btn-container">
+					<a href="#" class="b-btn ajax" onclick="$.fancybox.close(); return false;">Закрыть</a>
+				</div>
+			</div> -->
+		</noindex>
 	</div>
 	<script type="text/javascript" src="<?=SITE_TEMPLATE_PATH?>/js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="<?=SITE_TEMPLATE_PATH?>/js/jquery.fancybox.min.js"></script>
