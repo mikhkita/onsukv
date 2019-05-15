@@ -1484,6 +1484,11 @@ ul.accordion-list{
 					margin-bottom: 24px;
 					max-width: 350px;
 				}
+				.b-about-preview h1{
+					color: #7a7a7a;
+				    font-size: 20px;
+    				line-height: 28px;
+				}
 				.b-about-preview p{
 					margin-bottom: 13px;
 				}
@@ -4019,6 +4024,176 @@ li.bx-inclinkspersonal-item {
 .b-delivery-price{
 	margin-top: 24px;
 }
+
+.b-cabinet-orders{
+
+	}
+		.b-cabinet-order{
+			margin-bottom: 64px;
+		}
+			.b-order-header{
+				margin-bottom: 24px;
+			}
+				.order-header-left{
+					float: left;
+				}
+					.order-header-left h3{
+						display: inline-block;
+						margin-right: 20px;
+						font-family: 'MuseoSansCyrl-700';
+						font-size: 24px;
+						line-height: 30px;
+					}
+					.order-date{
+						display: inline-block;
+						color: rgba(86, 69, 49, 0.5);
+						font-family: 'MuseoSansCyrl-300';
+						font-size: 24px;
+						line-height: 30px;
+					}
+				.order-header-right{
+					position: relative;
+					float: right;
+					padding-right: 200px;
+				}
+					.order-header-right p{
+						font-size: 24px !important;
+						line-height: 30px !important;
+					}
+					.order-status{
+						position: absolute;
+						top: 0;
+						right: 0;
+						font-family: 'MuseoSansCyrl-500';
+						font-size: 24px;
+						line-height: 30px;
+					}
+					.order-status.status-wait-pay{
+						color: #CB6163;
+					}
+					.order-status.status-wait-send{
+						color: #32B2BE;
+					}
+					.order-status.status-success{
+						color: #77BE32;
+					}
+			.b-order-list{
+				
+			}
+				.b-order-item{
+					margin-bottom: 24px;
+				}
+					.b-order-item-left{
+						float: left;
+					}
+						.b-order-item img{
+							display: inline-block;
+							width: 73px;
+							height: 73px;
+							margin-right: 20px;
+						}
+						.b-order-item-name{
+							max-width: 560px;
+							display: inline-block;
+							vertical-align: top;
+							padding-top: 12px;
+						}
+							.b-order-item-name a{
+								display: inline-block;
+								font-size: 18px;
+								line-height: 22px;
+								margin-bottom: 8px;
+							}
+							.b-order-item-name .meters{
+								color: rgba(62, 50, 36, 0.5);
+							}
+					.b-order-item-right{
+						float: right;
+					}
+						.b-order-item-price{
+							display: inline-block;
+							vertical-align: top;
+							position: relative;
+							margin-right: 60px
+						}
+							.has-discount .price-total{
+								color: #CB6163;
+							}
+							.price-base{
+								position: absolute;
+								top: 0;
+								right: 0;
+								color: #9E9891;
+							}
+								.price-base:before{
+									content: " ";
+									position: absolute;
+									top: 11px;
+									left: 0;
+									height: 1px;
+									width: 100%;
+									background-color: #9E9891;
+								}
+							.price-total{
+								padding-top: 20px;
+								font-family: 'MuseoSansCyrl-500';
+								font-size: 24px;
+								line-height: 30px;
+							}
+						.b-order-item-update,
+						.b-order-item-buy{
+							display: inline-block;
+							vertical-align: top;
+							padding-top: 27px;
+						}
+		.price-base .icon-ruble:before {
+			font-size: 12px;
+			margin-left: 4px;
+		}
+		.price-total .icon-ruble:before,
+		.total .icon-ruble:before{
+			font-size: 17px;
+    		margin-left: 6px;
+    		position: relative;
+    		top: -1px;
+		}
+		.b-cabinet-orders .icon-update:before{
+		    font-size: 16px;
+		}
+		.b-cabinet-orders .icon-cart:before{
+			font-size: 20px;
+		}
+
+		.b-order-total{
+			width: 282px;
+			float: right;
+		}
+			.total-border{
+				width: 100%;
+				border-bottom: 1px #D8D8D8 solid;
+			}
+			.b-order-total-inner{
+				position: relative;
+				margin-top: 24px;
+				padding-left: 10px;
+			}
+				.b-order-total-inner p{
+					display: inline-block;
+					font-family: 'MuseoSansCyrl-700';
+					font-size: 24px;
+					line-height: 30px;
+
+				}
+				.b-order-total-inner .total{
+					position: absolute;
+				    top: 0;
+				    right: 83px;
+				    display: inline-block;
+				    font-family: 'MuseoSansCyrl-500';
+				    font-size: 24px;
+				    line-height: 30px;
+				}
+
 
 /*--------------------*/
 

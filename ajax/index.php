@@ -355,7 +355,6 @@ switch ($action) {
 				$user = new CUser;
 				$hash = md5($email.$hashKey);
 				$link = "nevkusno.pro/ajax/?action=CONFIRM_USER&email=".$email."&hash=".$hash;
-				echo $link;
 
 				$arFields = Array(
 				  "NAME"              => "Пользователь",
@@ -369,9 +368,9 @@ switch ($action) {
 
 				if ($user->Add($arFields)){
 				    if(CEvent::Send("CONFIRM_USER", "s1", array('EMAIL' => $email, "LINK" => $link))){
-						returnSuccess(array("Спасибо! На ваш e-mail отправлена ссылка для подтверждения."));
+						echo "1";
 					} else {
-						returnError(array("Ошибка."));
+						returnError("Ошибка регистрации.");
 					}
 				}
 				else{

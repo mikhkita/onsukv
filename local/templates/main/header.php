@@ -319,7 +319,7 @@ CModule::IncludeModule('iblock');
 						false
 					);?>
 					<? if( !isAuth() ): ?>
-						<a href="#b-popup-auth" class="auth fancy">Войти</a>
+						<a href="#b-popup-auth" class="auth fancy" noindex>Войти</a>
 					<? else: ?>
 						<div class="b-auth-block">
 							<a href="/personal/">Личный кабинет</a>

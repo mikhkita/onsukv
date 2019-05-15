@@ -13,6 +13,7 @@
 
 // print_r($arResult["SEARCH"]);
 ?>
+<noindex>
 <div class="search-page">
 <form action="" method="get">
 <?if($arParams["USE_SUGGEST"] === "Y"):
@@ -187,3 +188,4 @@ endif;?>
 	<?ShowNote(GetMessage("SEARCH_NOTHING_TO_FOUND"));?>
 <?endif;?>
 </div>
+</noindex>

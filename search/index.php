@@ -34,6 +34,7 @@ $APPLICATION->SetTitle("Поиск по товарам");
 		"arrWHERE" => ""
 	)
 );*/?>
+<noindex>
 <div class="b-catalog-preview b-catalog-search"><?$APPLICATION->IncludeComponent("bitrix:catalog.search", "search", Array(
 	"ACTION_VARIABLE" => "action",	// Название переменной, в которой передается действие
 		"AJAX_MODE" => "Y",	// Включить режим AJAX
@@ -92,4 +93,5 @@ $APPLICATION->SetTitle("Поиск по товарам");
 	false
 );?>
 </div>
+</noindex>
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
