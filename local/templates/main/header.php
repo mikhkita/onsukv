@@ -20,7 +20,7 @@ $isDelivery = $GLOBALS["isDelivery"] = ($urlArr[1] == "delivery");
 
 $isDetail = $GLOBALS["isDetail"] = ($urlArr[1] == "catalog" && isset($urlArr[4]));
 
-$notBText = $GLOBALS["notBText"] = ( in_array($page, array("cart", "contacts", "success", "error", "search", "news", "new")) || $isCatalog || $isMain )?true: false;
+$notBText = $GLOBALS["notBText"] = ( in_array($page, array("cart", "order", "contacts", "success", "error", "search", "news", "new")) || $isCatalog || $isMain )?true: false;
 
 $GLOBALS["HEADER_CATEGORIES"] = array();
 
@@ -35,6 +35,14 @@ CModule::IncludeModule('iblock');
 	<title><?$APPLICATION->ShowTitle()?></title>
 
 	<?$APPLICATION->ShowHead();?>
+
+	<!-- Google Tag Manager -->
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-TB8XJM3');</script>
+	<!-- End Google Tag Manager -->
 
 	<meta name="format-detection" content="telephone=no">
 
@@ -62,9 +70,11 @@ CModule::IncludeModule('iblock');
 	<link rel="mask-icon" href="<?=SITE_TEMPLATE_PATH?>/favicon/safari-pinned-tab.svg" color="#5bbad5">
 	<meta name="msapplication-TileColor" content="#da532c">
 	<meta name="theme-color" content="#ffffff">
-
+	
+	<script type="text/javascript">!function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://vk.com/js/api/openapi.js?159",t.onload=function(){VK.Retargeting.Init("VK-RTRG-293514-1wdRf"),VK.Retargeting.Hit()},document.head.appendChild(t)}();</script><noscript><img src="https://vk.com/rtrg?p=VK-RTRG-293514-1wdRf" style="position:fixed; left:-999px;" alt=""/></noscript>
 </head>
 <body>
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TB8XJM3" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	<?$APPLICATION->ShowPanel();?>
 	<div id="mobile-menu" class="mobile-menu hide">
 		<h2>Меню</h2>

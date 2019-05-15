@@ -1,0 +1,23 @@
+User-Agent: Googlebot
+Disallow: /bitrix/
+Disallow: /send/
+Disallow: /cart/
+Disallow: /ajax/
+Disallow: /personal/
+
+User-Agent: Yandex
+Disallow: /bitrix/
+Disallow: /send/
+Disallow: /cart/
+Disallow: /ajax/
+Disallow: /personal/
+
+User-Agent: MSNBot
+Disallow: /bitrix/
+Disallow: /send/
+Disallow: /cart/
+Disallow: /ajax/
+Disallow: /personal/
+
+Host: https://nevkusno.ru
+Sitemap: https://nevkusno.ru/sitemap.xml

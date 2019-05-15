@@ -150,6 +150,9 @@ foreach ($jsTemplates->getChildren() as $jsTemplate)
 	include($jsTemplate->getPath());
 }
 
+$minPrice = getParam("MIN_PRICE");
+$minPrice = intval($minPrice["VALUE"]);
+
 $displayModeClass = $arParams['DISPLAY_MODE'] === 'compact' ? ' basket-items-list-wrapper-compact' : '';
 
 if (empty($arResult['ERROR_MESSAGE']))
@@ -173,7 +176,7 @@ if (empty($arResult['ERROR_MESSAGE']))
 		<?
 	}
 	?>
-	<div id="basket-root" class="bx-basket bx-<?=$arParams['TEMPLATE_THEME']?> bx-step-opacity" style="opacity: 0;">
+	<div id="basket-root" class="bx-basket bx-<?=$arParams['TEMPLATE_THEME']?> bx-step-opacity <?=( (intval($arResult["allSum"]) < $minPrice)?"blockButton":"" )?>" style="opacity: 0;" data-minprice="<?=$minPrice?>">
 		<?
 		if (
 			$arParams['BASKET_WITH_ORDER_INTEGRATION'] !== 'Y'

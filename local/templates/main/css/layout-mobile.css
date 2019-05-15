@@ -472,6 +472,26 @@ p{
 }
 
 @media screen and (max-width: 600px){
+	.b-order-left {
+	    height: 82px;
+	    width: 80px;
+	    padding-right: 0;
+	    margin-right: 24px;
+	}
+	.b-order-box{
+		height: 100%;
+	}
+	.b-order-right {
+	    float: none;
+	    width: 100%;
+	}
+	.b-order-right h2{
+		font-size: 24px;
+		line-height: 30px;
+		max-width: 375px;
+		padding-top: 5px;
+		margin-bottom: 36px;
+	}
 	.b-discount-price .old-price{
 		margin-right: 330px;
 	}

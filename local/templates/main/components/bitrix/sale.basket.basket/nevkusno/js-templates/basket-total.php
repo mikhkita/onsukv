@@ -78,7 +78,7 @@ use Bitrix\Main\Localization\Loc;
 						<div class="basket-coupon-block-total-price-current" data-entity="basket-total-price">
 							{{{PRICE_FORMATED}}}
 						</div>
-
+						
 						{{#DISCOUNT_PRICE_FORMATED}}
 							<div class="basket-coupon-block-total-price-difference">
 								<?=Loc::getMessage('SBB_BASKET_ITEM_ECONOMY')?>
@@ -90,9 +90,10 @@ use Bitrix\Main\Localization\Loc;
 
 				<div class="basket-checkout-block basket-checkout-block-btn">
 					<button class="btn btn-lg btn-default basket-btn-checkout{{#DISABLE_CHECKOUT}} disabled{{/DISABLE_CHECKOUT}}"
-						data-entity="basket-checkout-button">
+						data-entity="basket-checkout-button" id="b-basket-checkout-button">
 						<?=Loc::getMessage('SBB_ORDER')?>
 					</button>
+					<p class="red" id="b-min-price-message" style="display:none;">Минимальная сумма заказа 500 руб.</p>
 				</div>
 			</div>
 		</div>

@@ -2,7 +2,7 @@
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Оформление заказа");
 ?><?$APPLICATION->IncludeComponent(
-	"bitrix:sale.order.ajax",
+	"redder:sale.order.ajax",
 	"order",
 	Array(
 		"ACTION_VARIABLE" => "soa-action",

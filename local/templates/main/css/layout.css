@@ -4020,6 +4020,51 @@ li.bx-inclinkspersonal-item {
 	margin-top: 24px;
 }
 
+
+.b-order-left{
+	float: left;
+	width: 29%;
+	padding-right: 37px;
+}
+	.b-order-box{
+		width: 100%;
+		height: 309px;
+		background-image: url(../i/gift.jpg);
+		background-position: 50% 0;
+		background-repeat: no-repeat;
+		background-size: contain;
+	}
+.b-order-right{
+	float: right;
+	width: 71%;
+}
+	ul.b-order-items{
+		margin-top: 24px;
+	}
+	.payment-sum.icon-ruble-regular:after{
+		color: #434343;
+		font-size: 12px;
+	}
+	.b-order-right .b-btn{
+		/*min-width: 250px;*/
+		margin-top: 28px;
+		padding: 13px 34px 14px;
+		font-family: 'Geometria-Medium';
+		font-size: 18px;
+		line-height: 26px;
+	}
+		.b-order-right .b-btn span{
+			font-size: 18px;
+			line-height: 26px;
+		}
+.blockButton #b-basket-checkout-button{
+	display: none !important;
+}
+.blockButton #b-min-price-message{
+	display: block !important;
+	max-width: 175px;
+}
+
 /*--------------------*/
 
 
