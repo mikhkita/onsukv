@@ -11,6 +11,7 @@ $action = (isset($_GET["actions"]))?$_GET["actions"]:$action;
 $review_id = (isset($_GET["review_id"]))?$_GET["review_id"]:NULL;
 $product_id = (isset($_GET["product_id"]))?$_GET["product_id"]:NULL; // id товара для отзыва
 $isBasket = isset($_GET["basket"]);
+$hashKey = 481516;
 
 switch ($action) {
 	case 'BUY':
@@ -331,6 +332,84 @@ switch ($action) {
 		}else{
 			echo "1";
 		}
+
+		break;
+	case 'REG':
+
+		if ($_POST["MAIL"] == ""){
+			$spam = false;
+		} else {
+			$spam = true;
+		}
+
+		if (!$spam) {
+
+			$filter = Array("EMAIL" => $_POST['email']);
+			$rsUser = CUser::GetList(($by="id"), ($order="desc"), $filter);
+			$arUser = $rsUser->Fetch();
+
+			if(!$arUser){
+
+				$email = $_POST['email'];
+				$password = $_POST['password'];
+				$user = new CUser;
+				$hash = md5($email.$hashKey);
+				$link = "nevkusno.pro/ajax/?action=CONFIRM_USER&email=".$email."&hash=".$hash;
+				echo $link;
+
+				$arFields = Array(
+				  "NAME"              => "Пользователь",
+				  "EMAIL"             => $email,
+				  "LOGIN"             => $email,
+				  "LID"               => "ru",
+				  "ACTIVE"            => "N",
+				  "PASSWORD"          => $password,
+				  "CONFIRM_PASSWORD"  => $password,
+				);
+
+				if ($user->Add($arFields)){
+				    if(CEvent::Send("CONFIRM_USER", "s1", array('EMAIL' => $email, "LINK" => $link))){
+						returnSuccess(array("Спасибо! На ваш e-mail отправлена ссылка для подтверждения."));
+					} else {
+						returnError(array("Ошибка."));
+					}
+				}
+				else{
+				    echo "0";
+				}
+			} else {
+				returnError("Пользователь с таким E-mail уже зарегестрирован.");
+			}
+		}else{
+			echo "0";
+		}
+
+		break;
+	case 'CONFIRM_USER':
+
+		$email = $_GET['email'];
+		$userHash = $_GET['hash'];
+		$hash = md5($email.$hashKey);
+
+		if ($userHash == $hash) {
+
+			$filter = Array("EMAIL" => $email);
+			$rsUser = CUser::GetList(($by="id"), ($order="desc"), $filter);
+			$arUser = $rsUser->Fetch();
+
+			$user = new CUser;
+			$fields = Array(
+			  "ACTIVE" => "Y",
+			);
+			
+			if ($user->Update($arUser["ID"], $fields)) {
+			 	LocalRedirect("/personal/");
+			} 
+			else {
+				LocalRedirect("/");
+			}
+
+		}	
 
 		break;
 

@@ -148,6 +148,42 @@ function getPrices($itemID){
 	return $prices;
 }
 
+function getParam($param){
+
+	$arSelect = Array("ID", "NAME", "DATE_ACTIVE_FROM", "IBLOCK_ID", "CODE");
+	$arFilter = Array("IBLOCK_ID"=>5, "ACTIVE"=>"Y");
+
+	$res = CIBlockElement::GetList(Array(), $arFilter, false, Array("nPageSize"=>1000), $arSelect);
+
+	while($ob = $res->GetNextElement()){
+		$arFields = $ob->GetFields();
+		$arProps = $ob->GetProperties();
+		$arItem[$arFields["CODE"]] = array(
+			"ID" => $arFields["ID"],
+			"VALUE" => $arProps["PARAM_VALUE"]['VALUE'],
+			"DESCRIPTION" => $arFields["PREVIEW_TEXT"],
+		);
+	}
+		
+	if (isset($arItem[$param])) {
+		return $arItem[$param];
+	} else { 
+		return NULL;
+	}
+}
+
+function setParam($param, $value){
+
+	$item = getParams($param);
+
+	if (CIBlockElement::SetPropertyValuesEx($item['ID'], false, array("PARAM_VALUE" => $value))) {
+		echo "1";
+	} else {
+		echo "0";
+	}
+
+}
+
 function getBasketCount(){
 	CModule::IncludeModule("sale");
 

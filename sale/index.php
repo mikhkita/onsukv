@@ -44,6 +44,9 @@ if( !isset($_REQUEST["ORDER_TYPE"]) ){
 	<div class="b-sort-block b-sort-text">Сортировать по:</div>
 	<div class="b-sort-block b-sort-field"><a href="?ORDER_FIELD=CATALOG_PRICE_1&ORDER_TYPE=<?=( ($_REQUEST["ORDER_TYPE"] == "DESC" || $_REQUEST["ORDER_FIELD"] != "CATALOG_PRICE_1")?"ASC":"DESC" )?>" class="<? if($_REQUEST["ORDER_FIELD"] == "CATALOG_PRICE_1"): ?>active <? endif; ?><? if($_REQUEST["ORDER_TYPE"] == "ASC"): ?>up <? endif; ?>icon-arrow">цене</a></div>
 	<div class="b-sort-block b-sort-field"><a href="?ORDER_FIELD=NAME&ORDER_TYPE=<?=( ($_REQUEST["ORDER_TYPE"] == "DESC" || $_REQUEST["ORDER_FIELD"] != "NAME")?"ASC":"DESC" )?>" class="<? if($_REQUEST["ORDER_FIELD"] == "NAME"): ?>active <? endif; ?><? if($_REQUEST["ORDER_TYPE"] == "ASC"): ?>up <? endif; ?> icon-arrow">названию</a></div>
+	<div class="b-sort-block b-sort-field"><a href="?ORDER_FIELD=DATE_CREATED&ORDER_TYPE=<?=( ($_REQUEST["ORDER_TYPE"] == "DESC" || $_REQUEST["ORDER_FIELD"] != "DATE_CREATED")?"ASC":"DESC" )?>" class="<? if($_REQUEST["ORDER_FIELD"] == "DATE_CREATED"): ?>active <? endif; ?><? if($_REQUEST["ORDER_TYPE"] == "ASC"): ?>up <? endif; ?> icon-arrow">новинкам</a>
+		</div>
+	<div class="b-sort-block b-sort-field"><a href="?ORDER_FIELD=SORT&ORDER_TYPE=<?=( ($_REQUEST["ORDER_TYPE"] == "DESC" || $_REQUEST["ORDER_FIELD"] != "SORT")?"ASC":"DESC" )?>" class="<? if($_REQUEST["ORDER_FIELD"] == "SORT"): ?>active <? endif; ?><? if($_REQUEST["ORDER_TYPE"] == "ASC"): ?>up <? endif; ?> icon-arrow">популярности</a></div>
 </div>
 <div class="b-catalog">
 	<?

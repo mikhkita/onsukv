@@ -87,7 +87,29 @@ CModule::IncludeModule('iblock');
 		<div class="menu-accordion">
 			<div class="menu-accodion-block ">
 				<h3 class="menu-header icon-arrow">Лавка кулинара</h3>
-				<ul>
+				<?$APPLICATION->IncludeComponent("bitrix:catalog.section.list", "main_categories", Array(
+					"ADD_SECTIONS_CHAIN" => "N",	// Включать раздел в цепочку навигации
+						"CACHE_GROUPS" => "Y",	// Учитывать права доступа
+						"CACHE_TIME" => "36000000",	// Время кеширования (сек.)
+						"CACHE_TYPE" => "N",	// Тип кеширования
+						"COUNT_ELEMENTS" => "Y",	// Показывать количество элементов в разделе
+						"IBLOCK_ID" => "1",	// Инфоблок
+						"IBLOCK_TYPE" => "content",	// Тип инфоблока
+						"SECTION_CODE" => "",	// Код раздела
+						"SECTION_FIELDS" => array(	// Поля разделов
+							0 => "NAME",
+						),
+						"SECTION_ID" => 1,	// ID раздела
+						"SECTION_URL" => "",	// URL, ведущий на страницу с содержимым раздела
+						"SECTION_USER_FIELDS" => array(	// Свойства разделов
+						),
+						"SHOW_PARENT_NAME" => "Y",	// Показывать название раздела
+						"TOP_DEPTH" => "1",	// Максимальная отображаемая глубина разделов
+						"VIEW_MODE" => "LINE",	// Вид списка подразделов
+					),
+					false
+				);?>
+				<!-- <ul>
 					<li><a href="#" class="active">Агар-агар, пектин и желатин</a></li>
 					<li><a href="#">Ганаш</a></li>
 					<li><a href="#">Айсинг и гель для рисования</a></li>
@@ -134,11 +156,33 @@ CModule::IncludeModule('iblock');
 					<li><a href="#">День Святого Валентина!</a></li>
 					<li><a href="#">Новый год</a></li>
 					<li><a href="#">Подарочная карта</a></li>
-				</ul>
+				</ul> -->
 			</div>
 			<div class="menu-accodion-block">
 				<h3 class="menu-header icon-arrow">Кондитерский инвентарь</h3>
-				<ul>
+				<?$APPLICATION->IncludeComponent("bitrix:catalog.section.list", "main_categories", Array(
+					"ADD_SECTIONS_CHAIN" => "N",	// Включать раздел в цепочку навигации
+						"CACHE_GROUPS" => "Y",	// Учитывать права доступа
+						"CACHE_TIME" => "36000000",	// Время кеширования (сек.)
+						"CACHE_TYPE" => "N",	// Тип кеширования
+						"COUNT_ELEMENTS" => "Y",	// Показывать количество элементов в разделе
+						"IBLOCK_ID" => "1",	// Инфоблок
+						"IBLOCK_TYPE" => "content",	// Тип инфоблока
+						"SECTION_CODE" => "",	// Код раздела
+						"SECTION_FIELDS" => array(	// Поля разделов
+							0 => "NAME",
+						),
+						"SECTION_ID" => 2,	// ID раздела
+						"SECTION_URL" => "",	// URL, ведущий на страницу с содержимым раздела
+						"SECTION_USER_FIELDS" => array(	// Свойства разделов
+						),
+						"SHOW_PARENT_NAME" => "Y",	// Показывать название раздела
+						"TOP_DEPTH" => "1",	// Максимальная отображаемая глубина разделов
+						"VIEW_MODE" => "LINE",	// Вид списка подразделов
+					),
+					false
+				);?>
+				<!-- <ul>
 					<li><a href="#">Аэрография</a></li>
 					<li><a href="#">Бумажные формы для выпечки</a></li>
 					<li><a href="#">Вайнеры цветочные</a></li>
@@ -164,7 +208,7 @@ CModule::IncludeModule('iblock');
 					<li><a href="#">Формы для выпечки</a></li>
 					<li><a href="#">Формы для выпечки раздвижные, резаки</a></li>
 					<li><a href="#">Формы для шоколада, печенья, леденцов, кейкпопсов и мороженого</a></li>
-				</ul>
+				</ul> -->
 			</div>
 		</div>
 	</div>

@@ -1,6 +1,8 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
-$APPLICATION->SetTitle("300 последних новинок");?>
+$count = getParam("NEW_COUNT");
+// setParam("NEW_COUNT", "200");
+$APPLICATION->SetTitle($count["VALUE"]." последних новинок");?>
 <div class="new-page-view">
 	<p>Отображение:</p>
 	<a href="?view=list" class="view-tab icon-list <?if ($_GET['view'] != 'tile'){echo'active';}?>"></a>
@@ -147,7 +149,7 @@ $APPLICATION->SetTitle("300 последних новинок");?>
 		"INCLUDE_IBLOCK_INTO_CHAIN" => "N",
 		"INCLUDE_SUBSECTIONS" => "N",
 		"MESSAGE_404" => "",
-		"NEWS_COUNT" => "300",
+		"NEWS_COUNT" => $count["VALUE"],
 		"PAGER_BASE_LINK_ENABLE" => "N",
 		"PAGER_DESC_NUMBERING" => "N",
 		"PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",

@@ -117,7 +117,7 @@
 		</div>
 		<div class="b-popup" id="b-popup-reg">
 			<div class="b-popup-header"><h3>Регистрация</h3></div>
-			<form action="kitsend.php"method="POST" id="b-form-reg">
+			<form action="/ajax/?action=REG"method="POST" id="b-form-reg">
 				<div class="b-popup-form">
 					<div class="b-input-container">
 						<div class="b-input-string">
@@ -127,9 +127,10 @@
 							<input type="password" id="password" name="password" placeholder="Пароль" required/>
 						</div>
 					</div>
+					<input type="text" name="MAIL"/>
 					<input type="submit" style="display:none;">
 					<div class="b-btn-container">
-						<a href="#" class="b-btn not-ajax">Готово</a>
+						<a href="#" class="b-btn ajax">Готово</a>
 					</div>
 				</div>
 			</form>
@@ -150,6 +151,12 @@
 						</div>
 						<div class="b-input-string">
 							<textarea name="question" id="question" placeholder="Ваш вопрос" rows="5"></textarea>
+						</div>
+						<div class="b-input-string">
+							<div class="b-checkbox">
+		                        <input id="politics3" type="checkbox" name="politics" checked required>
+		                        <label for="politics3">Настоящим подтверждаю, что я ознакомлен и согласен с <a href="/politics/">политикой по обработке персональных данных</a></label>
+		                    </div>
 						</div>
 						<input type="text" name="MAIL">
 					</div>
@@ -172,6 +179,12 @@
 						<div class="b-input-string">
 							<input type="text" id="phone" name="phone" placeholder="Телефон" required/>
 						</div>
+						<div class="b-input-string">
+							<div class="b-checkbox">
+		                        <input id="politics2" type="checkbox" name="politics" checked required>
+		                        <label for="politics2">Настоящим подтверждаю, что я ознакомлен и согласен с <a href="/politics/">политикой по обработке персональных данных</a></label>
+		                    </div>
+		                </div>
 						<input type="text" name="MAIL">
 					</div>
 					<input type="submit" style="display:none;">

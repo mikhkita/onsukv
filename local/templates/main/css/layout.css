@@ -486,6 +486,9 @@ textarea:-moz-placeholder {
 	margin-top: 20px;
 	text-align: center;
 }
+	.b-popup-form .b-checkbox{
+		text-align: left;
+	}
 	.b-input-container{
 
 	}
@@ -988,9 +991,9 @@ ul.accordion-list{
 .icon-minus:before{
 	content: "\e914";
 	display: block;
-  	font-size: 1px;
+  	font-size: 10px;
   	color: #c4c4c4;
-	padding: 12px;
+	padding: 8px 10px;
 }
 .icon-minus:hover:before{
 	color: #434343;
