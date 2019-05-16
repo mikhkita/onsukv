@@ -7,10 +7,39 @@ use Bitrix\Main\Localization\Loc;
  * @var $APPLICATION CMain
  */
 
-$dels = array(
-	2 => "Доставка курьером",
-	3 => "Самовывоз"
+$dels = array();
+$db_dtype = CSaleDelivery::GetList(
+    array(
+            "SORT" => "ASC",
+            "NAME" => "ASC"
+        ),
+    array(
+            "LID" => SITE_ID,
+            // "+<=WEIGHT_FROM" => $ORDER_WEIGHT,
+            // "+>=WEIGHT_TO" => $ORDER_WEIGHT,
+            // "+<=ORDER_PRICE_FROM" => $ORDER_PRICE,
+            // "+>=ORDER_PRICE_TO" => $ORDER_PRICE,
+            "ACTIVE" => "Y",
+            // "LOCATION" => $DELIVERY_LOCATION
+        ),
+    false,
+    false,
+    array()
 );
+if ($ar_dtype = $db_dtype->Fetch())
+{
+   do
+   {
+      $dels[ $ar_dtype["ID"] ] = $ar_dtype["NAME"];
+   }
+   while ($ar_dtype = $db_dtype->Fetch());
+}
+
+
+// $dels = array(
+// 	2 => "Доставка курьером",
+// 	3 => "Самовывоз"
+// );
 
 if ($arParams["SET_TITLE"] == "Y")
 	$APPLICATION->SetTitle("Заказ оформлен");
@@ -81,8 +110,8 @@ if (!empty($arResult["ORDER"]))
 				<? endif; ?>
 				<ul class="b-order-items">
 					<li><b>Способ доставки: </b><span class="delivery-method"><?=$delivery?></span></li>
-					<li><b>Способ оплаты: </b><span class="payment-method"><?=$payment["NAME"]?></span></li>
-					<li><b>Сумма к оплате: </b><span class="payment-sum icon-ruble-regular"><?=number_format( intval($arResult["ORDER"]["PRICE"]), 0, '.', ' ' )?></span></li>
+					<!-- <li><b>Способ оплаты: </b><span class="payment-method"><?=$payment["NAME"]?></span></li> -->
+					<li><b>Сумма к оплате: </b><span class="payment-sum icon-ruble-regular"><?=number_format( intval($arResult["ORDER"]["PRICE"]), 0, '.', ' ' )?> руб.</span></li>
 				</ul>
 			</div>
 
@@ -93,11 +122,11 @@ if (!empty($arResult["ORDER"]))
 					<?=$paySystem["BUFFERED_OUTPUT"]?>
 				</div>
 				<a href="#" class="b-btn b-btn-buy icon-card b-btn-pay">
-					<div class="b-btn-more-text b-center">Оплатить заказ</div>
+					<span>Оплатить заказ</span>
 				</a>
 			<?else: ?>
 				<a href="/" class="b-btn b-btn-more icon-arrow-right-bold">
-					<div class="b-btn-more-text b-center">На главную</div>
+					<span>На главную</span>
 				</a>
 			<?endif; ?>
 		</div>

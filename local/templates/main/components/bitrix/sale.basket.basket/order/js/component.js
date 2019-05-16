@@ -897,6 +897,8 @@
 				totalData.PRICE_NEW = totalData.PRICE + document.getElementById('b-delivery-price-input').value*1;
 				totalData.PRICE = this.result.TOTAL_RENDER_DATA.PRICE;
 
+				this.checkMinPrice(totalData);
+
 				totalData.PRICE_FORMATED_NEW = totalData.PRICE_FORMATED;
 				totalData.PRICE_FORMATED = this.result.TOTAL_RENDER_DATA.PRICE_FORMATED;
 
@@ -904,6 +906,20 @@
 			}
 
 			return totalData;
+		},
+
+		checkMinPrice: function(totalData){
+			if( document.getElementById('b-basket-checkout-button') && typeof totalData.SUM_PRICE != "undefined" ){
+				console.log(totalData);
+				var price = totalData.SUM_PRICE,
+					basketRoot = document.getElementById("basket-root"),
+					minPrice = basketRoot.dataset.minprice;
+				if( price*1 >= minPrice ){
+  					basketRoot.classList.remove("blockButton");
+				}else{
+					basketRoot.classList.add("blockButton");
+				}
+			}
 		},
 
 		checkBasketItemsAnimation: function(itemData)

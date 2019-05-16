@@ -775,6 +775,8 @@
 				}
 			}
 
+			this.checkMinPrice(result.TOTAL_RENDER_DATA);
+
 			if (result.TOTAL_RENDER_DATA)
 			{
 				result.TOTAL_RENDER_DATA = this.checkTotalAnimation(result.TOTAL_RENDER_DATA);
@@ -891,6 +893,8 @@
 				totalData.PRICE_NEW = totalData.PRICE;
 				totalData.PRICE = this.result.TOTAL_RENDER_DATA.PRICE;
 
+				// this.checkMinPrice(totalData);
+
 				totalData.PRICE_FORMATED_NEW = totalData.PRICE_FORMATED;
 				totalData.PRICE_FORMATED = this.result.TOTAL_RENDER_DATA.PRICE_FORMATED;
 
@@ -900,9 +904,27 @@
 			return totalData;
 		},
 
+		checkMinPrice: function(totalData){
+			console.log(totalData);
+			if( document.getElementById('b-basket-checkout-button') && typeof totalData.PRICE != "undefined" ){
+				// console.log(totalData);
+				// alert(totalData.PRICE);
+				var price = totalData.PRICE,
+					basketRoot = document.getElementById("basket-root"),
+					minPrice = basketRoot.dataset.minprice;
+				if( price*1 >= minPrice ){
+  					basketRoot.classList.remove("blockButton");
+				}else{
+					basketRoot.classList.add("blockButton");
+				}
+			}
+		},
+
 		checkBasketItemsAnimation: function(itemData)
 		{
 			var itemId = itemData.ID;
+
+			// this.checkMinPrice(itemData);
 
 			if (this.items[itemId])
 			{

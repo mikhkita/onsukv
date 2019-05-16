@@ -175,7 +175,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                 <div class="clearfix">
                     <div class="b-input not-empty">
                         <label for="last_name">Способ доставки <span class="required">*</span></label>
-                        <select name="delivery" id="delivery" data-price="0" data-date="1" required>
+                        <select name="DELIVERY_ID" id="delivery" data-price="0" data-date="1" required>
                             <option>Выберите тип доставки</option>
                             <? foreach ($arResult["DELIVERY"] as $key => $arDelivery): ?>
                                 <option value="<?=$arDelivery["ID"]?>" data-price="<?=$arDelivery["PRICE"]?>" data-date="<?=intval(filter_var($arDelivery["PERIOD_TEXT"], FILTER_SANITIZE_NUMBER_INT))?>"><?=$arDelivery["NAME"]?></option>

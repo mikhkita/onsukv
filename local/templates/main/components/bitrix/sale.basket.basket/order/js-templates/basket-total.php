@@ -95,9 +95,11 @@ use Bitrix\Main\Localization\Loc;
 				</div>
 
 				<div class="basket-checkout-block basket-checkout-block-btn">
-					<button class="btn btn-lg btn-default not-ajax basket-btn-checkout{{#DISABLE_CHECKOUT}} disabled{{/DISABLE_CHECKOUT}}">
+					<button class="btn btn-lg btn-default not-ajax basket-btn-checkout{{#DISABLE_CHECKOUT}} disabled{{/DISABLE_CHECKOUT}}"
+					 id="b-basket-checkout-button">
 						<?=Loc::getMessage('SBB_ORDER')?>
 					</button>
+					<p class="red" id="b-min-price-message" style="display:none;">Минимальная сумма заказа 500 руб.</p>
 				</div>
 			</div>
 		</div>
