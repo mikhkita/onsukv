@@ -4103,13 +4103,36 @@ li.bx-inclinkspersonal-item {
 						font-size: 24px !important;
 						line-height: 30px !important;
 					}
+					.sale-order-detail-payment-options-order-content-title{
+						text-align: justify;
+						font-size: 0;
+						line-height: 0;
+					}
+					.sale-order-detail-payment-options-order-content-title:after{
+						content: "";
+						width: 100%;
+						display: inline-block;
+					}
+					.sale-order-detail-payment-options-order-content-title-element{
+						display: inline-block;
+						vertical-align: middle;
+					}
 					.order-status{
-						position: absolute;
-						top: 0;
-						right: 0;
+						vertical-align: middle;
+						display: inline-block;
 						font-family: 'MuseoSansCyrl-500';
 						font-size: 24px;
 						line-height: 30px;
+					}
+					.b-order-btn-container{
+						text-align: right;
+					}
+					a.b-order-btn{
+						color: #fff;
+					}
+					ul.sale-order-detail-total-payment-list-left li:before,
+					ul.sale-order-detail-total-payment-list-right li:before{
+						visibility: hidden;
 					}
 					.order-status.status-wait-pay{
 						color: #CB6163;
