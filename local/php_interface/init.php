@@ -22,6 +22,297 @@ AddEventHandler("search", "BeforeIndex", array("SearchHandlers", "BeforeIndexHan
 
 AddEventHandler("catalog", "OnStoreProductUpdate", Array("MyClass", "OnStoreProductUpdateHandler"));
 AddEventHandler("sale", "DiscountOnAfterUpdate", Array("MyClass", "DiscountOnAfterUpdateHandler"));
+AddEventHandler("main", "OnBeforeEventAdd", Array("MyEventHandlers", "OnBeforeEventAddHandler")); 
+
+
+class MyEventHandlers 
+{ 
+    function OnBeforeEventAddHandler(&$event, &$lid, &$arFields)
+    {
+		if($event==="SALE_NEW_ORDER"){
+
+			$order = Bitrix\Sale\Order::load($arFields["ORDER_ID"]);
+			$propertyCollection = $order->getPropertyCollection();
+			$temp = $propertyCollection->getArray(); 
+			$fields = $order->getField("date");
+
+			$deliveryID = $order->getField("DELIVERY_ID");
+			// $tmp = $fields->getArray(); 
+			$arDelivery = CSaleDelivery::GetByID($deliveryID);
+
+			// vardump($arFields['ORDER_DATE']);
+
+			foreach ($temp["properties"] as $arProp) {
+				if ($arProp["CODE"] == "CALL") {
+					if ($arProp["VALUE"][0] == "Y") {
+						$arProps[$arProp["CODE"]] = "Звонок оператора";
+					} else {
+						$arProps[$arProp["CODE"]] = "Автоматический";
+					}
+				} else {
+					$arProps[$arProp["CODE"]] = $arProp["VALUE"][0];
+				}
+			}
+			// $arProps["NAME"];+
+			// $arProps["SURNAME"];+
+			// $arProps["EMAIL"];+
+			// $arProps["PHONE"];+
+			// $arProps["ALT_PHONE"];
+			// $arProps["CALL"];+
+
+			$arBasketItems = array();
+			$arBasketFilter = array("LID" => 's1',"ORDER_ID" => $arFields["ORDER_ID"]);
+			$arBasketSelect = array("PRODUCT_ID", "NAME", "PRICE", "BASE_PRICE", "QUANTITY", "DISCOUNT_PRICE");
+			$dbBasketItems = CSaleBasket::GetList(array("NAME" => "ASC","ID" => "ASC"), $arBasketFilter, false, false, $arBasketSelect);
+			
+			while ($arItems = $dbBasketItems->Fetch()){
+				$arFileds = CCatalogProduct::GetByID($arItems["PRODUCT_ID"]);
+				$db_props = CIBlockElement::GetProperty(1, $arItems["PRODUCT_ID"], array("sort" => "asc"), Array('ID' => 2));
+				while($ar_props = $db_props->Fetch()){
+					$arItems["COUNTRY"] = $ar_props["VALUE_ENUM"];
+				}
+
+			    $arItems["TOTAL_QUANTITY"] = $arFileds["QUANTITY"];
+			    $arBasketItems[] = $arItems;
+		    }
+		    $itemsText = "";
+		    // vardump($arBasketItems);
+		    $sum = 0;
+		    $saleSum = 0;
+		    foreach ($arBasketItems as $item) {
+		    	$itemsText.="<tr>".
+            		"<td>".$item['PRODUCT_ID']."</td>".
+            		"<td>".$item['NAME']."</td>".
+            		"<td>".$item['QUANTITY']."</td>".
+            		"<td>".$item['BASE_PRICE']."</td>".
+            		"<td>".$item["TOTAL_QUANTITY"]."</td>". //Наличие
+            		"<td>".$item['QUANTITY']*$item['BASE_PRICE']."</td>". //Сумма
+            		"<td>".$item["COUNTRY"]."</td>". //Страна
+            	"</tr>";
+            	$sum += $item['BASE_PRICE'];
+            	$saleSum += $item['DISCOUNT_PRICE'];
+		    }
+		    vardump($sum);
+		    $saleCount = $sum - $saleSum;
+
+		 //    vardump($item['PRODUCT_ID']);
+			// vardump($item['NAME']);
+			// vardump($item['QUANTITY']);
+			// vardump($item['BASE_PRICE']);
+			// vardump($item["TOTAL_QUANTITY"]);
+			// vardump($item['QUANTITY']*$item['BASE_PRICE']);
+		 //    vardump($itemsText);
+
+			    // $arItems['NAME']; //Название товара
+			    // $arItems["PRICE"]; //Цена со скидкой 
+			    // $arItems["BASE_PRICE"]; //Цена без скидки
+			    // $arItems["QUANTITY"]; //Кол-во товаров в заказе
+			    // $arItems["DISCOUNT_PRICE"]; //Размер скидки
+
+			// echo "<pre>";
+			// var_dump($_REQUEST);
+			// $_REQUEST["ORDER_PROP_1"] // Имя
+			// $_REQUEST["ORDER_PROP_2"] // Фамилия
+			// $_REQUEST["ORDER_PROP_4"] // Номер телефона
+			// $_REQUEST["ORDER_PROP_3"] // Емайл
+			// $_REQUEST["DELIVERY_ID"] //id доставки
+			// $_REQUEST["date"]// Дата доставки
+			// $_REQUEST["ORDER_DESCRIPTION"]//Комментарий к заказу
+			// $_REQUEST["call"] // Звонок оператора
+			// echo "</pre>";
+// $userID = $USER->GetID();
+$userID = "1";
+$msg = "<html>".
+	"<head>".
+		"<title>Вкусный магазин: Новый заказ</title>".
+		"<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>".
+		"<style>".
+			"body,table {font-family: Arial; font-size:14px;}".
+		"</style>".
+	"</head>".
+	"<body>".
+		"Уважаемый администратор интернет-магазина! Поступил новый заказ:<br>".
+		"<table border='0'>".
+			"<tbody>".
+				"<tr>".
+					"<td>Номер заказа:</td>".
+					"<td></td>".
+				    "<td><strong>".$arFields["ORDER_ID"]."</strong></td>".
+				"</tr>".
+				"<tr>".
+				    "<td>Способ обработки заказа: </td>".
+			        "<td></td>".
+		            "<td>Выбран <strong>".$arProps["CALL"]."</strong></td>".
+	            "</tr>".
+	            "<tr>".
+	                "<td>Дата заказа:</td>".
+	                    "<td></td>".
+	                    "<td>".$arFields['ORDER_DATE']."</td>".
+	                "</tr>".
+	            "<tr>".
+	                "<td colspan='3'></td>".
+                "</tr>".
+	            "<tr>".
+	                "<td>Дата доставки: </td>".
+                    "<td>&nbsp;</td>".
+    	   	        "<td>28 Январь, Понедельник</td>".
+                "</tr>".
+	            "<tr>".
+	                "<td>Фамилия Имя: </td>".
+                    "<td>&nbsp;</td>".
+                    "<td>".$arProps["SURNAME"]." ".$arProps["NAME"]." ( ".$userID." )</td>".
+                "</tr>".
+	            "<tr>".
+	                "<td>Контактный телефон: </td>".
+                    "<td>&nbsp;</td>".
+                    "<td>".$arProps["PHONE"]."</td>".
+                "</tr>".
+	            "<tr>".
+	                "<td nowrap='nowrap'>Адрес доставки: </td>".
+                    "<td>&nbsp;</td>".
+                    "<td>".$arDelivery['NAME']."</td>".
+                "</tr>".
+	            "<tr>".
+	                "<td nowrap='nowrap'>Метро: </td>".
+	                    "<td>&nbsp;</td>".
+	                    "<td>Молодежная</td>".
+                "</tr>".
+	            "<tr>".
+	                "<td nowrap='nowrap'>Адрес электронной почты: </td>".
+	                "<td>&nbsp;</td>".
+	                "<td>".$arProps["EMAIL"]."</td>".
+                "</tr>".
+	            "<tr>".
+	                "<td colspan='3'>&nbsp;</td>".
+                "</tr>".
+	         "</tbody>".
+	     "</table>".
+	     "<table border='0' cellpadding='2' cellspacing='2'>".
+	     	"<tbody>".
+	     		"<tr>".
+		         	"<td>#</td>".
+		         	"<td>Наименование товара</td>".
+		         	"<td>Количество</td>".
+		         	"<td>Цена</td>".
+		         	"<td>Наличие</td>".
+		         	"<td>Сумма</td>".
+		         	"<td>Страна</td>".
+		         "</tr>".
+            	$itemsText.
+	            "<tr>".
+	            	"<td colspan='4'><strong>Сумма без скидки</strong>:</td>".
+	            	"<td></td>".
+	            	"<td colspan='2'>".$sum."</td>".
+	            "</tr>".
+	            "<tr>".
+	            	"<td colspan='4'><strong>Скидка</strong>:</td>".
+	            	"<td></td>".
+	            	"<td colspan='2'>0%</td>".
+	            "</tr>".
+	            "<tr>".
+	            	"<td colspan='4'><strong>Сумма скидки</strong>:</td>".
+	            	"<td></td>".
+	            	"<td colspan='2'>".$saleCount."</td>".
+	            "</tr>".
+	            "<tr>".
+	            	"<td colspan='4'><strong>Способ доставки</strong>:</td>".
+	            	"<td></td>".
+	            	"<td colspan='2'>".$arDelivery['NAME']."</td>".
+	            "</tr>".
+	            "<tr>".
+	            	"<td colspan='4'><strong>Стоимость доставки</strong>:</td>".
+	            	"<td></td>".
+	            	"<td colspan='2'>100</td>".
+	            "</tr>".
+	            "<tr>".
+	            	"<td colspan='4'><strong>Итого</strong>:</td>".
+	            	"<td></td>".
+	            	"<td colspan='2'>2347</td>".
+	            "</tr>".
+	        "</tbody>".
+	    "</table>".
+	    "<table border='0'>".
+	    	"<tbody>".
+	    		"<tr>".
+	                "<td colspan='3'>&nbsp;</td>".
+	            "</tr>".
+	            "<tr>".
+	                "<td>Доп. информация о заказе: </td>".
+                    "<td>&nbsp;</td>".
+                    "<td></td>".
+                "</tr>".
+	            "<tr>".
+	                "<td>Комментарий к адресу: </td>".
+                    "<td>&nbsp;</td>".
+                    "<td></td>".
+                "</tr>".
+	            "<tr>".
+                  	"<td>Комментарий к заказу: </td>".
+                    "<td>&nbsp;</td>".
+                    "<td></td>".
+                "</tr>".
+	            "<tr>".
+	                "<td>Ссылка на заказ в админке: </td>".
+                    "<td>&nbsp;</td>".
+                    "<td>".
+                    	"<a href='http://nevkusno.ru/admin/ZAKAZ_ITEMS.php?pid=249755'>Заказ № 249755</a>".
+                    	"<a href='http://nevkusno.ru/admin/ZAKAZ.php?e=ED&amp;id=249755'>Редактирование</a>".
+                    "</td>".
+	            "</tr>".
+	        "</tbody>".
+	    "</table>".
+    "</body>".
+"</html>";
+
+//TODO
+// array({
+//   ["ORDER_ID"] = "16",
+//   ["ORDER_REAL_ID"] = "16",
+//   ["ORDER_ACCOUNT_NUMBER_ENCODE"] = "16",
+//   ["ORDER_DATE"] = "16.05.2019 19:29:14",
+//   ["ORDER_USER"] = "Михаил",
+//   ["PRICE"] = "686 руб.",
+//   ["BCC"] = "order@nevkusno.com",
+//   ["EMAIL"] = "mike@kitaev.ru",
+//   ["ORDER_LIST"] = "Арахисовые лепестки Унитрон, 150 гр. - 4.00 шт x 159 руб.",
+//   ["SALE_EMAIL"] = "order@nevkusno.com"
+//   ["DELIVERY_PRICE"] = "50",
+//   ["ORDER_PUBLIC_URL"] = "",
+// });
+
+//   //Номер заказа
+//  сделать поле //Способ обработки заказа
+//   //Дата заказа
+//  нужно взять у заказа//Дата доставки
+//   //Имя
+//  нужно взять у заказа  //Фамилия
+//  нужно взять у заказа  //Email
+//  нужно взять у заказа  //Телефон
+//  нужно взять у заказа  //Адрес доставки
+// -пока не делать //Метро
+//   //Наименование товара
+//   //Количество
+//   //Цена
+// -пока не делать //Наличие
+//  есть у баскета //Сумма
+// -делать запрос  //Страна
+//  есть у баскета //Сумма без скидки
+//  есть у баскета //Скидка
+//  есть у баскета //Сумма скидки:
+//  есть у заказа  //Способ доставки:
+//   //Стоимость доставки
+//   //Итого
+
+//    //Доп. информация о заказе
+// -  //Комментарий к адресу
+//    //Комментарий к заказу
+// -собрать  //Ссылка на заказ в админке
+
+
+			die();
+		}
+    } 
+} 
 
 
 class SearchHandlers
@@ -123,6 +414,14 @@ class MyClass {
  //    		updateWholesale($arFields["ID"]);
  //    	}
  //    }
+}
+
+function OnOrderUpdateHandler($ID, $arFields){ 
+	file_put_contents("/order.html", $arFields);
+}
+
+function OnOrderAddHandler($ID, $arFields){ 
+	file_put_contents("/addorder.html", $arFields);
 }
 
 function updateWholesale($itemID){
@@ -512,6 +811,12 @@ function getDiscountProducts(){
 	}
 
 	return $out;
+}
+
+function vardump($array){
+	echo "<pre>";
+	var_dump($array);
+	echo "</pre>";
 }
 
 getSectionChain();

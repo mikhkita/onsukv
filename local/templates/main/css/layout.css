@@ -185,6 +185,10 @@ p{
 a:focus{
 	outline: none;
 }
+.invisible-checkbox{
+	visibility: hidden;
+	height: 0;
+}
 .b-btn,
 .btn{
 	vertical-align: middle;

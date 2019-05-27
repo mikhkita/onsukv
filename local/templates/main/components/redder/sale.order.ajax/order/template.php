@@ -185,7 +185,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                     </div>
                     <div class="b-input not-empty">
                         <label for="last_name">Дата доставки <span class="required">*</span></label>
-                        <select name="date" id="date" required>
+                        <select name="DELIVERY_DOC_DATE" id="date" required>
                             <? foreach ($arResult["DATES"] as $key => $arDate): ?>
                                 <option value="<?=$arDate["KEY"]?>" data-isSunday="<?=$arDate["IS_SUNDAY"]?>"><?=$arDate["VALUE"]?></option>
                             <? endforeach; ?>
@@ -243,6 +243,17 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                     <div class="b-checkbox b-basket-checkbox">
                         <input id="politics1" class="" type="checkbox" name="politics" checked required>
                         <label for="politics1">Настоящим подтверждаю, что я ознакомлен и согласен с <a href="/politics/">политикой по обработке персональных данных</a></label>
+                    </div>
+                    <?
+                    $sales = CSaleOrder::GetList(array("SORT" => "ASC"), array("USER_ID" => $USER->GetID()), false, false, array()); 
+                    $class = "invisible-checkbox";
+                    if($sales->Fetch()){
+                        $class = "";
+                    };
+                    ?>
+                    <div class="b-checkbox b-basket-checkbox <?=$class?>">
+                        <input id="CALL" type="checkbox" name="ORDER_PROP_6" checked value="Y">
+                        <label for="CALL">Заказать звонок оператора</a></label>
                     </div>
                 </div>
             </div>
