@@ -372,6 +372,8 @@
 			</div> -->
 		</noindex>
 	</div>
+	<script type="text/javascript" src="http://pickpoint.ru/select/postamat.js" charset="utf-8"></script>
+	
 	<script type="text/javascript" src="<?=SITE_TEMPLATE_PATH?>/js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="<?=SITE_TEMPLATE_PATH?>/js/jquery.fancybox.min.js"></script>
 	<script type="text/javascript" src="<?=SITE_TEMPLATE_PATH?>/js/jquery.formstyler.min.js"></script>
