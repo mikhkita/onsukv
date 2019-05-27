@@ -191,6 +191,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                             <? endforeach; ?>
                         </select>
                     </div>
+                    <a href="#" onclick="PickPoint.open(pickPointHandler); return false">Выбрать постамат</a>
                     <div class="b-input b-time-input not-empty" style="display:none;" id="b-time-input">
                         <label for="last_name">Время доставки <span class="required">*</span></label>
                         <select name="time" id="time" required>

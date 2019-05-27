@@ -806,3 +806,8 @@ $(document).ready(function(){
 	// });
 
 });
+
+function pickPointHandler(object){
+    console.log(object);
+    alert(object.name);
+}
