@@ -1,6 +1,7 @@
 <?
 
 $arResult["DATES"] = array(
+	array( "TIME" => time()),
 	array( "TIME" => time() + 1*24*60*60),
 	array( "TIME" => time() + 2*24*60*60),
 	array( "TIME" => time() + 3*24*60*60),
