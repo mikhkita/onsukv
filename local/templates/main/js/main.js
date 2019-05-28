@@ -529,7 +529,7 @@ $(document).ready(function(){
             levels_list = [];
 
         for ( var t = 1; t < levels; t++ ) {
-                     console.log( levels_list, t, levels, $totalsum );
+                     // console.log( levels_list, t, levels, $totalsum );
             levels_list.push( {
                 'match': new RegExp( $totalsum.attr( 'data-' + t + '-match' ), 'i' ),
                 'price': parseFloat( $totalsum.attr( 'data-' + t + '-price' ) ),
@@ -552,6 +552,7 @@ $(document).ready(function(){
                     {
                         if ( this.match.test( addr_string ) && price_found === false )
                         {
+                            console.log(this);
                             $("#b-delivery-price-input").val( this.price ).trigger("change");
 
                             price_found = true;
@@ -581,7 +582,7 @@ $(document).ready(function(){
             // if( deliveryID != 4 && $(this).attr("data-isSunday") == "Y" ){
             //     date++;
             // }
-            if( $(this).index() < date - 1 || ( deliveryID != 4 && $(this).attr("data-isSunday") == "Y" ) ){
+            if( $(this).index() < date || ( deliveryID != 32 && $(this).attr("data-isSunday") == "Y" ) ){
                 $(this).prop("disabled", true);
             }else{
                 $(this).prop("disabled", false);

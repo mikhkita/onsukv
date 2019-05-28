@@ -2,6 +2,7 @@
 
 use Bitrix\Main,
     Bitrix\Sale,
+    Bitrix\Sale\Delivery,
     Bitrix\Main\Localization\Loc;
 
 // echo "<pre>";
@@ -45,6 +46,10 @@ if( $userID = $USER->GetID() ){
 //     // echo "string";
 // }
 // print_r($arResult);
+
+foreach ($arResult["DELIVERY"] as $key => $arDelivery) {
+    $arResult["DELIVERY"][$key] = Delivery\Services\Manager::getById($arDelivery["ID"]);
+}
 
 // print_r($arResult["DELIVERY"]);
 
@@ -192,7 +197,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                         <select name="DELIVERY_ID" id="delivery" data-price="0" data-date="1" required>
                             <option>Выберите тип доставки</option>
                             <? foreach ($arResult["DELIVERY"] as $key => $arDelivery): ?>
-                                <option value="<?=$arDelivery["ID"]?>" data-price="<?=$arDelivery["PRICE"]?>" data-date="<?=intval($arDelivery["PRIOD"])?>"><?=$arDelivery["NAME"]?></option>
+                                <option value="<?=$arDelivery["ID"]?>" data-price="<?=$arDelivery["CONFIG"]["MAIN"]["PRICE"]?>" data-date="<?=$arDelivery["CONFIG"]["MAIN"]["PERIOD"]?>"><?=$arDelivery["NAME"]?></option>
                             <? endforeach; ?>
                         </select>
                         <input type="hidden" name="deliveryPrice" id="b-delivery-price-input">
@@ -224,9 +229,9 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                         <label for="mkad">Расстояние от МКАД</label>
                     </div>
                 </div>
-                <div style="display: none;">
+                <!-- /*<div style="display: none;">*/ -->
                 <h4 class="b-delivery-price">Стоимость доставки: <span id="b-delivery-price">0</span> руб.</h4>
-                </div>
+                <!-- </div> -->
             </div>
             <!-- <div class="b-address b-table">
                 <div class="b-table-cell">
