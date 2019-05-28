@@ -467,6 +467,8 @@ $(document).ready(function(){
             $("#mkad").val('');
             $("#b-mkad-input").hide();
 
+            $(".b-pickpoint").hide();
+
             switch ($(this).val()) {
                 case "26":
                     $("#time").html(
@@ -482,6 +484,9 @@ $(document).ready(function(){
                         '<option value="с 13 до 18">с 13 до 18</option>'
                     );
                     $("#b-time-input").show();
+                    break;
+                case "30":
+                    $(".b-pickpoint").show();
                     break;
                 default:
                     
@@ -518,6 +523,54 @@ $(document).ready(function(){
                 $("#b-delivery-price-input").val( price ).trigger("change");
             }
         });
+
+        var $totalsum = $("#total_sum_pickpoint"),
+            levels = $totalsum.attr( 'data-levels' ),
+            levels_list = [];
+
+        for ( var t = 1; t < levels; t++ ) {
+                     console.log( levels_list, t, levels, $totalsum );
+            levels_list.push( {
+                'match': new RegExp( $totalsum.attr( 'data-' + t + '-match' ), 'i' ),
+                'price': parseFloat( $totalsum.attr( 'data-' + t + '-price' ) ),
+                'level': t
+            } );
+        }
+
+        $( window ).on( 'pickpoint_ready', function() {
+            var addr_string = $(".pickpointaddr").val();
+
+            $( '#no_price_to_pocikpoint' ).remove();
+
+            var price_found = false;
+
+            if ( typeof levels_list !== 'undefined' && price_found === false )
+            {
+                $.each( levels_list, function()
+                {
+                    try
+                    {
+                        if ( this.match.test( addr_string ) && price_found === false )
+                        {
+                            $("#b-delivery-price-input").val( this.price ).trigger("change");
+
+                            price_found = true;
+                        }
+                    }
+                    catch ( e )
+                    {
+                        console.error( e );
+                    }
+                } );
+            }
+
+            if ( price_found === false )
+            {
+                $(".b-delivery-price").after(
+                    '<span id="no_price_to_pocikpoint">Окончательную стоимость рассчитывает оператор</span>' );
+                $("#b-delivery-price-input").val( 0 ).trigger("change");
+            }
+        } );
     }
 
     function disableDates(){
@@ -808,6 +861,12 @@ $(document).ready(function(){
 });
 
 function pickPointHandler(object){
-    console.log(object);
-    alert(object.name);
+    $(".pickpointinfo").remove();
+    $( "#pickpoint-delivery-point" )
+        .html( object.name + '<br />' + object.address )
+        .after( '<input type="hidden" class="pickpointinfo" name="additional_info[PickPointPostamat_ID]" value="' + object.id + '" />' )
+        .after( '<input type="hidden" class="pickpointinfo" name="additional_info[PickPointPostamat_Name]" value="' + object.name + '" />' )
+        .after( '<input type="hidden" class="pickpointinfo pickpointaddr" name="additional_info[PickPointPostamat_Addr]" value="' + object.address + '" />' );
+
+    $( window ).trigger( 'pickpoint_ready' );
 }

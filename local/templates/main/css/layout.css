@@ -3725,6 +3725,9 @@ li.bx-inclinkspersonal-item {
 			width: calc(25% - 18px);
 			margin-right: 24px;
 		}
+			.b-input.b-wide-input{
+				width: calc(50% - 50px);
+			}
 		.b-input:nth-child(4n){
 			margin-right: 0;
 		}
@@ -4003,11 +4006,13 @@ li.bx-inclinkspersonal-item {
 	display: block;
 }
 
-.b-checkbox label a{
+.b-checkbox label a,
+.b-input a{
 	color: #C8AD89;
 	text-decoration: underline;
 }
-	.b-checkbox label a:hover{
+	.b-checkbox label a:hover,
+	.b-input a:hover{
 		text-decoration: none;
 	}
 

@@ -20,6 +20,7 @@ use Bitrix\Main\Localization\Loc;
 		<?=$arResult["BX_SESSION_CHECK"]?>
 		<input type="hidden" name="lang" value="<?=LANG?>" />
 		<input type="hidden" name="ID" value="<?=$arResult["ID"]?>" />
+		<input type="hidden" name="save" value="Y" />
 		<input type="hidden" name="LOGIN" value="<?=$arResult["arUser"]["LOGIN"]?>" />
 		<div class="main-profile-block-shown" id="user_div_reg">
 			<?
@@ -93,7 +94,7 @@ use Bitrix\Main\Localization\Loc;
 			?>
 		</div>
 		<p class="main-profile-form-buttons-block col-sm-9 col-md-offset-3">
-			<input type="submit" name="save" class="b-btn b-green-btn main-profile-submit not-ajax" value="<?=(($arResult["ID"]>0) ? Loc::getMessage("MAIN_SAVE") : Loc::getMessage("MAIN_ADD"))?>">
+			<input type="submit" name="save1" class="b-btn b-green-btn main-profile-submit not-ajax" value="<?=(($arResult["ID"]>0) ? Loc::getMessage("MAIN_SAVE") : Loc::getMessage("MAIN_ADD"))?>">
 			&nbsp;
 			<input type="submit" class="b-btn b-brown-btn"  name="reset" value="<?echo GetMessage("MAIN_RESET")?>">
 		</p>

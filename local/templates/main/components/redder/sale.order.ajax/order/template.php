@@ -1,6 +1,7 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 
 use Bitrix\Main,
+    Bitrix\Sale,
     Bitrix\Main\Localization\Loc;
 
 // echo "<pre>";
@@ -31,6 +32,19 @@ if( $userID = $USER->GetID() ){
     $rsUser = CUser::GetByID($userID);
     $arUser = $rsUser->Fetch();
 }
+
+// $order = Sale\Order::create(SITE_ID, $USER->GetID());
+// $deliveryCollection = $order->getShipmentCollection();
+
+// // $delivery = $deliveryCollection->getItemByShipmentCode(33);
+// print_r($deliveryCollection);
+
+// foreach ($deliveryCollection as $shipment){
+// //     // print_r($shipment->getField("PRICE"));
+// //     print_r($shipment->getFieldValues());
+//     // echo "string";
+// }
+// print_r($arResult);
 
 // print_r($arResult["DELIVERY"]);
 
@@ -178,7 +192,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                         <select name="DELIVERY_ID" id="delivery" data-price="0" data-date="1" required>
                             <option>Выберите тип доставки</option>
                             <? foreach ($arResult["DELIVERY"] as $key => $arDelivery): ?>
-                                <option value="<?=$arDelivery["ID"]?>" data-price="<?=$arDelivery["PRICE"]?>" data-date="<?=intval(filter_var($arDelivery["PERIOD_TEXT"], FILTER_SANITIZE_NUMBER_INT))?>"><?=$arDelivery["NAME"]?></option>
+                                <option value="<?=$arDelivery["ID"]?>" data-price="<?=$arDelivery["PRICE"]?>" data-date="<?=intval($arDelivery["PRIOD"])?>"><?=$arDelivery["NAME"]?></option>
                             <? endforeach; ?>
                         </select>
                         <input type="hidden" name="deliveryPrice" id="b-delivery-price-input">
@@ -191,7 +205,14 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                             <? endforeach; ?>
                         </select>
                     </div>
-                    <a href="#" onclick="PickPoint.open(pickPointHandler); return false">Выбрать постамат</a>
+                    <div class="b-input not-empty b-wide-input b-pickpoint" style="display: none;">
+                        <span id="total_sum_pickpoint" data-levels="7" data-1-match="БЕЛГОРОД|Белгородская обл.|БРЯНСК|Брянская обл.|ВЛАДИМИР|Владимирская обл.|ВОРОНЕЖ|Воронежская обл.|ИВАНОВО|Ивановская обл.|КАЗАНЬ|Татарстан респ.|КАЛУГА|Калужская обл.|КОСТРОМА|Костромская обл.|КРАСНОДАР|Краснодарский край|КУРСК|Курская обл.|ЛИПЕЦК|Липецкая обл.|НИЖНИЙ НОВГОРОД|Нижегородская обл.|ОРЕЛ|Орловская обл.|ПСКОВ|Псковская обл.|РОСТОВ-НА-ДОНУ|Ростовская обл.|РЯЗАНЬ|Рязанская обл.|САМАРА|Самарская обл.|СМОЛЕНСК|Смоленская обл.|ТАМБОВ|Тамбовская обл.|ТВЕРЬ|Тверская обл.|ТОЛЬЯТТИ|Самарская обл.|ТУЛА|Тульская обл.|ЯРОСЛАВЛЬ|Ярославская обл." data-1-price="490" data-2-match="АНАПА|Краснодарский край|АРМАВИР|Краснодарский край|ВОЛГОГРАД|Волгоградская обл.|ВОЛГОДОНСК|Ростовская обл.|ВОЛОГДА|Вологодская обл.|ГЕЛЕНДЖИК|Краснодарский край|ЕКАТЕРИНБУРГ|Свердловская обл.|ИЖЕВСК|Удмуртская респ.|ЙОШКАР-ОЛА|Марий Эль респ.|КИРОВ|Кировская обл.|НАБЕРЕЖНЫЕ ЧЕЛНЫ|Татарстан респ.|НОВОРОССИЙСК|Краснодарский край|ОРЕНБУРГ|Оренбургская обл.|ПЕНЗА|Пензенская обл.|РЫБИНСК|Ярославская обл.|САРАНСК|Мордовия респ.|САРАТОВ|Саратовская обл.|САРОВ|Нижегородская обл.|СОЧИ|Краснодарский край|СТАВРОПОЛЬ|Ставропольский край|СЫЗРАНЬ|Самарская обл.|ТАГАНРОГ|Ростовская обл.|ТУАПСЕ|Краснодарский край|УФА|Башкортостан респ.|ЧЕБОКСАРЫ|Чувашия респ.|ЧЕЛЯБИНСК|Челябинская обл." data-2-price="590" data-3-match="НОВОСИБИРСК|Новосибирская обл.|БЕРЕЗНИКИ|Пермский край|ВЕРХНЯЯ ПЫШМА|Свердловская обл.|КАМЕНСК-УРАЛЬСКИЙ|Свердловская обл.|МАГНИТОГОРСК|Челябинская обл.|НИЖНИЙ ТАГИЛ|Свердловская обл.|ОМСК|Омская обл.|ОРСК|Оренбургская обл.|ПЕРМЬ|Пермский край|ПЯТИГОРСК|Ставропольский край|СЕРОВ|Свердловская обл.|ТЮМЕНЬ|Тюменская обл.|УЛЬЯНОВСК|Ульяновская обл.|ЧЕРЕПОВЕЦ|Вологодская обл." data-3-price="690" data-4-match="БАРНАУЛ|Алтайский край|КЕМЕРОВО|Кемеровская обл.|КРАСНОЯРСК|Красноярский край|КУРГАН|Курганская обл.|НИЖНЕВАРТОВСК|Ханты-Мансийский АО|НОВОКУЗНЕЦК|Кемеровская обл.|ПЕТРОЗАВОДСК|Карелия респ.|СУРГУТ|Ханты-Мансийский АО|ТОМСК|Томская обл." data-4-price="1190" data-5-match="АРХАНГЕЛЬСК|Архангельская обл.|АСТРАХАНЬ|Астраханская обл.|ВЛАДИВОСТОК|Приморский край|ХАБАРОВСК|Хабаровский край|УЛАН-УДЭ|Бурятия респ.|МУРМАНСК|Мурманская обл.|СЫКТЫВКАР|Коми респ.|ИРКУТСК|Иркутская обл." data-5-price="990" data-6-match="МАГАДАН|Магаданская обл." data-6-price="2290" data-7-match="Санкт-Петербург" data-7-price="490"></span>
+                        <!-- <label for="last_name">Постамат <span class="required">*</span></label> -->
+                        <div class="b-postamat" id="pickpoint-delivery-point">
+                            Постамат <span class="required">*</span>: не выбран
+                        </div>
+                        <a href="#" onclick="PickPoint.open(pickPointHandler); return false">Выбрать постамат</a>
+                    </div>
                     <div class="b-input b-time-input not-empty" style="display:none;" id="b-time-input">
                         <label for="last_name">Время доставки <span class="required">*</span></label>
                         <select name="time" id="time" required>
@@ -203,7 +224,9 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                         <label for="mkad">Расстояние от МКАД</label>
                     </div>
                 </div>
+                <div style="display: none;">
                 <h4 class="b-delivery-price">Стоимость доставки: <span id="b-delivery-price">0</span> руб.</h4>
+                </div>
             </div>
             <!-- <div class="b-address b-table">
                 <div class="b-table-cell">
@@ -228,7 +251,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                     </div>
                 </div>
             </div>
-            <div class="b-inputs b-input-row b-for-payment clearfix">
+           <!--  <div class="b-inputs b-input-row b-for-payment clearfix">
                 <div class="b-for-payment-left">
                     <div class="b-radio b-payment-method" style="display: none;">
                         <p>Способ оплаты:</p>
@@ -241,12 +264,8 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                             <? endforeach; ?>
                         </div>
                     </div>
-                    <div class="b-checkbox b-basket-checkbox">
-                        <input id="politics1" class="" type="checkbox" name="politics" checked required>
-                        <label for="politics1">Настоящим подтверждаю, что я ознакомлен и согласен с <a href="/politics/">политикой по обработке персональных данных</a></label>
-                    </div>
                 </div>
-            </div>
+            </div> -->
             <!-- <div class="b-center">
                 <img src="/bitrix/templates/main/html/i/preload.svg" alt="" class="b-svg-preload b-svg-preload-popup">
                 <a href="#" class="b-btn b-btn-buy not-ajax b-btn-cart icon-success">
@@ -317,6 +336,10 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                 ),
                 false
             );?>
+            <div class="b-checkbox b-basket-checkbox">
+                <input id="politics1" class="" type="checkbox" name="politics" checked required>
+                <label for="politics1">Настоящим подтверждаю, что я ознакомлен и согласен с <a href="/politics/">политикой по обработке персональных данных</a></label>
+            </div>
         </form>
     </div>
 </div>
