@@ -199,7 +199,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                     </div>
                     <div class="b-input not-empty">
                         <label for="last_name">Дата доставки <span class="required">*</span></label>
-                        <select name="date" id="date" required>
+                        <select name="DELIVERY_DOC_DATE" id="date" required>
                             <? foreach ($arResult["DATES"] as $key => $arDate): ?>
                                 <option value="<?=$arDate["KEY"]?>" data-isSunday="<?=$arDate["IS_SUNDAY"]?>"><?=$arDate["VALUE"]?></option>
                             <? endforeach; ?>
@@ -251,9 +251,9 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                     </div>
                 </div>
             </div>
-           <!--  <div class="b-inputs b-input-row b-for-payment clearfix">
+           <div class="b-inputs b-input-row b-for-payment clearfix">
                 <div class="b-for-payment-left">
-                    <div class="b-radio b-payment-method" style="display: none;">
+                    <!-- <div class="b-radio b-payment-method" style="display: none;">
                         <p>Способ оплаты:</p>
                         <div class="b-payment-method-list">
                             <? foreach ($arResult["PAY_SYSTEM"] as $key => $payment): ?>
@@ -264,8 +264,23 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                             <? endforeach; ?>
                         </div>
                     </div>
+                    <div class="b-checkbox b-basket-checkbox">
+                        <input id="politics1" class="" type="checkbox" name="politics" checked required>
+                        <label for="politics1">Настоящим подтверждаю, что я ознакомлен и согласен с <a href="/politics/">политикой по обработке персональных данных</a></label>
+                    </div> -->
+                    <?
+                    $sales = CSaleOrder::GetList(array("SORT" => "ASC"), array("USER_ID" => $USER->GetID()), false, false, array()); 
+                    $class = "invisible-checkbox";
+                    if($sales->Fetch()){
+                        $class = "";
+                    };
+                    ?>
+                    <div class="b-checkbox b-basket-checkbox <?=$class?>">
+                        <input id="CALL" type="checkbox" name="ORDER_PROP_6" checked value="Y">
+                        <label for="CALL">Заказать звонок оператора</a></label>
+                    </div>
                 </div>
-            </div> -->
+            </div>
             <!-- <div class="b-center">
                 <img src="/bitrix/templates/main/html/i/preload.svg" alt="" class="b-svg-preload b-svg-preload-popup">
                 <a href="#" class="b-btn b-btn-buy not-ajax b-btn-cart icon-success">

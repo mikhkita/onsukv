@@ -68,21 +68,44 @@ $payment = CSalePaySystem::GetByID($arResult["ORDER"]["PAY_SYSTEM_ID"], $arResul
 } ?>
 
 <?
-if (!empty($arResult["ORDER"]))
-{
+if (!empty($arResult["ORDER"])){
 	?>
 	<div class="b-block clearfix">
 		<?
 
 		$arr = explode(".", $arResult["ORDER"]["DATE_INSERT"]);
-
 		$arr[1] = getRusMonth($arr[1]);
-
 		$arr = explode(":", implode(" ", $arr));
-
 		array_pop($arr);
-
 		$arResult["ORDER"]["DATE_INSERT"] = implode(":", $arr);
+		
+	// 	$arResult["ORDER"]["ID"]; //Номер заказа
+	// ?	$arResult["ORDER"]["PAY_SYSTEM_ID"]; //Способ обработки заказа
+	// 	$arResult["ORDER"]["DATE_INSERT"] //Дата заказа
+	// ?	$arResult["ORDER"]["DELIVERY_DOC_DATE"] //Дата доставки
+	// 	$arUser['NAME'] // Имя
+	// 	$arUser['LAST_NAME'] // Фамилия
+	// 	$arUser['EMAIL'] // 
+	// 	$arUser["PERSONAL_PHONE"] //
+	// 	//Адрес доставки
+	// 	//Метро
+	// 	//Наименование товара
+	// 	//Количество
+	// 	//Цена
+	// 	//Наличие
+	// 	//Сумма
+	// 	//Страна
+	// 	//Сумма без скидки
+	// 	//Скидка
+	// 	//Сумма скидки:
+	// 	$delivery //Способ доставки:
+	// 	$arResult["ORDER"]["PRICE_DELIVERY"]//Стоимость доставки
+	// 	$arResult["ORDER"]["PRICE"] //Итого
+		 
+		//Доп. информация о заказе
+		//Комментарий к адресу
+		//Комментарий к заказу
+		//Ссылка на заказ в админке
 
 		?>
 		<div class="b-order-left">
