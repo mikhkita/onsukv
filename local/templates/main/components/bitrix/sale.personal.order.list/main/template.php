@@ -96,12 +96,6 @@ else
 			if ($orderHeaderStatus !== $order['ORDER']['STATUS_ID'] && $arResult['SORT_TYPE'] == 'STATUS')
 			{
 				$orderHeaderStatus = $order['ORDER']['STATUS_ID'];
-
-				?>
-				<h1 class="sale-order-title">
-					<?= Loc::getMessage('SPOL_TPL_ORDER_IN_STATUSES') ?> &laquo;<?=htmlspecialcharsbx($arResult['INFO']['STATUS'][$orderHeaderStatus]['NAME'])?>&raquo;
-				</h1>
-				<?
 			}
 
 			$APPLICATION->IncludeComponent("bitrix:sale.personal.order.detail","",Array(
@@ -113,7 +107,7 @@ else
 			        "CACHE_TYPE" => "A",
 			        "CACHE_TIME" => "3600",
 			        "CACHE_GROUPS" => "Y",
-			        "SET_TITLE" => "Y",
+			        "SET_TITLE" => "N",
 			        "ACTIVE_DATE_FORMAT" => "d.m.Y",
 			        "PICTURE_WIDTH" => "110",
 			        "PICTURE_HEIGHT" => "110",
@@ -124,6 +118,8 @@ else
 			    )
 			);
 		}
+		
+		$APPLICATION->SetTitle(Loc::getMessage('SPOL_TPL_ORDER_IN_STATUSES').' &laquo;'.htmlspecialcharsbx($arResult['INFO']['STATUS'][$orderHeaderStatus]['NAME']).'&raquo;');
 	}
 	else
 	{

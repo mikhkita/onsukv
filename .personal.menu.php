@@ -8,6 +8,13 @@ $aMenuLinks = Array(
 		"" 
 	),
 	Array(
+		"Мои адреса", 
+		"personal/addresses/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
 		"Корзина", 
 		"cart/", 
 		Array(), 
@@ -29,22 +36,15 @@ $aMenuLinks = Array(
 		"CBXFeatures::IsFeatureEnabled('SaleAccounts')" 
 	),
 	Array(
-		"История заказов", 
-		"personal/orders/?filter_history=Y", 
+		"Подписки на товары", 
+		"personal/subscribe/", 
 		Array(), 
 		Array(), 
 		"" 
 	),
-	// Array(
-	// 	"Профили заказов", 
-	// 	"personal/profiles/", 
-	// 	Array(), 
-	// 	Array(), 
-	// 	"" 
-	// ),
 	Array(
-		"Подписки на товары", 
-		"personal/subscribe/", 
+		"История заказов", 
+		"personal/orders/?filter_history=Y", 
 		Array(), 
 		Array(), 
 		"" 

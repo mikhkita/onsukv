@@ -4137,6 +4137,7 @@ li.bx-inclinkspersonal-item {
 						text-align: right;
 					}
 					a.b-order-btn{
+						padding: 10px 20px;
 						color: #fff;
 					}
 					ul.sale-order-detail-total-payment-list-left li:before,
@@ -4271,8 +4272,67 @@ li.bx-inclinkspersonal-item {
 
 /*--------------------*/
 
+.b-addresss-list{
 
-
+}
+	.b-addresss-item{
+		display: inline-block;
+		width: calc(100% - 160px);
+		vertical-align: top;
+	}
+		.b-addresss-item__address{
+			display: inline-block;
+			width: 100%;
+			max-width: 495px;
+		}
+		.b-addresss-item__room{
+			display: inline-block;
+			width: 100%;
+			max-width: 160px;
+		}
+		.b-addresss-item__index{
+			display: inline-block;
+			width: 100%;
+			max-width: 100px;
+		}
+	.b-addresss-btn-container{
+		width: 150px;
+		display: inline-block;
+		vertical-align: top;
+	}
+	.b-addresss-btn-container a:last-child{
+		margin-left: 15px;
+	}	
+		.b-btn-address-save{
+		    padding: 16px 22px 17px 22px;
+	        -webkit-appearance: none;
+	        appearance: none;
+		    /* -webkit-box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); */
+		    /* -moz-box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); */
+		    /* box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); */
+		    border-radius: 60px;
+		    border: 1px solid #3eb104;
+		    background: #fff;
+		    color: #3eb104;
+		    font-size: 16px;
+		    line-height: 20px;
+		    font-family: 'ProximaNova-Regular';
+		    width: 100%;
+		}
+		.b-btn-address-back{
+			margin-top: 20px;
+			display: inline-block;
+		}
+#map-address{
+	height: 500px;
+	margin-top: 20px;
+}
+	.ui-menu-item{
+		cursor: pointer;
+	}
+	.ui-menu-item:hover{
+		color: #C8AD89;
+	}
 
 
 

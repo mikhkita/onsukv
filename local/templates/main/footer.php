@@ -372,6 +372,13 @@
 			</div> -->
 		</noindex>
 	</div>
+	
+	<?if($urlArr[2]=="addresses" && isset($urlArr[4])): ?>
+		<script type="text/javascript" src="https://api-maps.yandex.ru/2.1.41/?load=package.full&lang=ru-RU"></script>
+		<script type="text/javascript" src="<?=SITE_TEMPLATE_PATH?>/js/AddressDeliveryClass.js"></script>
+		<script type="text/javascript" src="<?=SITE_TEMPLATE_PATH?>/js/address.js"></script>
+	<?endif;?>
+
 	<script type="text/javascript" src="http://pickpoint.ru/select/postamat.js" charset="utf-8"></script>
 	
 	<script type="text/javascript" src="<?=SITE_TEMPLATE_PATH?>/js/jquery-3.2.1.min.js"></script>

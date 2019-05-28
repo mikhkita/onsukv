@@ -1,5 +1,13 @@
 <?php
 $arUrlRewrite=array (
+  10 => 
+  array (
+    'CONDITION' => '#^/personal/addresses/(.+)/(\\\\?(.*))?#',
+    'RULE' => 'CODE=$1&$2',
+    'ID' => '',
+    'PATH' => '/personal/addresses/detail.php',
+    'SORT' => 100,
+  ),
   1 => 
   array (
     'CONDITION' => '#^/wholesale/(.+)/(.+)/(\\\\?(.*))?#',
@@ -48,20 +56,20 @@ $arUrlRewrite=array (
     'PATH' => '/catalog/index.php',
     'SORT' => 100,
   ),
-  3 => 
-  array (
-    'CONDITION' => '#^/sale/(.+)/(\\\\?(.*))?#',
-    'RULE' => 'SECTION_CODE=$1&$2',
-    'ID' => '',
-    'PATH' => '/sale/index.php',
-    'SORT' => 100,
-  ),
   7 => 
   array (
     'CONDITION' => '#^/wholesale/(\\\\?(.*))?#',
     'RULE' => 'WHOLESALE=Y&$1',
     'ID' => '',
     'PATH' => '/catalog/index.php',
+    'SORT' => 100,
+  ),
+  3 => 
+  array (
+    'CONDITION' => '#^/sale/(.+)/(\\\\?(.*))?#',
+    'RULE' => 'SECTION_CODE=$1&$2',
+    'ID' => '',
+    'PATH' => '/sale/index.php',
     'SORT' => 100,
   ),
   8 => 
