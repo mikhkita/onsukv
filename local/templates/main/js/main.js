@@ -21,6 +21,18 @@ function LineBlockHeight(block){
 }
 
 $(document).ready(function(){	
+
+    if( $(".order-adress-map-form-content").length ){
+        $(".b-input input").each(function(){
+            $(this).parents(".b-input").removeClass("focus");
+            if( $(this).val() != "" && $(this).val() != "+7 (   )    -  -  " ){
+                $(this).parents(".b-input").addClass("not-empty");
+            }else{
+                $(this).parents(".b-input").removeClass("not-empty");
+            }
+        });
+    }
+
     function resize(){
        if( typeof( window.innerWidth ) == 'number' ) {
             myWidth = window.innerWidth;
@@ -455,11 +467,18 @@ $(document).ready(function(){
         var delTimer = null;
         $("select#delivery").change(function(){
             var price = $("select#delivery option:checked").attr("data-price"),
-                date = $("select#delivery option:checked").attr("data-date")
+                date = $("select#delivery option:checked").attr("data-date"),
+                calc = $("select#delivery option:checked").attr("data-calc");
             $("select#delivery").attr("data-price", price);
             $("select#delivery").attr("data-date", date);
 
-            disableDates();
+            if( isValidJSON(calc) && calc != "" ){
+                calc = JSON.parse(calc);
+
+                if( calc.length ){
+                    alert();
+                }
+            }
 
             $("#time").html('');
             $("#b-time-input").hide();
@@ -493,7 +512,7 @@ $(document).ready(function(){
                     break;
             }
 
-            $("#b-delivery-price-input").val( price ).trigger("change");
+            $("#b-delivery-price-input").val( price*1 ).trigger("change");
         });
 
         $("#b-delivery-price-input").change(function(){
@@ -552,7 +571,7 @@ $(document).ready(function(){
                     {
                         if ( this.match.test( addr_string ) && price_found === false )
                         {
-                            console.log(this);
+                            // console.log(this);
                             $("#b-delivery-price-input").val( this.price ).trigger("change");
 
                             price_found = true;

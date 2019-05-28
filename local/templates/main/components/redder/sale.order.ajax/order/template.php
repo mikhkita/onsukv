@@ -78,7 +78,6 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
             <input type="hidden" name="ORDER_DESCRIPTION" value="">
             <input type="hidden" name="BUYER_STORE" id="BUYER_STORE" value="0">
             <input type="hidden" name="DELIVERY_PRICE" id="b-delivery-price-input">
-            <? /* ?><input type="hidden" name="PRICE_DELIVERY" id="delivery-price" value=""><? */ ?> 
             <? /* ?><input type="hidden" name="account_only" value="N"><? */ ?>
             <? /* ?><input type="hidden" name="PAY_CURRENT_ACCOUNT" value="N"><? */ ?>
             <? /* ?><input type="hidden" name="confirmorder" id="confirmorder" value="Y"><? */ ?>
@@ -86,7 +85,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
             <? /* ?><input type="hidden" name="is_ajax_post" id="is_ajax_post" value="Y"><? */ ?>
             <? /* ?><input type="hidden" name="json" value="Y"><? */ ?>
             <input type="hidden" name="save" value="Y">
-            <input type="hidden" name="DELIVERY_ID" value="2">
+            <!-- <input type="hidden" name="DELIVERY_ID" value="2"> -->
 
             <div class="b-inputs b-input-row clearfix">
                 <div class="b-input<?=( isset($arUser["NAME"])?" not-empty":"")?>">
@@ -198,7 +197,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                         <select name="DELIVERY_ID" id="delivery" data-price="0" data-date="1" required>
                             <option>Выберите тип доставки</option>
                             <? foreach ($arResult["DELIVERY"] as $key => $arDelivery): ?>
-                                <option value="<?=$arDelivery["ID"]?>" data-price="<?=$arDelivery["CONFIG"]["MAIN"]["PRICE"]?>" data-date="<?=$arDelivery["CONFIG"]["MAIN"]["PERIOD"]?>"><?=$arDelivery["NAME"]?></option>
+                                <option value="<?=$arDelivery["ID"]?>" data-price="<?=$arDelivery["CONFIG"]["MAIN"]["PRICE"]?>" data-calc="<?=$arDelivery["CONFIG"]["MAIN"]["CALC"]?>" data-date="<?=$arDelivery["CONFIG"]["MAIN"]["PERIOD"]?>"><?=$arDelivery["NAME"]?></option>
                             <? endforeach; ?>
                         </select>
                     </div>
@@ -216,7 +215,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                             "PickPoint", 
                             array(
                                 "ACTIVE_DATE_FORMAT" => "d.m.Y",
-                                "ADD_SECTIONS_CHAIN" => "Y",
+                                "ADD_SECTIONS_CHAIN" => "N",
                                 "AJAX_MODE" => "N",
                                 "AJAX_OPTION_ADDITIONAL" => "",
                                 "AJAX_OPTION_HISTORY" => "N",
@@ -242,7 +241,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                                 "HIDE_LINK_WHEN_NO_DETAIL" => "N",
                                 "IBLOCK_ID" => "7",
                                 "IBLOCK_TYPE" => "content",
-                                "INCLUDE_IBLOCK_INTO_CHAIN" => "Y",
+                                "INCLUDE_IBLOCK_INTO_CHAIN" => "N",
                                 "INCLUDE_SUBSECTIONS" => "Y",
                                 "MESSAGE_404" => "",
                                 "NEWS_COUNT" => "1000",
@@ -293,6 +292,15 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                         <input type="number" id="mkad" name="mkad">
                         <label for="mkad">Расстояние от МКАД</label>
                     </div>
+                </div>
+                <div class="b-row b-order-addr">
+                    <h4>Адрес доставки:</h4>
+                    <? foreach ($arResult["ADDRESSES"] as $key => $arAddress): ?>
+                        <div class="b-checkbox">
+                            <input type="checkbox" id="addr-<?=$arAddress["ID"]?>">
+                            <label for="addr-<?=$arAddress["ID"]?>"><?=$arAddress["INDEX"]?>, <?=$arAddress["REGION"]?>, <?=$arAddress["ADDRESS"]?>, кв/оф. <?=$arAddress["ROOM"]?></label>
+                        </div>
+                    <? endforeach; ?>
                 </div>
                 <!-- /*<div style="display: none;">*/ -->
                 <h4 class="b-delivery-price">Стоимость доставки: <span id="b-delivery-price">0</span> руб.</h4>

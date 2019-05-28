@@ -1,4 +1,5 @@
 <?
+global $USER;
 
 $arResult["DATES"] = array(
 	array( "TIME" => time()),
@@ -19,5 +20,22 @@ foreach ($arResult["DATES"] as $key => $arDate) {
 	$arResult["DATES"][$key]["VALUE"] = date("d", $arDate["TIME"])." ".getRusMonth(date("m", $arDate["TIME"])).", ".getRusDayOfWeek(date("w", $arDate["TIME"]));
 	$arResult["DATES"][$key]["IS_SUNDAY"] = ( date("w", $arDate["TIME"]) == 0 )?"Y":"N";
 }
+
+$arSelect = Array("NAME", "PROPERTY_*", "ID", "IBLOCK_ID");
+$arFilter = Array("IBLOCK_ID"=>6, "ACTIVE" => "Y", "PROPERTY_USER" => $USER->GetID());
+$res = CIBlockElement::GetList(Array(), $arFilter, false, Array("nPageSize"=>1000000), $arSelect);
+$items = array();
+while($ob = $res->GetNextElement()){
+	$arFields = $ob->GetFields();
+	$arProps = $ob->GetProperties();
+	$items[] = array(
+		"ADDRESS" => $arFields["NAME"],
+		"INDEX" => $arProps["INDEX"]["VALUE"],
+		"ROOM" => $arProps["ROOM"]["VALUE"],
+		"REGION" => $arProps["REGION"]["VALUE"],
+	);
+}
+
+$arResult["ADDRESSES"] = $items;
 
 ?>
