@@ -24,10 +24,10 @@ $this->setFrameMode(true);
 		    </div>
 	    </div>
 		<?endforeach;?>
-		<div class="b-addresss-item-container">
-	        <div class="b-addresss-item">
-				<a href="create/">Добавить</a>
-	        </div>
-	    </div>
 	</div>
 <? endif; ?>
+<div class="b-addresss-item-container">
+    <div class="b-addresss-item">
+		<a href="create/">Добавить</a>
+    </div>
+</div>

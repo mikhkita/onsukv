@@ -4171,8 +4171,8 @@ class SaleOrderAjax extends \CBitrixComponent
 						$clonedShipment = $this->getCurrentShipment($orderClone);
 						$clonedShipment->setField('DELIVERY_ID', $deliveryId);
 
-						print_r($clonedShipment->getDelivery());
-						echo "<br><br>";
+						// print_r($clonedShipment->getDelivery());
+						// echo "<br><br>";
 						// $shipments = $orderClone->getShipmentCollection();
 
 						// foreach ($shipments as $key => $sh) {

@@ -92,8 +92,11 @@ class MyEventHandlers
             	$sum += $item['BASE_PRICE'];
             	$saleSum += $item['DISCOUNT_PRICE'];
 		    }
+
 		    vardump($sum);
 		    $saleCount = $sum - $saleSum;
+		    vardump($saleCount);
+		    $discount = (100-($saleCount*100/$sum)."%");
 
 		 //    vardump($item['PRODUCT_ID']);
 			// vardump($item['NAME']);
@@ -207,7 +210,7 @@ $msg = "<html>".
 	            "<tr>".
 	            	"<td colspan='4'><strong>Скидка</strong>:</td>".
 	            	"<td></td>".
-	            	"<td colspan='2'>0%</td>".
+	            	"<td colspan='2'>".$discount."</td>".
 	            "</tr>".
 	            "<tr>".
 	            	"<td colspan='4'><strong>Сумма скидки</strong>:</td>".
