@@ -21,6 +21,18 @@ function LineBlockHeight(block){
 }
 
 $(document).ready(function(){	
+
+    if( $(".order-adress-map-form-content").length ){
+        $(".b-input input").each(function(){
+            $(this).parents(".b-input").removeClass("focus");
+            if( $(this).val() != "" && $(this).val() != "+7 (   )    -  -  " ){
+                $(this).parents(".b-input").addClass("not-empty");
+            }else{
+                $(this).parents(".b-input").removeClass("not-empty");
+            }
+        });
+    }
+
     function resize(){
        if( typeof( window.innerWidth ) == 'number' ) {
             myWidth = window.innerWidth;

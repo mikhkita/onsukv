@@ -22,22 +22,26 @@ if (strlen($arResult["MESSAGE"]) > 0):?>
 <? $userID = $USER->GetID(); ?>
 <form name="iblock_add" action="<?=POST_FORM_ACTION_URI?>" method="post" enctype="multipart/form-data" class="order-adress-map-form">
 	<?=bitrix_sessid_post()?>
-	<div class="b-addresss-item-container order-adress-map-form-content">
+	<div class="order-adress-map-form-content">
         <div class="b-addresss-item form-item __adress b-ui-autocomplete">
 			<div class="b-addresss-item__address b-input ui-menu ui-widget ui-widget-content ui-autocomplete ui-front">
-				<input type="text" id="js-order-adress-map-input" class="js-order-adress-map-input ui-autocomplete-input" name="PROPERTY[NAME][0]" value="<?=$arResult["ELEMENT"]['NAME']?>" placeholder="Город, улица, дом" autocomplete="off" required>
+				<input type="text" id="js-order-adress-map-input" class="js-order-adress-map-input ui-autocomplete-input" name="PROPERTY[NAME][0]" value="<?=$arResult["ELEMENT"]['NAME']?>" autocomplete="off" required>
+				<label for="name">Город, улица, дом <span class="required">*</span></label>
 			</div>
 			<div class="b-addresss-item__room b-input">
-				<input type="text" id="number-room-input" name="PROPERTY[26][0]" value="<?=$arResult["ELEMENT_PROPERTIES"][26][0]['VALUE']?>" placeholder="Квартира/офис" required>
+				<input type="text" id="number-room-input" name="PROPERTY[26][0]" value="<?=$arResult["ELEMENT_PROPERTIES"][26][0]['VALUE']?>" autocomplete="off" required>
+				<label for="name">Квартира/офис <span class="required">*</span></label>
 			</div>
 			<div class="b-addresss-item__index b-input">
-				<input type="text" id="postal-code" name="PROPERTY[24][0]" value="<?=$arResult["ELEMENT_PROPERTIES"][24][0]['VALUE']?>" placeholder="Индекс" required>
+				<input type="text" id="postal-code" name="PROPERTY[24][0]" value="<?=$arResult["ELEMENT_PROPERTIES"][24][0]['VALUE']?>" autocomplete="off" required>
+				<label for="name">Индекс <span class="required">*</span></label>
 			</div>
 			<input type="hidden" id="region" name="PROPERTY[25][0]" value="<?=$arResult["ELEMENT_PROPERTIES"][25][0]['VALUE']?>">
 			<input type="hidden" name="PROPERTY[27][0]" value="<?=$userID?>">
+			<input type="hidden" name="iblock_submit" value="Сохранить">
         </div>
         <div class="b-addresss-btn-container">
-	    	<input type="submit" name="iblock_submit" value="Сохранить" class="b-btn-address-save">
+	    	<input type="submit" name="iblock_submit3" value="Сохранить" class="b-btn-address-save not-ajax">
 	    </div>
     </div>
 </form>
