@@ -40,7 +40,7 @@ class MyEventHandlers
 			// $tmp = $fields->getArray(); 
 			$arDelivery = CSaleDelivery::GetByID($deliveryID);
 
-			// vardump($arFields['ORDER_DATE']);
+			vardump($arFields);
 
 			foreach ($temp["properties"] as $arProp) {
 				if ($arProp["CODE"] == "CALL") {
@@ -49,10 +49,25 @@ class MyEventHandlers
 					} else {
 						$arProps[$arProp["CODE"]] = "Автоматический";
 					}
+				} elseif($arProp["CODE"] == "PICKPOINT") {
+					if (isset($arProp['VALUE'][1])) {
+						$arProps[$arProp["CODE"]] = "PickPoint, ID постамата : ".$arProp["VALUE"][2]."<br>".$arProp["VALUE"][1]."<br>Адрес постамата : ".$arProp["VALUE"][0]."";
+					}
 				} else {
 					$arProps[$arProp["CODE"]] = $arProp["VALUE"][0];
 				}
 			}
+ // ["PICKPOINT"]=>
+ //  array(3) {
+ //    [0]=>
+ //    string(82) "634009, Томская обл., Томск, Нижне-Луговая ул., д. 4"
+ //    [1]=>
+ //    string(91) "Постамат: QIWI: Холди Дискаунтер: Нижне-Луговая 7005-014"
+ //    [2]=>
+ //    string(8) "7005-014"
+ //  }
+			// vardump($temp["properties"]);
+
 			// $arProps["NAME"];+
 			// $arProps["SURNAME"];+
 			// $arProps["EMAIL"];+
@@ -76,7 +91,7 @@ class MyEventHandlers
 			    $arBasketItems[] = $arItems;
 		    }
 		    $itemsText = "";
-		    // vardump($arBasketItems);
+		    vardump($arProps);
 		    $sum = 0;
 		    $saleSum = 0;
 		    foreach ($arBasketItems as $item) {
@@ -89,22 +104,13 @@ class MyEventHandlers
             		"<td>".$item['QUANTITY']*$item['BASE_PRICE']."</td>". //Сумма
             		"<td>".$item["COUNTRY"]."</td>". //Страна
             	"</tr>";
-            	$sum += $item['BASE_PRICE'];
-            	$saleSum += $item['DISCOUNT_PRICE'];
+            	$sum += $item['BASE_PRICE']*$item['QUANTITY'];
+            	$saleSum += $item['DISCOUNT_PRICE']*$item['QUANTITY'];
 		    }
 
-		    vardump($sum);
+		    vardump($arDelivery);
 		    $saleCount = $sum - $saleSum;
-		    vardump($saleCount);
 		    $discount = (100-($saleCount*100/$sum)."%");
-
-		 //    vardump($item['PRODUCT_ID']);
-			// vardump($item['NAME']);
-			// vardump($item['QUANTITY']);
-			// vardump($item['BASE_PRICE']);
-			// vardump($item["TOTAL_QUANTITY"]);
-			// vardump($item['QUANTITY']*$item['BASE_PRICE']);
-		 //    vardump($itemsText);
 
 			    // $arItems['NAME']; //Название товара
 			    // $arItems["PRICE"]; //Цена со скидкой 
@@ -125,6 +131,8 @@ class MyEventHandlers
 			// echo "</pre>";
 // $userID = $USER->GetID();
 $userID = "1";
+$processing = ($arProps["CALL"]) ? "Выбран <strong>".$arProps["CALL"]."</strong>" : $processing = "Не выбран";
+$howToDelivery = (isset($arProps['PICKPOINT'])) ? $arProps['PICKPOINT'] : $arDelivery['NAME'];
 $msg = "<html>".
 	"<head>".
 		"<title>Вкусный магазин: Новый заказ</title>".
@@ -145,7 +153,7 @@ $msg = "<html>".
 				"<tr>".
 				    "<td>Способ обработки заказа: </td>".
 			        "<td></td>".
-		            "<td>Выбран <strong>".$arProps["CALL"]."</strong></td>".
+		            "<td>".$processing."</strong></td>".
 	            "</tr>".
 	            "<tr>".
 	                "<td>Дата заказа:</td>".
@@ -215,22 +223,22 @@ $msg = "<html>".
 	            "<tr>".
 	            	"<td colspan='4'><strong>Сумма скидки</strong>:</td>".
 	            	"<td></td>".
-	            	"<td colspan='2'>".$saleCount."</td>".
+	            	"<td colspan='2'>".$saleSum."</td>".
 	            "</tr>".
 	            "<tr>".
 	            	"<td colspan='4'><strong>Способ доставки</strong>:</td>".
 	            	"<td></td>".
-	            	"<td colspan='2'>".$arDelivery['NAME']."</td>".
+	            	"<td colspan='2'>".$howToDelivery."</td>".
 	            "</tr>".
 	            "<tr>".
 	            	"<td colspan='4'><strong>Стоимость доставки</strong>:</td>".
 	            	"<td></td>".
-	            	"<td colspan='2'>100</td>".
+	            	"<td colspan='2'>".$arDelivery['PRICE']."</td>".
 	            "</tr>".
 	            "<tr>".
 	            	"<td colspan='4'><strong>Итого</strong>:</td>".
 	            	"<td></td>".
-	            	"<td colspan='2'>2347</td>".
+	            	"<td colspan='2'>".$arFields["PRICE"]."</td>".
 	            "</tr>".
 	        "</tbody>".
 	    "</table>".
@@ -266,6 +274,8 @@ $msg = "<html>".
 	    "</table>".
     "</body>".
 "</html>";
+
+vardump($msg);
 
 //TODO
 // array({
