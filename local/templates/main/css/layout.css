@@ -4347,6 +4347,12 @@ li.bx-inclinkspersonal-item {
 	    /*color: #2f3435;*/
     /*font: 400 20px/24px "Helvetica Neue",Helvetica,Arial,sans-serif;*/
 }
+.b-order-addr{
+	margin: 16px 0px;
+}
+	.b-order-addr h4{
+		margin-bottom: 16px;
+	}
 #map-address{
 	height: 500px;
 	margin-top: 32px;

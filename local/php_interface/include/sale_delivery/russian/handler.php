@@ -19,7 +19,12 @@ class RussianHandler extends Base
     protected function calculateConcrete(\Bitrix\Sale\Shipment $shipment)
         {
             $result = new CalculationResult();
-            $price = floatval($this->config["MAIN"]["PRICE"]);
+
+            if( isset($_REQUEST["PRICE_DELIVERY"]) ){
+                $price = floatval($_REQUEST["PRICE_DELIVERY"]);
+            }else{
+                $price = floatval($this->config["MAIN"]["PRICE"]);
+            }
             // $weight = floatval($shipment->getWeight()) / 1000;
         
             $result->setDeliveryPrice($price);
@@ -40,7 +45,7 @@ class RussianHandler extends Base
                             "MIN" => 0,
                             "NAME" => "Срок доставки"
                         ),
-                        "PRICE" => array(
+                        "CALC" => array(
                             "TYPE" => "STRING",
                             "MULTILINE" => "Y",
                             "ROWS" => "20",
