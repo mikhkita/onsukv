@@ -596,7 +596,7 @@ $(document).ready(function(){
                     {
                         if ( this.match.test( addr_string ) && price_found === false )
                         {
-                            // console.log(this);
+                            console.log(this);
                             $("#b-delivery-price-input").val( this.price ).trigger("change");
 
                             price_found = true;
@@ -1039,6 +1039,8 @@ function pickPointHandler(object){
         .after( '<input type="hidden" class="pickpointinfo" name="ORDER_PROP_7[PickPointPostamat_ID]" value="' + object.id + '" />' )
         .after( '<input type="hidden" class="pickpointinfo" name="ORDER_PROP_7[PickPointPostamat_Name]" value="' + object.name + '" />' )
         .after( '<input type="hidden" class="pickpointinfo pickpointaddr" name="ORDER_PROP_7[PickPointPostamat_Addr]" value="' + object.address + '" />' );
+
+    $(".b-postamat-error").remove();
 
     $( window ).trigger( 'pickpoint_ready' );
 }

@@ -109,7 +109,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                 <div class="b-input not-empty">
                     <label for="last_name">Способ доставки <span class="required">*</span></label>
                     <select name="DELIVERY_ID" id="delivery" data-price="0" data-date="1" required>
-                        <option>Выберите тип доставки</option>
+                        <option value="">Выберите тип доставки</option>
                         <? foreach ($arResult["DELIVERY"] as $key => $arDelivery): ?>
                             <option value="<?=$arDelivery["ID"]?>" data-price="<?=$arDelivery["CONFIG"]["MAIN"]["PRICE"]?>" data-date="<?=$arDelivery["CONFIG"]["MAIN"]["PERIOD"]?>"><?=$arDelivery["NAME"]?></option>
                         <? endforeach; ?>
@@ -204,7 +204,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                     <div class="b-postamat" id="pickpoint-delivery-point">
                         Постамат <span class="required">*</span>: не выбран
                     </div>
-                    <a href="#" onclick="PickPoint.open(pickPointHandler); return false">Выбрать постамат</a>
+                    <a href="#" class="b-add-postamat" onclick="PickPoint.open(pickPointHandler); return false">Выбрать постамат</a>
                 </div>
             </div>
             <? foreach ($arResult["DELIVERY"] as $key => $arDelivery): ?>

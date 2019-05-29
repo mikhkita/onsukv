@@ -3494,7 +3494,7 @@ li.bx-inclinkspersonal-item {
 	}
 
 	.required, .red{
-		color: #f43d84;
+		color: #ff0000;
 	}
 
 	.b-addressee{
@@ -3992,7 +3992,9 @@ li.bx-inclinkspersonal-item {
 	border: 1px solid #f43d84;
 	/*box-shadow: 0px 0px 0px 2px #F00;*/
 }
-
+.b-input-comment{
+	margin-bottom: 24px;
+}
 .b-checkbox input{
 	position: absolute;
 	opacity: 0;
@@ -4010,7 +4012,7 @@ li.bx-inclinkspersonal-item {
 	font-family: 'ProximaNova-Regular';
 	font-size: 16px;
 	line-height: 22px;
-	margin-bottom: 17px;
+	/*margin-bottom: 17px;*/
 }
 .b-checkbox input:disabled:not(.any-flowers) + span + label,
 .b-checkbox input:disabled:not(.any-flowers) + label{
