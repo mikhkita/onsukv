@@ -33,6 +33,9 @@ $(document).ready(function(){
         });
     }
 
+    if( typeof autosize == "function" )
+        autosize(document.querySelectorAll('textarea'));
+
     function resize(){
        if( typeof( window.innerWidth ) == 'number' ) {
             myWidth = window.innerWidth;

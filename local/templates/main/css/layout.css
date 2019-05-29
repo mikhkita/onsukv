@@ -3759,6 +3759,9 @@ li.bx-inclinkspersonal-item {
 	.b-input-row{
 		margin-bottom: 40px;
 	}
+	.b-last-input-row{
+		margin-bottom: 30px;
+	}
 	.b-address.hide + .b-input-row{
 		margin-bottom: 0px;
 	}
@@ -3869,11 +3872,14 @@ li.bx-inclinkspersonal-item {
 	.b-textarea{
 		width: calc(50% - 12px);
 		margin-right: 0;
+		margin-bottom: 20px;
 	}
 		.b-textarea textarea{
 			padding: 14px 22px 15px 22px;
 			line-height: 24px;
 			width: 100%;
+			border-radius: 26px;
+			resize: none;
 		}
 	.b-for-payment-left{
 		float: left;
@@ -4075,7 +4081,62 @@ li.bx-inclinkspersonal-item {
 	background-color: #C8AD89;
 	display: block;
 }
-
+.b-checkbox label a{
+	font-size: 16px;
+}
+.bx-forgotpass-table{
+	margin: 20px 0;
+}
+	.bx-forgotpass-table input[type="submit"]{
+		vertical-align: middle;
+		position: relative;
+		cursor: pointer;
+		padding: 10px 20px;
+		z-index: 2;
+		display: inline-block;
+		background: #FFAC00;
+		color: #fff;
+		border-radius: 26px;
+		border: none;
+		display: inline-block;
+		font-size: 16px;
+		line-height: 22px;
+		text-decoration: none !important;
+	}
+	table.bx-forgotpass-table tbody{
+		margin-bottom: 16px;
+		display: block;
+	}
+	table.bx-forgotpass-table tbody tr:nth-child(1){
+		display: none;
+	}
+	table.bx-forgotpass-table td:nth-child(2){
+		font-size: 0;
+		line-height: 0;
+	}
+	table.bx-forgotpass-table td {
+	    padding: 3px;
+	    text-align: left;
+	    font-weight: bold;
+	}
+	.bx-forgotpass-table input[type="text"]{
+		display: block;
+	    width: 100%;
+	    height: auto;
+	    padding: 10px 20px;
+	    font-size: 16px;
+	    line-height: 24px;
+	    color: inherit;
+	    background-color: #fff;
+	    background-image: none;
+	    border: 1px solid #e6ded3;
+	    border-radius: 100px;
+	    -webkit-box-shadow: none;
+	    box-shadow: none;
+	    -webkit-transition: none;
+	    -o-transition: none;
+	    transition: none;
+	}
 .b-checkbox label a,
 .b-input a{
 	color: #C8AD89;
@@ -4351,18 +4412,15 @@ li.bx-inclinkspersonal-item {
 	}
 		.b-addresss-item__address{
 			display: inline-block;
-			width: 100%;
-			max-width: 435px;
+			width: 435px;
 		}
 		.b-addresss-item__room{
 			display: inline-block;
-			width: 100%;
-			max-width: 166px;
+		    width: 166px;
 		}
 		.b-addresss-item__index{
 			display: inline-block;
-			width: 100%;
-			max-width: 166px;
+		    width: 166px;
 			margin-right: 0;
 		}
 	.b-addresss-btn-container{
@@ -4435,10 +4493,12 @@ li.bx-inclinkspersonal-item {
 			margin-bottom: 40px;
 		}
 		.b-order-addr-new .b-addresss-item__room{
-			max-width: calc(50% - 12px);
+			max-width: calc(50% - 16px);
+			width: 100%;
 		}
 		.b-order-addr-new .b-addresss-item__index{
-			max-width: calc(50% - 12px);
+			max-width: calc(50% - 16px);
+			width: 100%;
 		}
 	.b-order-addr-new #map-address{
 		float: left;
@@ -4482,6 +4542,17 @@ li.bx-inclinkspersonal-item {
 		.b-catalog-preview .b-catalog-item:nth-child(4n){
 			margin-right: 0;
 		}
+	.b-addresss-item__address{
+		width: calc(100% - 18px);
+		margin-bottom: 32px;
+	}
+	.b-addresss-item__room{
+		margin-right: 32px;
+	}
+	.b-addresss-item{
+	    width: calc(100% - 180px);
+    	margin-right: 20px;
+	}
 }
 
 

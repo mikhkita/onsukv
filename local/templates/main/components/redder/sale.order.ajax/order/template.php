@@ -104,7 +104,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                 <label for="email">Ваш E-mail <span class="required">*</span></label>
             </div>
         </div>
-        <div class="b-inputs clearfix b-input-row">
+        <div class="b-inputs clearfix b-input-row b-last-input-row">
             <div class="clearfix">
                 <div class="b-input not-empty">
                     <label for="last_name">Способ доставки <span class="required">*</span></label>

@@ -243,7 +243,7 @@ CModule::IncludeModule('iblock');
 						</ul>
 					</div>
 					<? if (isAuth()): ?>
-					<a href="/personal/" class="b-mobile-auth fancy"></a>	
+					<a href="/personal/" class="b-mobile-auth"></a>	
 					<? else: ?>
 					<a href="#b-popup-auth" class="b-mobile-auth fancy"></a>
 					<? endif; ?>
