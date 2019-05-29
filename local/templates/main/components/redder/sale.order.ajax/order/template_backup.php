@@ -58,15 +58,15 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
 }else{
 ?>
 <div class="b-data-order b-block-gray b-padding">
-   <!--  <div class="b-data-order-top clearfix">
-        <h2 class="b-title">Данные к заказу</h2>
-        <div class="b b-addressee b-addressee-desktop">
-            <a href="#" class="b-addressee-switch"></a>
-            <div class="b-btn-switch b-addressee-left active" data-payment="delivery" data-short="Доставка" data-long="Нужна доставка">Нужна доставка</div>
-            <div class="b-btn-switch b-addressee-right" data-payment="pickup">Самовывоз</div>
-            <div class="b-btn-addressee"></div>
-        </div>
-    </div> -->
+       <!--  <div class="b-data-order-top clearfix">
+            <h2 class="b-title">Данные к заказу</h2>
+            <div class="b b-addressee b-addressee-desktop">
+                <a href="#" class="b-addressee-switch"></a>
+                <div class="b-btn-switch b-addressee-left active" data-payment="delivery" data-short="Доставка" data-long="Нужна доставка">Нужна доставка</div>
+                <div class="b-btn-switch b-addressee-right" data-payment="pickup">Самовывоз</div>
+                <div class="b-btn-addressee"></div>
+            </div>
+        </div> -->
     <form class="b-data-order-form" method="POST" name="ORDER_FORM" id="ORDER_FORM" enctype="multipart/form-data" action="<?=$APPLICATION->GetCurPage();?>">
         <?=bitrix_sessid_post()?>
         <input type="hidden" id="PERSON_TYPE_1" name="PERSON_TYPE" value="1">
@@ -103,13 +103,98 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                 <input type="text" id="email" name="ORDER_PROP_3" value="<?=( isset($arUser["EMAIL"])?$arUser["EMAIL"]:"")?>" required>
                 <label for="email">Ваш E-mail <span class="required">*</span></label>
             </div>
+            <!-- <div class="b-date-time" data-intervals="<?=$intervalsJSON;?>">
+                <div class="b-date-tip">Дата недоступна</div>
+                <div class="b-input b-date">
+                    <input type="text" id="date" name="ORDER_PROP_5" autocomplete="off">
+                    <label for="date">Дата и время</label>
+                </div>
+                <div class="b-input b-time">
+                    <input type="text" class="input-time" id="time" name="ORDER_PROP_6" data-hour="1" autocomplete="off">
+                    <label for="time"></label>
+                </div>
+                <div class="b-time-list">
+                    <ul>
+                        <li>
+                            <input id="hour-8" type="radio" data-hour="8" name="time-select">
+                            <label for="hour-8">08:00</label>
+                        </li>
+                        <li>
+                            <input id="hour-9" type="radio" data-hour="9" name="time-select">
+                            <label for="hour-9">09:00</label>
+                        </li>
+                        <li>
+                            <input id="hour-10" type="radio" data-hour="10" name="time-select">
+                            <label for="hour-10">10:00</label>
+                        </li>
+                        <li>
+                            <input id="hour-11" type="radio" data-hour="11" name="time-select">
+                            <label for="hour-11">11:00</label>
+                        </li>
+                        <li>
+                            <input id="hour-12" type="radio" data-hour="12" name="time-select">
+                            <label for="hour-12">12:00</label>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <input id="hour-13" type="radio" data-hour="13" name="time-select">
+                            <label for="hour-13">13:00</label>
+                        </li>
+                        <li>
+                            <input id="hour-14" type="radio" data-hour="14" name="time-select">
+                            <label for="hour-14">14:00</label>
+                        </li>
+                        <li>
+                            <input id="hour-15" type="radio" data-hour="15" name="time-select">
+                            <label for="hour-15">15:00</label>
+                        </li>
+                        <li>
+                            <input id="hour-16" type="radio" data-hour="16" name="time-select">
+                            <label for="hour-16">16:00</label>
+                        </li>
+                        <li>
+                            <input id="hour-17" type="radio" data-hour="17" name="time-select">
+                            <label for="hour-17">17:00</label>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <input id="hour-18" type="radio" data-hour="18" name="time-select">
+                            <label for="hour-18">18:00</label>
+                        </li>
+                        <li>
+                            <input id="hour-19" type="radio" data-hour="19" name="time-select">
+                            <label for="hour-19">19:00</label>
+                        </li>
+                        <li>
+                            <input id="hour-20" type="radio" data-hour="20" name="time-select">
+                            <label for="hour-20">20:00</label>
+                        </li>
+                        <li>
+                            <input id="hour-21" type="radio" data-hour="21" name="time-select">
+                            <label for="hour-21">21:00</label>
+                        </li>
+                        <li>
+                            <input id="hour-22" type="radio" data-hour="22" name="time-select">
+                            <label for="hour-22">22:00</label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="icon-clock hide"></div>
+                <div class="icon-calendar"></div>
+            </div>
+            <div class="b-input b-input-date-mobile">
+                <input type="text" id="date-mobile" name="date-mobile">
+                <label for="date-mobile">Дата и время</label>
+            </div> -->
         </div>
         <div class="b-inputs clearfix b-input-row">
             <div class="clearfix">
                 <div class="b-input not-empty">
                     <label for="last_name">Способ доставки <span class="required">*</span></label>
                     <select name="DELIVERY_ID" id="delivery" data-price="0" data-date="1" required>
-                        <option value="">Выберите тип доставки</option>
+                        <option>Выберите тип доставки</option>
                         <? foreach ($arResult["DELIVERY"] as $key => $arDelivery): ?>
                             <option value="<?=$arDelivery["ID"]?>" data-price="<?=$arDelivery["CONFIG"]["MAIN"]["PRICE"]?>" data-date="<?=$arDelivery["CONFIG"]["MAIN"]["PERIOD"]?>"><?=$arDelivery["NAME"]?></option>
                         <? endforeach; ?>
@@ -118,19 +203,83 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                 <div class="b-input not-empty">
                     <label for="last_name">Дата доставки <span class="required">*</span></label>
                     <select name="ORDER_PROP_8" id="date" required>
-                        <? foreach ($arResult["DATES"] as $key => $arDate): ?>
-                            <option value="<?=$arDate["KEY"]?>" data-isSunday="<?=$arDate["IS_SUNDAY"]?>"><?=$arDate["VALUE"]?></option>
-                        <? endforeach; ?>
+                        <?$APPLICATION->IncludeComponent(
+                        "bitrix:news.list", 
+                        "orders_desctritions", 
+                        array(
+                            "ACTIVE_DATE_FORMAT" => "d.m.Y",
+                            "ADD_SECTIONS_CHAIN" => "N",
+                            "AJAX_MODE" => "N",
+                            "AJAX_OPTION_ADDITIONAL" => "",
+                            "AJAX_OPTION_HISTORY" => "N",
+                            "AJAX_OPTION_JUMP" => "N",
+                            "AJAX_OPTION_STYLE" => "Y",
+                            "CACHE_FILTER" => "N",
+                            "CACHE_GROUPS" => "Y",
+                            "CACHE_TIME" => "36000000",
+                            "CACHE_TYPE" => "A",
+                            "CHECK_DATES" => "Y",
+                            "DETAIL_URL" => "",
+                            "DISPLAY_BOTTOM_PAGER" => "N",
+                            "DISPLAY_DATE" => "Y",
+                            "DISPLAY_NAME" => "Y",
+                            "DISPLAY_PICTURE" => "Y",
+                            "DISPLAY_PREVIEW_TEXT" => "Y",
+                            "DISPLAY_TOP_PAGER" => "N",
+                            "FIELD_CODE" => array(
+                                0 => "",
+                                1 => "",
+                            ),
+                            "FILTER_NAME" => "",
+                            "HIDE_LINK_WHEN_NO_DETAIL" => "N",
+                            "IBLOCK_ID" => "8",
+                            "IBLOCK_TYPE" => "content",
+                            "INCLUDE_IBLOCK_INTO_CHAIN" => "N",
+                            "INCLUDE_SUBSECTIONS" => "Y",
+                            "MESSAGE_404" => "",
+                            "NEWS_COUNT" => "1000",
+                            "PAGER_BASE_LINK_ENABLE" => "N",
+                            "PAGER_DESC_NUMBERING" => "N",
+                            "PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
+                            "PAGER_SHOW_ALL" => "N",
+                            "PAGER_SHOW_ALWAYS" => "N",
+                            "PAGER_TEMPLATE" => ".default",
+                            "PAGER_TITLE" => "Новости",
+                            "PARENT_SECTION" => "",
+                            "PARENT_SECTION_CODE" => "",
+                            "PREVIEW_TRUNCATE_LEN" => "",
+                            "PROPERTY_CODE" => array(
+                                0 => "ORDER_DATE",
+                                1 => "",
+                            ),
+                            "SET_BROWSER_TITLE" => "N",
+                            "SET_LAST_MODIFIED" => "N",
+                            "SET_META_DESCRIPTION" => "N",
+                            "SET_META_KEYWORDS" => "N",
+                            "SET_STATUS_404" => "N",
+                            "SET_TITLE" => "N",
+                            "SHOW_404" => "N",
+                            "SORT_BY1" => "PROPERTY_ORDER_DATE",
+                            "SORT_BY2" => "SORT",
+                            "SORT_ORDER1" => "ASC",
+                            "SORT_ORDER2" => "ASC",
+                            "STRICT_SECTION_CHECK" => "N",
+                        ),
+                        false
+                    );?>
+                    <? /* foreach ($arResult["DATES"] as $key => $arDate): ?>
+                        <option value="<?=$arDate["KEY"]?>" data-isSunday="<?=$arDate["IS_SUNDAY"]?>"><?=$arDate["VALUE"]?></option>
+                    <? endforeach;*/ ?>
                     </select>
                 </div>
                 <div class="b-input b-time-input not-empty" style="display:none;" id="b-time-input">
                     <label for="last_name">Время доставки <span class="required">*</span></label>
-                    <select name="ORDER_PROP_9" id="time" required>
+                    <select name="time" id="time" required>
                         
                     </select>
                 </div>
                 <div class="b-input b-mkad-input" style="display:none;" id="b-mkad-input">
-                    <input type="number" id="mkad" name="ORDER_PROP_10">
+                    <input type="number" id="mkad" name="mkad">
                     <label for="mkad">Расстояние от МКАД</label>
                 </div>
                 <div class="b-input not-empty b-wide-input b-pickpoint" style="display: none;">
@@ -204,7 +353,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                     <div class="b-postamat" id="pickpoint-delivery-point">
                         Постамат <span class="required">*</span>: не выбран
                     </div>
-                    <a href="#" class="b-add-postamat" onclick="PickPoint.open(pickPointHandler); return false">Выбрать постамат</a>
+                    <a href="#" onclick="PickPoint.open(pickPointHandler); return false">Выбрать постамат</a>
                 </div>
             </div>
             <? foreach ($arResult["DELIVERY"] as $key => $arDelivery): ?>
@@ -247,14 +396,34 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                             </div>
                         </div>
                         <input type="hidden" id="region" name="PROPERTY[25][0]" value="<?=$arResult["ELEMENT_PROPERTIES"][25][0]['VALUE']?>">
+                        <!-- <div class="b-addresss-btn-container">
+                            <input type="submit" name="iblock_submit3" value="Сохранить" class="b-btn-address-save not-ajax">
+                        </div> -->
                     </div>
                     <div id="map-address"></div>
                 </div>
             </div>
+            <!-- /*<div style="display: none;">*/ -->
             <h4 class="b-delivery-price">Стоимость доставки: <span id="b-delivery-price">0</span> руб.</h4>
+            <!-- </div> -->
         </div>
+        <!-- <div class="b-address b-table">
+            <div class="b-table-cell">
+                <div class="b-choose-address">
+                    <p>Адрес доставки: <span class="required">*</span></p>
+                    <span class="choose-address-value"></span>
+                    <div class="choose-address-change-cont">
+                        <a href="#b-popup-map" class="fancy b-btn-dashed choose-address-change">
+                            <span class="choose-address-action">указать адрес</span>
+                            <input class="error" type="text" id="address" name="ORDER_PROP_4" required>
+                        </a>
+                        <div class="b-address-tip">Укажите адрес доставки</div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
         <div class="b-row clearfix">
-            <div class="b-inputs b-input-comment b-input-move clearfix">
+            <div class="b-inputs b-input-row b-input-move clearfix">
                 <div class="b-input b-textarea">
                     <textarea id="comment" name="ORDER_DESCRIPTION" rows="1"></textarea>
                     <label for="comment">Комментарий или пожелание</label>
@@ -291,6 +460,12 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                 </div>
             </div>
         </div>
+        <!-- <div class="b-center">
+            <img src="/bitrix/templates/main/html/i/preload.svg" alt="" class="b-svg-preload b-svg-preload-popup">
+            <a href="#" class="b-btn b-btn-buy not-ajax b-btn-cart icon-success">
+                <div class="b-btn-more-text b-center">Оформить заказ</div>
+            </a>
+        </div> -->
         <input type="submit" value="Заказать" class="goal-click" data-goal="TRY_BUY" style="display:none;">
         <?$APPLICATION->IncludeComponent("bitrix:sale.basket.basket", "order", Array(
             "ACTION_VARIABLE" => "basketAction",    // Название переменной действия

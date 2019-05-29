@@ -1,5 +1,7 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
-use Bitrix\Main\Localization\Loc;
+use Bitrix\Main\Localization\Loc,
+	Bitrix\Sale,
+    Bitrix\Sale\Delivery;
 
 /**
  * @var array $arParams
@@ -7,33 +9,33 @@ use Bitrix\Main\Localization\Loc;
  * @var $APPLICATION CMain
  */
 
-$dels = array();
-$db_dtype = CSaleDelivery::GetList(
-    array(
-            "SORT" => "ASC",
-            "NAME" => "ASC"
-        ),
-    array(
-            "LID" => SITE_ID,
-            // "+<=WEIGHT_FROM" => $ORDER_WEIGHT,
-            // "+>=WEIGHT_TO" => $ORDER_WEIGHT,
-            // "+<=ORDER_PRICE_FROM" => $ORDER_PRICE,
-            // "+>=ORDER_PRICE_TO" => $ORDER_PRICE,
-            "ACTIVE" => "Y",
-            // "LOCATION" => $DELIVERY_LOCATION
-        ),
-    false,
-    false,
-    array()
-);
-if ($ar_dtype = $db_dtype->Fetch())
-{
-   do
-   {
-      $dels[ $ar_dtype["ID"] ] = $ar_dtype["NAME"];
-   }
-   while ($ar_dtype = $db_dtype->Fetch());
-}
+// $dels = array();
+// $db_dtype = CSaleDelivery::GetList(
+//     array(
+//             "SORT" => "ASC",
+//             "NAME" => "ASC"
+//         ),
+//     array(
+//             "LID" => SITE_ID,
+//             // "+<=WEIGHT_FROM" => $ORDER_WEIGHT,
+//             // "+>=WEIGHT_TO" => $ORDER_WEIGHT,
+//             // "+<=ORDER_PRICE_FROM" => $ORDER_PRICE,
+//             // "+>=ORDER_PRICE_TO" => $ORDER_PRICE,
+//             "ACTIVE" => "Y",
+//             // "LOCATION" => $DELIVERY_LOCATION
+//         ),
+//     false,
+//     false,
+//     array()
+// );
+// if ($ar_dtype = $db_dtype->Fetch())
+// {
+//    do
+//    {
+//       $dels[ $ar_dtype["ID"] ] = $ar_dtype["NAME"];
+//    }
+//    while ($ar_dtype = $db_dtype->Fetch());
+// }
 
 
 // $dels = array(
@@ -47,9 +49,21 @@ if ($arParams["SET_TITLE"] == "Y")
 
 $paySystem = array_pop($arResult["PAY_SYSTEM_LIST"]);
 
-$delivery = $dels[$arResult["ORDER"]["DELIVERY_ID"]];
+$delivery = Delivery\Services\Manager::getById($arResult["ORDER"]["DELIVERY_ID"]);
 
 $payment = CSalePaySystem::GetByID($arResult["ORDER"]["PAY_SYSTEM_ID"], $arResult["ORDER"]["PERSON_TYPE_ID"]);
+
+$order = Sale\Order::load($arResult["ORDER"]["ID"]);
+
+// Получение свойств заказа
+$propertyCollection = $order->getPropertyCollection();
+$tmp = $propertyCollection->getArray();
+$props = array();
+foreach ($tmp["properties"] as $key => $arProp) {
+	$props[$arProp["ID"]] = $arProp["VALUE"][0];
+}
+
+// print_r($props);
 
 ?>
 <? if ($paySystem["BUFFERED_OUTPUT"] && $payment["ID"] == 1){
@@ -114,25 +128,11 @@ if (!empty($arResult["ORDER"])){
 		<div class="b-order-right">
 			<div class="b-text">
 				<h2>Ваш заказ №<?=$arResult["ORDER"]["ACCOUNT_NUMBER"]?> успешно создан!</h2>
-				<? if( $payment["ID"] == 1 && 0 ): ?>
-					<p>
-						Оплата картой на сайте <b>находится в разработке.</b> Приносим свои извинения.<br>
-						<br>
-						Предлагаем Вам оплатить заказ с помощью перевода на <b>карту Сбербанка</b> по реквизитам:<br>
-						<b>Номер карты:</b> <span>4276</span><span>6406</span><span>2638</span><span>9862</span><br>
-						<b>Получатель:</b> Артем Сергеевич М.<br><br>
-						<? /* ?><b>Номер карты:</b> <span>4276</span><span>6401</span><span>6982</span><span>0992</span><br>
-						<b>Получатель:</b> Татьяна Александровна П.<br><br><? */ ?>
-						<? /* ?><b>Номер карты:</b> <span>5469</span><span>6400</span><span>1222</span><span>2432</span><br>
-						<b>Получатель:</b> Анна Николаевна З.<br><br><? */ ?>
-						Наш менеджер свяжется с Вами в ближайшее время для уточнения деталей.<br>
-						Спасибо за понимание!
-					</p>
-				<? else: ?>
+				<? if( $props[6] == "Y" ): ?>
 					<p>Наш менеджер свяжется с Вами в ближайшее время по телефону, который Вы указали<br>при оформлении заказа, для уточнения деталей.</p>
 				<? endif; ?>
 				<ul class="b-order-items">
-					<li><b>Способ доставки: </b><span class="delivery-method"><?=$delivery?></span></li>
+					<li><b>Способ доставки: </b><span class="delivery-method"><?=$delivery["NAME"]?></span></li>
 					<!-- <li><b>Способ оплаты: </b><span class="payment-method"><?=$payment["NAME"]?></span></li> -->
 					<li><b>Сумма к оплате: </b><span class="payment-sum icon-ruble-regular"><?=number_format( intval($arResult["ORDER"]["PRICE"]), 0, '.', ' ' )?> руб.</span></li>
 				</ul>

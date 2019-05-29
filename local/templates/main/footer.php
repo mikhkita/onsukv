@@ -81,7 +81,7 @@
 					Все права защищены.
 				</div>
 				<div class="b-underfooter-item right-underfooter-item">
-					<a href="#" class="underline politics-link">Политика конфиденциальности</a>
+					<a href="/politics" class="underline politics-link">Политика конфиденциальности</a>
 				</div>
 			</div>
 		</div>
@@ -294,7 +294,7 @@
 					</div>
 				<?endif;?>
 					<div class="b-input-string b-review-textarea">
-						<textarea name="comment" cols="30" rows="5" placeholder="Комментарий покупателя. Опишите общее впечатление от конкретной покупки" required></textarea>
+						<textarea name="comment" cols="30" rows="5" placeholder="Поделитесь своим мнением о товаре, ваш отзыв поможет другим покупателям в выборе" required></textarea>
 					</div>
 					<div class="b-popup-form">
 						<? if(!isAuth()): ?>

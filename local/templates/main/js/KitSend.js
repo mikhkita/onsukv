@@ -214,7 +214,14 @@ $(document).ready(function(){
 
 	$(".ajax, .not-ajax").parents("form").submit(function(){
 		var $form = $(this);
-  		if( $(this).find("input.error,select.error,textarea.error").length == 0 ){
+
+		$(".b-postamat-error").remove();
+
+		if( $form.hasClass("b-data-order-form") && !$(".pickpointaddr").length ){
+			$(".b-add-postamat").after("<p class='red b-postamat-error'>Вам нужно выбрать постамат, в котором вы хотите получить вашу посылку.</p>");
+		}
+
+  		if( $(this).find("input.error,select.error,textarea.error,.b-postamat-error").length == 0 ){
   			var $this = $(this),
   				$thanks = $($this.attr("data-block"));
 

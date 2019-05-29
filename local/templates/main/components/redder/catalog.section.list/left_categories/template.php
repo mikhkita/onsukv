@@ -18,48 +18,58 @@ $this->setFrameMode(true);
 			<? if($arItem["ID"] == 1144 || $arItem["UF_HIDE"] ){
 				continue;
 			} ?>
-			<? $isSectionActive = isSectionActive($arItem["ID"]); ?>
-			<li <? if( $arItem["PICTURE"] ): ?>class="b-with-image"<? endif; ?>>
-				<a href="<?=detailPageUrl($arItem["SECTION_PAGE_URL"])?>" class="clearfix <? if( $GLOBALS["SECTION_ID"] == $arItem["ID"] ): ?>active icon-tick<? endif; ?><?=(($arItem["UF_HIGHLIGHT"])?" highlight":"")?>">
-					<? if( $arItem["PICTURE"] ){ 
-						?>
-							<img src="<?=$arItem["PICTURE"]["SRC"]?>" alt="">
-					<? } ?>
-					<span><?=$arItem["NAME"]?></span>
-						
-				</a>
-				<?
-				if( $isSectionActive ){
-					$property = ($GLOBALS["isWholesale"])?array( "WHOLESALE" => 78 ):Array();
-					if( ($GLOBALS["isSale"]) ){
-						$property = array("SALE" => 79);
+			<? if( !$arItem["PICTURE"] ): ?>
+				<? $isSectionActive = isSectionActive($arItem["ID"]); ?>
+				<li>
+					<a href="<?=detailPageUrl($arItem["SECTION_PAGE_URL"])?>" class="clearfix <? if( $GLOBALS["SECTION_ID"] == $arItem["ID"] ): ?>active icon-tick<? endif; ?><?=(($arItem["UF_HIGHLIGHT"])?" highlight":"")?>">
+						<span><?=$arItem["NAME"]?></span>	
+					</a>
+					<?
+					if( $isSectionActive ){
+						$property = ($GLOBALS["isWholesale"])?array( "WHOLESALE" => 78 ):Array();
+						if( ($GLOBALS["isSale"]) ){
+							$property = array("SALE" => 79);
+						}
+						$APPLICATION->IncludeComponent("redder:catalog.section.list", "left_categories", Array(
+							"ADD_SECTIONS_CHAIN" => "N",	// Включать раздел в цепочку навигации
+								"CACHE_GROUPS" => "Y",	// Учитывать права доступа
+								"CACHE_TIME" => "36000000",	// Время кеширования (сек.)
+								"CACHE_TYPE" => "N",	// Тип кеширования
+								"COUNT_ELEMENTS" => "Y",	// Показывать количество элементов в разделе
+								"IBLOCK_ID" => "1",	// Инфоблок
+								"IBLOCK_TYPE" => "content",	// Тип инфоблока
+								"SECTION_CODE" => "",	// Код раздела
+								"SECTION_FIELDS" => array(	// Поля разделов
+									0 => "NAME",
+								),
+								"SECTION_ID" => $arItem["ID"],	// ID раздела
+								"SECTION_URL" => "",	// URL, ведущий на страницу с содержимым раздела
+								"SECTION_USER_FIELDS" => array(	// Свойства разделов
+								),
+								"SHOW_PARENT_NAME" => "Y",	// Показывать название раздела
+								"TOP_DEPTH" => "1",	// Максимальная отображаемая глубина разделов
+								"VIEW_MODE" => "LINE",	// Вид списка подразделов
+								"PROPERTY" => $property,
+							),
+							false
+						);
 					}
-					$APPLICATION->IncludeComponent("redder:catalog.section.list", "left_categories", Array(
-						"ADD_SECTIONS_CHAIN" => "N",	// Включать раздел в цепочку навигации
-							"CACHE_GROUPS" => "Y",	// Учитывать права доступа
-							"CACHE_TIME" => "36000000",	// Время кеширования (сек.)
-							"CACHE_TYPE" => "N",	// Тип кеширования
-							"COUNT_ELEMENTS" => "Y",	// Показывать количество элементов в разделе
-							"IBLOCK_ID" => "1",	// Инфоблок
-							"IBLOCK_TYPE" => "content",	// Тип инфоблока
-							"SECTION_CODE" => "",	// Код раздела
-							"SECTION_FIELDS" => array(	// Поля разделов
-								0 => "NAME",
-							),
-							"SECTION_ID" => $arItem["ID"],	// ID раздела
-							"SECTION_URL" => "",	// URL, ведущий на страницу с содержимым раздела
-							"SECTION_USER_FIELDS" => array(	// Свойства разделов
-							),
-							"SHOW_PARENT_NAME" => "Y",	// Показывать название раздела
-							"TOP_DEPTH" => "1",	// Максимальная отображаемая глубина разделов
-							"VIEW_MODE" => "LINE",	// Вид списка подразделов
-							"PROPERTY" => $property,
-						),
-						false
-					);
-				}
-				?>
-			</li>
+					?>
+				</li>
+			<? endif; ?>
+		<?endforeach;?>
+		<li>
+			<a href="/sale/" class="highlight">Распродажа</a>
+		</li>
+		<?foreach($arResult["SECTIONS"] as $arItem):?>
+			<? if( $arItem["PICTURE"] ): ?>
+				<li class="b-with-image">
+					<a href="<?=detailPageUrl($arItem["SECTION_PAGE_URL"])?>" class="clearfix <? if( $GLOBALS["SECTION_ID"] == $arItem["ID"] ): ?>active icon-tick<? endif; ?><?=(($arItem["UF_HIGHLIGHT"])?" highlight":"")?>">
+						<img src="<?=$arItem["PICTURE"]["SRC"]?>" alt="">
+						<span><?=$arItem["NAME"]?></span>
+					</a>
+				</li>
+			<? endif; ?>
 		<?endforeach;?>
 	</ul>
 <? endif; ?>

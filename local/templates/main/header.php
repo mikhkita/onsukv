@@ -242,7 +242,11 @@ CModule::IncludeModule('iblock');
 							<li><a href="/discounts/" class="yellow">Акции и&nbsp;скидки</a></li>
 						</ul>
 					</div>
+					<? if (isAuth()): ?>
+					<a href="/personal/" class="b-mobile-auth"></a>	
+					<? else: ?>
 					<a href="#b-popup-auth" class="b-mobile-auth fancy"></a>
+					<? endif; ?>
 					<? $basketInfo = getBasketCount(); ?>
 					<a href="/cart/" class="b-cart">
 						<div class="b-cart-img icon-cart"></div>
@@ -346,7 +350,7 @@ CModule::IncludeModule('iblock');
 		<div class="b-content-block">
 			<div class="b-block clearfix">
 				<? if( $isCatalog ): ?>
-					<div class="b-category-left b-category-item">
+					<div class="b-category-left b-category-left-catalog b-category-item">
 						<?
 						$property = ($GLOBALS["isWholesale"])?array( "WHOLESALE" => 78 ):Array();
 						if( ($GLOBALS["isSale"]) ){
@@ -379,15 +383,10 @@ CModule::IncludeModule('iblock');
 							),
 							false
 						);?>
-						<ul>
-							<li>
-								<a href="/sale/" class="highlight">Распродажа</a>
-							</li>
-						</ul>
 					</div>
 					<div class="b-category-right b-category-item">
 				<? elseif( $isPersonal ): ?>
-					<div class="b-category-left b-category-item">
+					<div class="b-category-left b-category-left-personal b-category-item">
 						<?$APPLICATION->IncludeComponent("bitrix:menu", "personal_menu", array(
 							"ROOT_MENU_TYPE" => "personal",
 							"MAX_LEVEL" => "1",

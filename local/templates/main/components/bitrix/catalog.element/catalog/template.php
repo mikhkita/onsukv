@@ -80,7 +80,14 @@ $APPLICATION->AddHeadString('<link rel="canonical" href="https://nevkusno.ru' . 
 							<input type="text" name="quantity" data-min="1" data-max="<?=$arResult["CATALOG_QUANTITY"]?>" data-id="<?=$arResult["ID"]?>" class="b-quantity-input" maxlength="3" oninput="this.value = this.value.replace(/\D/g, '')" value="<?=( (isset($arResult["BASKET"]))?$arResult["BASKET"]["QUANTITY"]:1 )?>">
 						</div>
 					</div>
-					<a href="/ajax/?partial=1&ELEMENT_ID=<?=$arResult["ID"]?>&action=ADD2BASKET" class="b-btn icon-cart b-btn-to-cart"><span>В корзину</span></a>
+					<div class="b-detail-btn-container clearfix">
+						<a href="/ajax/?partial=1&ELEMENT_ID=<?=$arResult["ID"]?>&action=ADD2BASKET" class="b-btn icon-cart b-btn-to-cart"><span>В корзину</span></a>
+						<? foreach ($arResult["AMOUNT"] as $store): ?>
+							<p><a href="/magazin/" class="b-green-link"><?=$store["STORE_NAME"]?></a> – <?=number_format( ceil($arResult["PRICES"]["PRICE"]["VALUE"]*1.07), 0, ',', ' ' )?> руб.<br>
+								в наличии на текущее утро<br>
+							</p>
+						<? endforeach; ?>
+					</div>
 					<div class="b-error-max-count">Доступно для заказа: <?=$arResult["CATALOG_QUANTITY"]?> шт.</div>
 				<? else: ?>
 					<div class="b-catalog-item-empty">Нет в наличии</div>
@@ -110,21 +117,17 @@ $APPLICATION->AddHeadString('<link rel="canonical" href="https://nevkusno.ru' . 
 
 			<? if($arResult["PROPERTIES"]["COMPOSITION"]["VALUE"]): ?>
 				<div class="b-opacity">
-					<div class="b-subtitle">Состав:</div>
-					<p><?=$arResult["PROPERTIES"]["COMPOSITION"]["VALUE"]?></p>
+					<p><div class="b-subtitle">Состав: </div><?=$arResult["PROPERTIES"]["COMPOSITION"]["VALUE"]?></p>
 				</div>
 			<? endif; ?>
 
 			<? if($arResult["PROPERTIES"]["ENERGY"]["VALUE"]): ?>
 				<div class="b-opacity">
-					<div class="b-subtitle">Энергетическая ценность:</div>
-					<p><?=$arResult["PROPERTIES"]["ENERGY"]["VALUE"]?></p>
+					<p><div class="b-subtitle">Энергетическая ценность: </div></b><?=$arResult["PROPERTIES"]["ENERGY"]["VALUE"]?></p>
 				</div>
 			<? endif; ?>
 
-			<? foreach ($arResult["AMOUNT"] as $store): ?>
-				<p><a href="/magazin/" class="b-green-link"><?=$store["STORE_NAME"]?></a> – в наличии на текущее утро<br><?=number_format( ceil($arResult["PRICES"]["PRICE"]["VALUE"]*1.07), 0, ',', ' ' )?> руб.</p>
-			<? endforeach; ?>
+			
 		</div>
 	</div>
 </div>
@@ -202,117 +205,119 @@ if( $arResult["PROPERTIES"]["SIMILAR"]["VALUE"] ){
 	);
 }
 ?>
-<div class="b-detail-items">
-	<h3>Похожие товары</h3>
-	<?$APPLICATION->IncludeComponent(
-		"bitrix:catalog.section",
-		"main",
+<? if( count($GLOBALS["arrFilterSimilar"]["ID"]) ): ?>
+	<div class="b-detail-items">
+		<h3>Похожие товары</h3>
+		<?$APPLICATION->IncludeComponent(
+			"bitrix:catalog.section",
+			"main",
+			Array(
+				"ACTION_VARIABLE" => "action",
+				"ADD_PICT_PROP" => "MORE_PHOTO",
+				"ADD_PROPERTIES_TO_BASKET" => "Y",
+				"ADD_SECTIONS_CHAIN" => "Y",
+				"ADD_TO_BASKET_ACTION" => "ADD",
+				"AJAX_MODE" => "N",
+				"AJAX_OPTION_ADDITIONAL" => "",
+				"AJAX_OPTION_HISTORY" => "Y",
+				"AJAX_OPTION_JUMP" => "Y",
+				"AJAX_OPTION_STYLE" => "Y",
+				"BACKGROUND_IMAGE" => "-",
+				"BASKET_URL" => "/personal/cart/",
+				"BROWSER_TITLE" => "-",
+				"CACHE_FILTER" => "N",
+				"CACHE_GROUPS" => "Y",
+				"CACHE_TIME" => "36000000",
+				"CACHE_TYPE" => "N",
+				"COMPONENT_TEMPLATE" => ".default",
+				"CONVERT_CURRENCY" => "N",
+				"DETAIL_URL" => "",
+				"DISABLE_INIT_JS_IN_COMPONENT" => "N",
+				"DISPLAY_BOTTOM_PAGER" => "N",
+				"DISPLAY_TOP_PAGER" => "N",
+				"ELEMENT_SORT_FIELD" => "",
+				"ELEMENT_SORT_FIELD2" => "id",
+				"ELEMENT_SORT_ORDER" => "",
+				"ELEMENT_SORT_ORDER2" => "DESC",
+				"FILTER_NAME" => "arrFilterSimilar",
+				"HIDE_NOT_AVAILABLE" => "N",
+				"IBLOCK_ID" => "1",
+				"IBLOCK_TYPE" => "catalog",
+				"IBLOCK_TYPE_ID" => "catalog",
+				"INCLUDE_SUBSECTIONS" => "A",
+				"LABEL_PROP" => "SALELEADER",
+				"LINE_ELEMENT_COUNT" => "1",
+				"MESSAGE_404" => "",
+				"MESS_BTN_ADD_TO_BASKET" => "В корзину",
+				"MESS_BTN_BUY" => "Купить",
+				"MESS_BTN_DETAIL" => "Подробнее",
+				"MESS_BTN_SUBSCRIBE" => "Подписаться",
+				"MESS_NOT_AVAILABLE" => "Заказ по телефону",
+				"META_DESCRIPTION" => "-",
+				"META_KEYWORDS" => "-",
+				"OFFERS_CART_PROPERTIES" => array(0=>"COLOR_REF",1=>"SIZES_CLOTHES",),
+				"OFFERS_FIELD_CODE" => array(0=>"",1=>"",),
+				"OFFERS_LIMIT" => "5",
+				"OFFERS_PROPERTY_CODE" => array(0=>"COLOR_REF",1=>"SIZES_CLOTHES",2=>"SIZES_SHOES",3=>"",),
+				"OFFERS_SORT_FIELD" => "sort",
+				"OFFERS_SORT_FIELD2" => "id",
+				"OFFERS_SORT_ORDER" => "desc",
+				"OFFERS_SORT_ORDER2" => "desc",
+				"OFFER_ADD_PICT_PROP" => "-",
+				"OFFER_TREE_PROPS" => array(0=>"COLOR_REF",1=>"SIZES_SHOES",2=>"SIZES_CLOTHES",),
+				"PAGER_BASE_LINK_ENABLE" => "N",
+				"PAGER_DESC_NUMBERING" => "N",
+				"PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
+				"PAGER_SHOW_ALL" => "N",
+				"PAGER_SHOW_ALWAYS" => "N",
+				"PAGER_TEMPLATE" => "main",
+				"PAGER_TITLE" => "Товары",
+				"PAGE_ELEMENT_COUNT" => 100,
+				"PARTIAL_PRODUCT_PROPERTIES" => "N",
+				"PRICE_CODE" => array(0=>"PRICE",),
+				"PRICE_VAT_INCLUDE" => "N",
+				"PRODUCT_DISPLAY_MODE" => "N",
+				"PRODUCT_ID_VARIABLE" => "id",
+				"PRODUCT_PROPERTIES" => array(),
+				"PRODUCT_PROPS_VARIABLE" => "prop",
+				"PRODUCT_QUANTITY_VARIABLE" => "",
+				"PRODUCT_SUBSCRIPTION" => "N",
+				"PROPERTY_CODE" => array(0=>"",1=>"",),
+				"SECTION_CODE" => "",
+				"SECTION_CODE_PATH" => "",
+				"SECTION_ID" => "",
+				"SECTION_ID_VARIABLE" => "",
+				"SECTION_URL" => "",
+				"SECTION_USER_FIELDS" => array(0=>"",1=>"",),
+				"SEF_MODE" => "N",
+				"SET_BROWSER_TITLE" => "Y",
+				"SET_LAST_MODIFIED" => "N",
+				"SET_META_DESCRIPTION" => "Y",
+				"SET_META_KEYWORDS" => "Y",
+				"SET_STATUS_404" => "N",
+				"SET_TITLE" => "Y",
+				"SHOW_404" => "N",
+				"SHOW_ALL_WO_SECTION" => "Y",
+				"SHOW_CLOSE_POPUP" => "N",
+				"SHOW_DISCOUNT_PERCENT" => "N",
+				"SHOW_OLD_PRICE" => "N",
+				"SHOW_PRICE_COUNT" => "1",
+				"TEMPLATE_THEME" => "site",
+				"USE_MAIN_ELEMENT_SECTION" => "N",
+				"USE_PRICE_COUNT" => "N",
+				"USE_PRODUCT_QUANTITY" => "N",
+				"WITH_REVIEWS" => "N",
+				"WITH_CALLBACK" => "N",
+				"CLASS" => "b-catalog-slider",
+				"CUSTOM_ORDER" => $arResult["PROPERTIES"]["SIMILAR"]["VALUE"]
+			),
+		false,
 		Array(
-			"ACTION_VARIABLE" => "action",
-			"ADD_PICT_PROP" => "MORE_PHOTO",
-			"ADD_PROPERTIES_TO_BASKET" => "Y",
-			"ADD_SECTIONS_CHAIN" => "Y",
-			"ADD_TO_BASKET_ACTION" => "ADD",
-			"AJAX_MODE" => "N",
-			"AJAX_OPTION_ADDITIONAL" => "",
-			"AJAX_OPTION_HISTORY" => "Y",
-			"AJAX_OPTION_JUMP" => "Y",
-			"AJAX_OPTION_STYLE" => "Y",
-			"BACKGROUND_IMAGE" => "-",
-			"BASKET_URL" => "/personal/cart/",
-			"BROWSER_TITLE" => "-",
-			"CACHE_FILTER" => "N",
-			"CACHE_GROUPS" => "Y",
-			"CACHE_TIME" => "36000000",
-			"CACHE_TYPE" => "N",
-			"COMPONENT_TEMPLATE" => ".default",
-			"CONVERT_CURRENCY" => "N",
-			"DETAIL_URL" => "",
-			"DISABLE_INIT_JS_IN_COMPONENT" => "N",
-			"DISPLAY_BOTTOM_PAGER" => "N",
-			"DISPLAY_TOP_PAGER" => "N",
-			"ELEMENT_SORT_FIELD" => "",
-			"ELEMENT_SORT_FIELD2" => "id",
-			"ELEMENT_SORT_ORDER" => "",
-			"ELEMENT_SORT_ORDER2" => "DESC",
-			"FILTER_NAME" => "arrFilterSimilar",
-			"HIDE_NOT_AVAILABLE" => "N",
-			"IBLOCK_ID" => "1",
-			"IBLOCK_TYPE" => "catalog",
-			"IBLOCK_TYPE_ID" => "catalog",
-			"INCLUDE_SUBSECTIONS" => "A",
-			"LABEL_PROP" => "SALELEADER",
-			"LINE_ELEMENT_COUNT" => "1",
-			"MESSAGE_404" => "",
-			"MESS_BTN_ADD_TO_BASKET" => "В корзину",
-			"MESS_BTN_BUY" => "Купить",
-			"MESS_BTN_DETAIL" => "Подробнее",
-			"MESS_BTN_SUBSCRIBE" => "Подписаться",
-			"MESS_NOT_AVAILABLE" => "Заказ по телефону",
-			"META_DESCRIPTION" => "-",
-			"META_KEYWORDS" => "-",
-			"OFFERS_CART_PROPERTIES" => array(0=>"COLOR_REF",1=>"SIZES_CLOTHES",),
-			"OFFERS_FIELD_CODE" => array(0=>"",1=>"",),
-			"OFFERS_LIMIT" => "5",
-			"OFFERS_PROPERTY_CODE" => array(0=>"COLOR_REF",1=>"SIZES_CLOTHES",2=>"SIZES_SHOES",3=>"",),
-			"OFFERS_SORT_FIELD" => "sort",
-			"OFFERS_SORT_FIELD2" => "id",
-			"OFFERS_SORT_ORDER" => "desc",
-			"OFFERS_SORT_ORDER2" => "desc",
-			"OFFER_ADD_PICT_PROP" => "-",
-			"OFFER_TREE_PROPS" => array(0=>"COLOR_REF",1=>"SIZES_SHOES",2=>"SIZES_CLOTHES",),
-			"PAGER_BASE_LINK_ENABLE" => "N",
-			"PAGER_DESC_NUMBERING" => "N",
-			"PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
-			"PAGER_SHOW_ALL" => "N",
-			"PAGER_SHOW_ALWAYS" => "N",
-			"PAGER_TEMPLATE" => "main",
-			"PAGER_TITLE" => "Товары",
-			"PAGE_ELEMENT_COUNT" => 100,
-			"PARTIAL_PRODUCT_PROPERTIES" => "N",
-			"PRICE_CODE" => array(0=>"PRICE",),
-			"PRICE_VAT_INCLUDE" => "N",
-			"PRODUCT_DISPLAY_MODE" => "N",
-			"PRODUCT_ID_VARIABLE" => "id",
-			"PRODUCT_PROPERTIES" => array(),
-			"PRODUCT_PROPS_VARIABLE" => "prop",
-			"PRODUCT_QUANTITY_VARIABLE" => "",
-			"PRODUCT_SUBSCRIPTION" => "N",
-			"PROPERTY_CODE" => array(0=>"",1=>"",),
-			"SECTION_CODE" => "",
-			"SECTION_CODE_PATH" => "",
-			"SECTION_ID" => "",
-			"SECTION_ID_VARIABLE" => "",
-			"SECTION_URL" => "",
-			"SECTION_USER_FIELDS" => array(0=>"",1=>"",),
-			"SEF_MODE" => "N",
-			"SET_BROWSER_TITLE" => "Y",
-			"SET_LAST_MODIFIED" => "N",
-			"SET_META_DESCRIPTION" => "Y",
-			"SET_META_KEYWORDS" => "Y",
-			"SET_STATUS_404" => "N",
-			"SET_TITLE" => "Y",
-			"SHOW_404" => "N",
-			"SHOW_ALL_WO_SECTION" => "Y",
-			"SHOW_CLOSE_POPUP" => "N",
-			"SHOW_DISCOUNT_PERCENT" => "N",
-			"SHOW_OLD_PRICE" => "N",
-			"SHOW_PRICE_COUNT" => "1",
-			"TEMPLATE_THEME" => "site",
-			"USE_MAIN_ELEMENT_SECTION" => "N",
-			"USE_PRICE_COUNT" => "N",
-			"USE_PRODUCT_QUANTITY" => "N",
-			"WITH_REVIEWS" => "N",
-			"WITH_CALLBACK" => "N",
-			"CLASS" => "b-catalog-slider",
-			"CUSTOM_ORDER" => $arResult["PROPERTIES"]["SIMILAR"]["VALUE"]
-		),
-	false,
-	Array(
-		'ACTIVE_COMPONENT' => 'Y'
-	)
-	);?>
-</div>
+			'ACTIVE_COMPONENT' => 'Y'
+		)
+		);?>
+	</div>
+<? endif; ?>
 <? if( $recently = getRecently($arResult["ID"]) ): ?>
 	<div class="b-detail-items">
 		<h3>Вы недавно смотрели</h3>
