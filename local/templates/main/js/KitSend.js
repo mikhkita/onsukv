@@ -217,7 +217,7 @@ $(document).ready(function(){
 
 		$(".b-postamat-error").remove();
 
-		if( $form.hasClass("b-data-order-form") && !$(".pickpointaddr").length ){
+		if( $form.hasClass("b-data-order-form") && $(".b-pickpoint").is(":visible") && !$(".pickpointaddr").length ){
 			$(".b-add-postamat").after("<p class='red b-postamat-error'>Вам нужно выбрать постамат, в котором вы хотите получить вашу посылку.</p>");
 		}
 
