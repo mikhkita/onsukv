@@ -77,6 +77,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
             <input type="hidden" name="location_type" value="code">
             <input type="hidden" name="ORDER_DESCRIPTION" value="">
             <input type="hidden" name="BUYER_STORE" id="BUYER_STORE" value="0">
+            <input type="hidden" name="DELIVERY_PRICE" id="b-delivery-price-input">
             <? /* ?><input type="hidden" name="account_only" value="N"><? */ ?>
             <? /* ?><input type="hidden" name="PAY_CURRENT_ACCOUNT" value="N"><? */ ?>
             <? /* ?><input type="hidden" name="confirmorder" id="confirmorder" value="Y"><? */ ?>
@@ -199,7 +200,6 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                                 <option value="<?=$arDelivery["ID"]?>" data-price="<?=$arDelivery["CONFIG"]["MAIN"]["PRICE"]?>" data-date="<?=$arDelivery["CONFIG"]["MAIN"]["PERIOD"]?>"><?=$arDelivery["NAME"]?></option>
                             <? endforeach; ?>
                         </select>
-                        <input type="hidden" name="PRICE_DELIVERY" id="b-delivery-price-input">
                     </div>
                     <div class="b-input not-empty">
                         <label for="last_name">Дата доставки <span class="required">*</span></label>
