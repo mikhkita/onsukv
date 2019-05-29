@@ -47,6 +47,7 @@ $APPLICATION->SetTitle("Оформление заказа");
 		"SHOW_NEAREST_PICKUP" => "N",
 		"SHOW_NOT_CALCULATED_DELIVERIES" => "Y",
 		"SHOW_ORDER_BUTTON" => "final_step",
+		"SHOW_PAYMENT_SERVICES_NAMES" => "Y",
 		"SHOW_PAY_SYSTEM_INFO_NAME" => "Y",
 		"SHOW_PAY_SYSTEM_LIST_NAMES" => "Y",
 		"SHOW_PICKUP_MAP" => "Y",

@@ -373,7 +373,7 @@
 		</noindex>
 	</div>
 	
-	<?if($urlArr[2]=="addresses" && isset($urlArr[4])): ?>
+	<?if($urlArr[2]=="addresses" && isset($urlArr[4]) || $urlArr[2]=="order"): ?>
 		<script type="text/javascript" src="https://api-maps.yandex.ru/2.1.41/?load=package.full&lang=ru-RU"></script>
 		<script type="text/javascript" src="<?=SITE_TEMPLATE_PATH?>/js/AddressDeliveryClass.js"></script>
 		<script type="text/javascript" src="<?=SITE_TEMPLATE_PATH?>/js/address.js"></script>

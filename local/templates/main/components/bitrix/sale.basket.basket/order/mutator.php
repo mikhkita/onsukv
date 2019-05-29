@@ -376,6 +376,7 @@ foreach ($this->basketItems as $row)
 	$result['BASKET_ITEM_RENDER_DATA'][] = $rowData;
 }
 
+$result['allSum_WITHOUT_DELIVERY'] = $result['allSum'];
 $result['allSum'] = PriceMaths::roundPrecision((float)$result['allSum'] + $_REQUEST["deliveryPriceCustom"]);
 $result['allSum_FORMATED'] = CCurrencyLang::CurrencyFormat($result['allSum'], $result['CURRENCY'], true);
 // $result['PRICE_WITHOUT_DISCOUNT'] = PriceMaths::roundPrecision((float)$result['PRICE_WITHOUT_DISCOUNT'] + $_REQUEST["deliveryPriceCustom"]);
@@ -385,6 +386,7 @@ $result['allSum_FORMATED'] = CCurrencyLang::CurrencyFormat($result['allSum'], $r
 $totalData = array(
 	'DISABLE_CHECKOUT' => (int)$result['ORDERABLE_BASKET_ITEMS_COUNT'] === 0,
 	'PRICE' => $result['PRICE'],
+	'PRICE_WITHOUT_DELIVERY' => $result['allSum_WITHOUT_DELIVERY'],
 	'PRICE_FORMATED' => $result['allSum_FORMATED'],
 	'PRICE_WITHOUT_DISCOUNT_FORMATED' => $result['PRICE_WITHOUT_DISCOUNT'],
 	'CURRENCY' => $result['CURRENCY']

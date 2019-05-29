@@ -45,7 +45,7 @@ class RussianHandler extends Base
                             "MIN" => 0,
                             "NAME" => "Срок доставки"
                         ),
-                        "CALC" => array(
+                        "PRICE" => array(
                             "TYPE" => "STRING",
                             "MULTILINE" => "Y",
                             "ROWS" => "20",

@@ -196,7 +196,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                         <select name="DELIVERY_ID" id="delivery" data-price="0" data-date="1" required>
                             <option>Выберите тип доставки</option>
                             <? foreach ($arResult["DELIVERY"] as $key => $arDelivery): ?>
-                                <option value="<?=$arDelivery["ID"]?>" data-price="<?=$arDelivery["CONFIG"]["MAIN"]["PRICE"]?>" data-calc="<?=$arDelivery["CONFIG"]["MAIN"]["CALC"]?>" data-date="<?=$arDelivery["CONFIG"]["MAIN"]["PERIOD"]?>"><?=$arDelivery["NAME"]?></option>
+                                <option value="<?=$arDelivery["ID"]?>" data-price="<?=$arDelivery["CONFIG"]["MAIN"]["PRICE"]?>" data-date="<?=$arDelivery["CONFIG"]["MAIN"]["PERIOD"]?>"><?=$arDelivery["NAME"]?></option>
                             <? endforeach; ?>
                         </select>
                         <input type="hidden" name="PRICE_DELIVERY" id="b-delivery-price-input">
@@ -208,6 +208,16 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                                 <option value="<?=$arDate["KEY"]?>" data-isSunday="<?=$arDate["IS_SUNDAY"]?>"><?=$arDate["VALUE"]?></option>
                             <? endforeach; ?>
                         </select>
+                    </div>
+                    <div class="b-input b-time-input not-empty" style="display:none;" id="b-time-input">
+                        <label for="last_name">Время доставки <span class="required">*</span></label>
+                        <select name="time" id="time" required>
+                            
+                        </select>
+                    </div>
+                    <div class="b-input b-mkad-input" style="display:none;" id="b-mkad-input">
+                        <input type="number" id="mkad" name="mkad">
+                        <label for="mkad">Расстояние от МКАД</label>
                     </div>
                     <div class="b-input not-empty b-wide-input b-pickpoint" style="display: none;">
                         <?$APPLICATION->IncludeComponent(
@@ -282,25 +292,53 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                         </div>
                         <a href="#" onclick="PickPoint.open(pickPointHandler); return false">Выбрать постамат</a>
                     </div>
-                    <div class="b-input b-time-input not-empty" style="display:none;" id="b-time-input">
-                        <label for="last_name">Время доставки <span class="required">*</span></label>
-                        <select name="time" id="time" required>
-                            
-                        </select>
-                    </div>
-                    <div class="b-input b-mkad-input" style="display:none;" id="b-mkad-input">
-                        <input type="number" id="mkad" name="mkad">
-                        <label for="mkad">Расстояние от МКАД</label>
-                    </div>
                 </div>
-                <div class="b-row b-order-addr">
-                    <h4>Адрес доставки:</h4>
-                    <? foreach ($arResult["ADDRESSES"] as $key => $arAddress): ?>
-                        <div class="b-checkbox">
-                            <input type="checkbox" id="addr-<?=$arAddress["ID"]?>">
-                            <label for="addr-<?=$arAddress["ID"]?>"><?=$arAddress["INDEX"]?>, <?=$arAddress["REGION"]?>, <?=$arAddress["ADDRESS"]?>, кв/оф. <?=$arAddress["ROOM"]?></label>
+                <? foreach ($arResult["DELIVERY"] as $key => $arDelivery): ?>
+                    <? if( $arDelivery["DESCRIPTION"] !== "" ): ?>
+                        <div class="b-delivery-info b-text" id="delivery-info-<?=$arDelivery["ID"]?>" style="display: none;">
+                            <?=$arDelivery["DESCRIPTION"]?>
                         </div>
-                    <? endforeach; ?>
+                    <? endif; ?>
+                <? endforeach; ?>
+                <div class="b-order-addr-cont" style="display: none;">
+                    <div class="b-row b-order-addr">
+                        <h4>Адрес доставки:</h4>
+                        <? foreach ($arResult["ADDRESSES"] as $key => $arAddress): ?>
+                            <div class="b-checkbox">
+                                <input type="radio" id="addr-<?=$arAddress["ID"]?>" class="b-addr-radio" name="address" data-index="<?=$arAddress["INDEX"]?>" data-region="<?=$arAddress["REGION"]?>" data-address="<?=$arAddress["ADDRESS"]?>" data-room="<?=$arAddress["ROOM"]?>">
+                                <label for="addr-<?=$arAddress["ID"]?>"><?=$arAddress["INDEX"]?>, <?=$arAddress["REGION"]?>, <?=$arAddress["ADDRESS"]?>, кв/оф. <?=$arAddress["ROOM"]?></label>
+                            </div>
+                        <? endforeach; ?>
+                        <? if( count($arResult["ADDRESSES"]) ): ?>
+                            <div class="b-checkbox">
+                                <input type="radio" id="addr-new" class="b-addr-radio" name="address" value="NEW">
+                                <label for="addr-new">Добавить адрес</label>
+                            </div>
+                        <? endif; ?>
+                    </div>
+                    <div class="b-row b-order-addr-new b-text clearfix" <? if(count($arResult["ADDRESSES"])): ?>style="display:none;"<? endif; ?>>
+                        <div class="order-adress-map-form-content">
+                            <div class="b-addresss-item form-item __adress b-ui-autocomplete">
+                                <div class="b-addresss-item__address b-input ui-menu ui-widget ui-widget-content ui-autocomplete ui-front">
+                                    <input type="text" id="js-order-adress-map-input" class="js-order-adress-map-input ui-autocomplete-input" name="PROPERTY[NAME][0]" value="" autocomplete="off" required>
+                                    <label for="name">Город, улица, дом <span class="required">*</span></label>
+                                </div>
+                                <div class="b-addresss-item__room b-input">
+                                    <input type="text" id="number-room-input" name="PROPERTY[26][0]" value="" autocomplete="off" required>
+                                    <label for="name">Квартира/офис <span class="required">*</span></label>
+                                </div>
+                                <div class="b-addresss-item__index b-input">
+                                    <input type="text" id="postal-code" name="PROPERTY[24][0]" value="" autocomplete="off" required>
+                                    <label for="name">Индекс <span class="required">*</span></label>
+                                </div>
+                            </div>
+                            <input type="hidden" id="region" name="PROPERTY[25][0]" value="<?=$arResult["ELEMENT_PROPERTIES"][25][0]['VALUE']?>">
+                            <!-- <div class="b-addresss-btn-container">
+                                <input type="submit" name="iblock_submit3" value="Сохранить" class="b-btn-address-save not-ajax">
+                            </div> -->
+                        </div>
+                        <div id="map-address"></div>
+                    </div>
                 </div>
                 <!-- /*<div style="display: none;">*/ -->
                 <h4 class="b-delivery-price">Стоимость доставки: <span id="b-delivery-price">0</span> руб.</h4>
