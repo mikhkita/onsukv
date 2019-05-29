@@ -16,4 +16,21 @@ body {
 	.b-preview-block .b-block-2{
 		width: 100%;
 	}
+	.b-input{
+	    width: calc(50% - 12px);
+	    margin-bottom: 40px;
+	}
+	.b-input:nth-child(2n){
+		margin-right: 0;
+	}
+	.b-input-row{
+		margin-bottom: 0;
+	}
+	.b-order-addr{
+		margin: 0;
+	}
+	.b-delivery-price{
+		margin-top: 18px;
+		margin-bottom: 12px;
+	}
 }

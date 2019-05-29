@@ -336,9 +336,13 @@ a:focus{
 		.b-text a:hover{
 			text-decoration: none;
 		}
-	.b-text a.b-green-link{
+	a.b-green-link{
 		color: #00a224;	
+		text-decoration: underline;
 	}
+		a.b-green-link:hover{
+			text-decoration: none;
+		}
 	.b-text ul{
 	    list-style: none;
 	    margin-top: 9px;
@@ -1501,7 +1505,7 @@ ul.accordion-list{
 		    width: calc(50% - 46px);
 		}
 			.b-about-preview{
-				margin-bottom: 34px;
+				margin-bottom: 15px;
 			}
 				.b-about-preview h2{
 					margin-bottom: 24px;
@@ -2297,6 +2301,15 @@ ul.accordion-list{
 		.b-category-left ul>li.b-with-image{
 			margin-top: 28px;
 		}
+			.b-category-left ul>li.b-with-image .highlight{
+				border-bottom-color: #ffac00;
+			}
+			.b-category-left ul>li.b-with-image .highlight:hover{
+				border-bottom-color: transparent;
+			}
+				.b-category-left ul>li.b-with-image .highlight span{
+					color: #ffac00;
+				}
 			.b-category-left li>ul{
 				padding-left: 12px;
 				margin-top: 10px;
@@ -2610,6 +2623,9 @@ ul.accordion-list{
 			margin-bottom: 8px;
 			padding-top: 4px;
 		}
+		.b-opacity .b-subtitle{
+			display: inline;
+		}
 		.b-detail-country{
 			margin-bottom: 16px;
 		}
@@ -2660,6 +2676,11 @@ ul.accordion-list{
 			padding: 10px 0px;
 			border-radius: 100px;
 			box-shadow: inset 0px 0px 0px 1px #FFAC00;
+		}
+		.b-detail-btn-container p{
+			display: inline-block;
+			float: right;
+			max-width: 250px;
 		}
 		.b-item-in-basket .b-basket-count{
 			display: inline-block;

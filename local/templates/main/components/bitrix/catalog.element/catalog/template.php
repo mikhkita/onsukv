@@ -80,7 +80,14 @@ $APPLICATION->AddHeadString('<link rel="canonical" href="https://nevkusno.ru' . 
 							<input type="text" name="quantity" data-min="1" data-max="<?=$arResult["CATALOG_QUANTITY"]?>" data-id="<?=$arResult["ID"]?>" class="b-quantity-input" maxlength="3" oninput="this.value = this.value.replace(/\D/g, '')" value="<?=( (isset($arResult["BASKET"]))?$arResult["BASKET"]["QUANTITY"]:1 )?>">
 						</div>
 					</div>
-					<a href="/ajax/?partial=1&ELEMENT_ID=<?=$arResult["ID"]?>&action=ADD2BASKET" class="b-btn icon-cart b-btn-to-cart"><span>В корзину</span></a>
+					<div class="b-detail-btn-container clearfix">
+						<a href="/ajax/?partial=1&ELEMENT_ID=<?=$arResult["ID"]?>&action=ADD2BASKET" class="b-btn icon-cart b-btn-to-cart"><span>В корзину</span></a>
+						<? foreach ($arResult["AMOUNT"] as $store): ?>
+							<p><a href="/magazin/" class="b-green-link"><?=$store["STORE_NAME"]?></a> – <?=number_format( ceil($arResult["PRICES"]["PRICE"]["VALUE"]*1.07), 0, ',', ' ' )?> руб.<br>
+								в наличии на текущее утро<br>
+							</p>
+						<? endforeach; ?>
+					</div>
 					<div class="b-error-max-count">Доступно для заказа: <?=$arResult["CATALOG_QUANTITY"]?> шт.</div>
 				<? else: ?>
 					<div class="b-catalog-item-empty">Нет в наличии</div>
@@ -110,21 +117,17 @@ $APPLICATION->AddHeadString('<link rel="canonical" href="https://nevkusno.ru' . 
 
 			<? if($arResult["PROPERTIES"]["COMPOSITION"]["VALUE"]): ?>
 				<div class="b-opacity">
-					<div class="b-subtitle">Состав:</div>
-					<p><?=$arResult["PROPERTIES"]["COMPOSITION"]["VALUE"]?></p>
+					<p><div class="b-subtitle">Состав: </div><?=$arResult["PROPERTIES"]["COMPOSITION"]["VALUE"]?></p>
 				</div>
 			<? endif; ?>
 
 			<? if($arResult["PROPERTIES"]["ENERGY"]["VALUE"]): ?>
 				<div class="b-opacity">
-					<div class="b-subtitle">Энергетическая ценность:</div>
-					<p><?=$arResult["PROPERTIES"]["ENERGY"]["VALUE"]?></p>
+					<p><div class="b-subtitle">Энергетическая ценность: </div></b><?=$arResult["PROPERTIES"]["ENERGY"]["VALUE"]?></p>
 				</div>
 			<? endif; ?>
 
-			<? foreach ($arResult["AMOUNT"] as $store): ?>
-				<p><a href="/magazin/" class="b-green-link"><?=$store["STORE_NAME"]?></a> – в наличии на текущее утро<br><?=number_format( ceil($arResult["PRICES"]["PRICE"]["VALUE"]*1.07), 0, ',', ' ' )?> руб.</p>
-			<? endforeach; ?>
+			
 		</div>
 	</div>
 </div>
