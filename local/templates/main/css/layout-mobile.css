@@ -496,6 +496,9 @@ p{
 }
 
 @media screen and (max-width: 600px){
+	#no_price_to_pocikpoint{
+		max-width: 100%;
+	}
 	.b-order-left {
 	    height: 82px;
 	    width: 80px;

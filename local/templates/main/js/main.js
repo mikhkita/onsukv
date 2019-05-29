@@ -668,13 +668,20 @@ $(document).ready(function(){
         // if( price == null ){
 
         // }else{
-        if( 1 ){
-            $(".b-delivery-price").after('<span id="no_price_to_pocikpoint"></span>' );
+        if( price >= 20000 || weigth*1 >= 10 || isNeedMessage() ){
+            $(".b-delivery-price").after('<span id="no_price_to_pocikpoint" class="red">Точная стоимость доставки будет рассчитана оператором индивидуально и может поменяться.</span>' );
         }
 
         price *= getPriceK( $("#region").val() );
+
         $("#b-delivery-price-input").val( price*1 ).trigger("change");
         // }
+    }
+
+    function isNeedMessage(){
+        var cities = new RegExp( "Магадан|Саратов|Норильск", 'i' );
+
+        return cities.test( $("#region").val() );
     }
 
     function getDeliveryPriceBySum(sum, priceAr){

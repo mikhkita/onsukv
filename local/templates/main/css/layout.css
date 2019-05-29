@@ -3868,7 +3868,10 @@ li.bx-inclinkspersonal-item {
 			.b-data-order .b-btn-dashed{
 				border-bottom: 1px dashed #434343;
 			}
-
+#no_price_to_pocikpoint{
+	max-width: calc(50% - 12px);
+	display: block;
+}
 	.b-textarea{
 		width: calc(50% - 12px);
 		margin-right: 0;
