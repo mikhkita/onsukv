@@ -3760,7 +3760,7 @@ li.bx-inclinkspersonal-item {
 		margin-bottom: 40px;
 	}
 	.b-last-input-row{
-		margin-bottom: 30px;
+		margin-bottom: 20px;
 	}
 	.b-address.hide + .b-input-row{
 		margin-bottom: 0px;
@@ -3872,7 +3872,7 @@ li.bx-inclinkspersonal-item {
 	.b-textarea{
 		width: calc(50% - 12px);
 		margin-right: 0;
-		margin-bottom: 20px;
+		margin-bottom: 16px;
 	}
 		.b-textarea textarea{
 			padding: 14px 22px 15px 22px;
@@ -3881,6 +3881,9 @@ li.bx-inclinkspersonal-item {
 			border-radius: 26px;
 			resize: none;
 		}
+	.b-for-payment{
+		margin-bottom: 20px;
+	}
 	.b-for-payment-left{
 		float: left;
 	}	
@@ -4458,7 +4461,7 @@ li.bx-inclinkspersonal-item {
     /*font: 400 20px/24px "Helvetica Neue",Helvetica,Arial,sans-serif;*/
 }
 .b-order-addr{
-	margin: 24px 0px 16px;
+	margin: 24px 0px 20px;
 }
 	.b-order-addr h4{
 		margin-bottom: 16px;

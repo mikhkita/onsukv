@@ -254,7 +254,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
             <h4 class="b-delivery-price">Стоимость доставки: <span id="b-delivery-price">0</span> руб.</h4>
         </div>
         <div class="b-row clearfix">
-            <div class="b-inputs b-input-comment b-input-move clearfix">
+            <div class="b-inputs b-input-move clearfix">
                 <div class="b-input b-textarea">
                     <textarea id="comment" name="ORDER_DESCRIPTION" rows="1"></textarea>
                     <label for="comment">Комментарий или пожелание</label>

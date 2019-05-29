@@ -682,6 +682,18 @@ p{
 		width: 100%;
 		margin-right: 0;
 	}
+	.b-last-input-row .b-input{
+		margin-bottom: 40px;
+	}
+	.b-delivery-price{
+		margin-top: 0;
+	}
+	.b-order-addr-cont{
+		margin-bottom: 20px;
+	}
+	.basket-checkout-block-total{
+		padding-top: 0;
+	}
 }
 
 @media screen and (max-width: 500px){
