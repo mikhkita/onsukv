@@ -22,7 +22,7 @@ function LineBlockHeight(block){
 
 $(document).ready(function(){	
 
-    if( $(".order-adress-map-form-content").length ){
+    if( $(".order-adress-map-form").length ){
         $(".b-input input").each(function(){
             $(this).parents(".b-input").removeClass("focus");
             if( $(this).val() != "" && $(this).val() != "+7 (   )    -  -  " ){
@@ -466,19 +466,11 @@ $(document).ready(function(){
     if( $("select#delivery").length ){
         var delTimer = null;
         $("select#delivery").change(function(){
-            var price = $("select#delivery option:checked").attr("data-price"),
+            var price = ($("select#delivery option:checked").attr("data-price"))?$("select#delivery option:checked").attr("data-price"):0 ,
                 date = $("select#delivery option:checked").attr("data-date"),
                 calc = $("select#delivery option:checked").attr("data-calc");
             $("select#delivery").attr("data-price", price);
             $("select#delivery").attr("data-date", date);
-
-            if( isValidJSON(calc) && calc != "" ){
-                calc = JSON.parse(calc);
-
-                if( calc.length ){
-                    alert();
-                }
-            }
 
             $("#time").html('');
             $("#b-time-input").hide();
@@ -487,6 +479,26 @@ $(document).ready(function(){
             $("#b-mkad-input").hide();
 
             $(".b-pickpoint").hide();
+
+            $(".b-order-addr-cont").hide();
+
+            if( isValidJSON(price) ){
+                var json = JSON.parse(price);
+                if( json.length ){
+                    price = 0;
+                }
+            }
+            // console.log(price*1);
+            // console.log(typeof price);
+
+            if( $(this).val() !== "53" && $(this).val() !== "54" && $(this).val() !== "55" ){
+                $("#b-delivery-price-input").val( price*1 ).trigger("change");
+            }
+
+            $(".b-delivery-info").hide();
+            if( $("#delivery-info-"+$(this).val()).length ){
+                $("#delivery-info-"+$(this).val()).show();
+            }
 
             switch ($(this).val()) {
                 case "26":
@@ -507,12 +519,22 @@ $(document).ready(function(){
                 case "30":
                     $(".b-pickpoint").show();
                     break;
+                case "53":
+                case "54":
+                case "55":
+                    $(".b-order-addr-cont").show();
+                    if( !$(".b-addr-radio:checked").length ){
+                        $(".b-addr-radio").eq(0).prop("checked", true).trigger("change");
+                    }else{
+                        $(".b-addr-radio:checked").trigger("change");
+                    }
+                    break;
                 default:
                     
                     break;
             }
 
-            $("#b-delivery-price-input").val( price*1 ).trigger("change");
+            disableDates();
         });
 
         $("#b-delivery-price-input").change(function(){
@@ -591,6 +613,81 @@ $(document).ready(function(){
                 $("#b-delivery-price-input").val( 0 ).trigger("change");
             }
         } );
+
+        $(".b-addr-radio").change(function(){
+            var address = $(this).attr("data-address"),
+                index = $(this).attr("data-index"),
+                region = $(this).attr("data-region"),
+                room = $(this).attr("data-room"),
+                value = $(this).val();
+
+            if( value == "NEW" ){
+                address = index = region = room = "";   
+
+                $(".b-order-addr-new").show();
+                $("#js-order-adress-map-input").trigger("focusin").focus();
+            }else{
+                $(".b-order-addr-new").hide();
+            }
+
+            $("#js-order-adress-map-input").val(address);
+            $("#number-room-input").val(room);
+            $("#postal-code").val(index);
+            $("#region").val(region).trigger("change");
+        });
+
+        $("#region").change(function(){
+            calculatePost();
+        });
+    }
+
+    function calculatePost(){
+        var sum = $(".basket-coupon-block-total-price-current").attr("data-price").replace(/\D\.+/g,""),
+            weigth = $(".basket-coupon-block-total-price-current").attr("data-weigth").replace(/\D\.+/g,""),
+            calc = $("#delivery").attr("data-price"),
+            priceAr = null,
+            price = 0;
+
+        $( '#no_price_to_pocikpoint' ).remove();
+
+        if( isValidJSON(calc) && calc != "" ){
+            calc = JSON.parse(calc);
+
+            if( calc.length ){
+                priceAr = calc;
+            }
+        }else{
+            priceAr = null;
+        }
+
+        price = getDeliveryPriceBySum(sum, priceAr);
+
+        // if( price == null ){
+
+        // }else{
+        if( 1 ){
+            $(".b-delivery-price").after('<span id="no_price_to_pocikpoint"></span>' );
+        }
+
+        price *= getPriceK( $("#region").val() );
+        $("#b-delivery-price-input").val( price*1 ).trigger("change");
+        // }
+    }
+
+    function getDeliveryPriceBySum(sum, priceAr){
+        sum = sum*1;
+
+        for( var i in priceAr ){
+            var from = priceAr[i][0]*1,
+                to = priceAr[i][1]*1,
+                price = priceAr[i][2]*1;
+            
+            if( from <= sum && sum <= to ){
+                return price;
+            }
+        }
+
+        return 0;
     }
 
     function disableDates(){
@@ -608,9 +705,15 @@ $(document).ready(function(){
             }
         });
 
-        if( !$('select#date option:not([disabled]):selected').length ){
-            $("select#date").val( $('select#date option:not([disabled]):first').attr("value") );
+        if( deliveryID == 53 || deliveryID == 54 || deliveryID == 55 || deliveryID == 30 ){
+            $("select#date").prop( "disabled", true );
+        }else{
+            $("select#date").prop( "disabled", false );
         }
+
+        // if( !$('select#date option:not([disabled]):selected').length ){
+            $("select#date").val( $('select#date option:not([disabled]):first').attr("value") );
+        // }
     }
 
     $(".b-catalog-slider").slick({
@@ -879,6 +982,52 @@ $(document).ready(function(){
 	// });
 
 });
+
+function getPriceK(region){
+    var regions = [
+        'Амурская',
+        'Камчатский',
+        'Магаданская',
+        'Приморский',
+        'Саха /Якутия/',
+        'Сахалинская',
+        'Хабаровский',
+        'Чукотский',
+
+        'Алтайский',
+        'Забайкальский',
+        'Иркутская',
+        'Красноярский',
+        'Кемеровская',
+        'Новосибирская',
+        'Омская',
+        'Алтай',
+        'Бурятия',
+        'Тыва',
+        'Хакасия',
+        'Томская',
+
+        'Курганская',
+        'Свердловская',
+        'Тюменская',
+        'Ханты-Мансийский Автономный округ - Югра',
+        'Челябинская',
+        'Ямало-Ненецкий',
+
+        'Карелия',
+        'Коми',
+        'Архангельская',
+        'Ненецкий',
+        'Мурманская',
+    ];
+
+    for( var i in regions ){
+        if( region.indexOf(regions[i], 0) !== -1){
+            return 2
+        }
+    }
+    return 1;
+}
 
 function pickPointHandler(object){
     $(".pickpointinfo").remove();

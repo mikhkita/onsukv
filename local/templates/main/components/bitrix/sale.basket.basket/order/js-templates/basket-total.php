@@ -66,7 +66,7 @@ use Bitrix\Main\Localization\Loc;
 							</div>
 						{{/DISCOUNT_PRICE_FORMATED}}
 
-						<div class="basket-coupon-block-total-price-current" data-price="{{{PRICE}}}">
+						<div class="basket-coupon-block-total-price-current" data-price="{{{PRICE_WITHOUT_DELIVERY}}}" data-weigth="{{{WEIGHT_FORMATED}}}">
 							<div class="basket-checkout-block-total-title" style="display: inline-block; vertical-align: top; margin-top: 4px;"><?=Loc::getMessage('SBB_TOTAL')?>:</div>
 							<span data-entity="basket-total-price">{{{PRICE_FORMATED}}}</span>
 						</div>

@@ -24,20 +24,20 @@ $arUrlRewrite=array (
     'PATH' => '/catalog/detail.php',
     'SORT' => 100,
   ),
-  0 => 
-  array (
-    'CONDITION' => '#^/sale/(.+)/(.+)/(\\\\?(.*))?#',
-    'RULE' => 'SECTION_CODE=$1&ELEMENT_CODE=$2&$3',
-    'ID' => '',
-    'PATH' => '/catalog/detail.php',
-    'SORT' => 100,
-  ),
   4 => 
   array (
     'CONDITION' => '#^/wholesale/(.+)/(\\\\?(.*))?#',
     'RULE' => 'SECTION_CODE=$1&$2',
     'ID' => '',
     'PATH' => '/catalog/index.php',
+    'SORT' => 100,
+  ),
+  0 => 
+  array (
+    'CONDITION' => '#^/sale/(.+)/(.+)/(\\\\?(.*))?#',
+    'RULE' => 'SECTION_CODE=$1&ELEMENT_CODE=$2&$3',
+    'ID' => '',
+    'PATH' => '/catalog/detail.php',
     'SORT' => 100,
   ),
   5 => 
@@ -56,20 +56,20 @@ $arUrlRewrite=array (
     'PATH' => '/catalog/index.php',
     'SORT' => 100,
   ),
-  7 => 
-  array (
-    'CONDITION' => '#^/wholesale/(\\\\?(.*))?#',
-    'RULE' => 'WHOLESALE=Y&$1',
-    'ID' => '',
-    'PATH' => '/catalog/index.php',
-    'SORT' => 100,
-  ),
   3 => 
   array (
     'CONDITION' => '#^/sale/(.+)/(\\\\?(.*))?#',
     'RULE' => 'SECTION_CODE=$1&$2',
     'ID' => '',
     'PATH' => '/sale/index.php',
+    'SORT' => 100,
+  ),
+  7 => 
+  array (
+    'CONDITION' => '#^/wholesale/(\\\\?(.*))?#',
+    'RULE' => 'WHOLESALE=Y&$1',
+    'ID' => '',
+    'PATH' => '/catalog/index.php',
     'SORT' => 100,
   ),
   8 => 
