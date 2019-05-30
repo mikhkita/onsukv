@@ -1571,6 +1571,9 @@ ul.accordion-list{
 			.b-preview-block img{
 				width: 100%;
 			}
+.b-reg-form{
+	width: 270px;
+}
 .b-catalog-preview{
 	padding-top: 55px;
 	text-align: left;
@@ -3020,6 +3023,9 @@ div.bx-yellow .btn.btn-default:active{
 			    font-size: 0;
 			    display: block;
 			}
+			.b-review-popup span.error{
+				display: none!important;
+			}
 
 .b-reviews-count{
 	text-align: center;
@@ -3875,7 +3881,11 @@ li.bx-inclinkspersonal-item {
 	.b-textarea{
 		width: calc(50% - 12px);
 		margin-right: 0;
+<<<<<<< HEAD
 		margin-bottom: 16px;
+=======
+		/*margin-bottom: 20px;*/
+>>>>>>> e4fd62803ae99f0b07e56d1728dd6a30303a7237
 	}
 		.b-textarea textarea{
 			padding: 14px 22px 15px 22px;

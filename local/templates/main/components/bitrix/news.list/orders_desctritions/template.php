@@ -14,6 +14,9 @@ $this->setFrameMode(true);?>
 
 <? if(count($arResult["ITEMS"])): ?> 
     <? foreach ($arResult["ITEMS"] as $arItem): ?>
-        <option value="<?=$arItem["NAME"]?>"><?=$arItem['PROPERTIES']['ORDER_DATE']['VALUE']?></option>
+    	<? $arDate = $arItem['PROPERTIES']['ORDER_DATE']['VALUE']; ?>
+    	<? $date = date("d", strtotime($arDate))." ".getRusMonth(date("m", strtotime($arDate))).", ".getRusDayOfWeek(date("w", strtotime($arDate))); ?>
+    	<? $isSunday = ( date("w", strtotime($arDate)) == 0 )?'data-isSunday="Y" disabled':""; ?>
+        <option value="<?=$arDate?>" <?=$isSunday?>> <?=$date?></option>
     <? endforeach; ?>
 <? endif; ?>

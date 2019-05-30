@@ -26,7 +26,12 @@ $this->setFrameMode(true);
 				?>
 				<div class="b-review" id="<?=$this->GetEditAreaId($arItem['ID']);?>">
 					<div class="b-review-info">
-						<div class="b-stars b-stars-<?=$arItem["CODE"]?>">
+						<? if (isset($arItem['PROPERTIES']["STORE_QUALITY"])){
+							$stars = ($arItem['PROPERTIES']["STORE_QUALITY"]["VALUE"] + $arItem['PROPERTIES']["GOODS_QUALITY"]["VALUE"] + $arItem['PROPERTIES']["MANAGER_QUALITY"]["VALUE"] + $arItem['PROPERTIES']["PACK_QUALITY"]["VALUE"] + $arItem['PROPERTIES']["COURIER_QUALITY"]["VALUE"])/5;
+						} else {
+							$stars = $arItem["PROPERTIES"]["RATING"]["VALUE"];
+						} ?>
+						<div class="b-stars b-stars-<?=$stars?>">
 							<div class="b-star"></div>
 							<div class="b-star"></div>
 							<div class="b-star"></div>

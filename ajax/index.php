@@ -208,12 +208,13 @@ switch ($action) {
 			if ($product_id) {
 
 				$PROP["PRODUCT_ID"]['VALUE'] = $product_id;
+				$PROP["RATING"]['VALUE'] = $_POST["item-quality"];
 
 				$arLoadProductArray = Array(
 				  "IBLOCK_ID"      => 2,
 				  "PROPERTY_VALUES"=> $PROP,
 				  "NAME"           => $_POST["name"],
-				  "CODE"		   => $_POST["item-quality"],
+				  "CODE"		   => $userID,
 				  "ACTIVE"         => "Y",
 				  "PREVIEW_TEXT"   => $_POST['comment'],
 				  "DATE_ACTIVE_FROM" => ConvertTimeStamp(time(), "FULL"),
@@ -235,7 +236,7 @@ switch ($action) {
 				  "IBLOCK_ID"      => 3,
 				  "PROPERTY_VALUES"=> $PROP,
 				  "NAME"           => $_POST["name"],
-				  "CODE"		   => $round,
+				  "CODE"		   => $userID,
 				  "ACTIVE"         => "Y",
 				  "PREVIEW_TEXT"   => $_POST['comment'],
 				  "DATE_ACTIVE_FROM" => ConvertTimeStamp(time(), "FULL")
