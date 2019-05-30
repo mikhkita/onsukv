@@ -204,7 +204,8 @@ switch ($action) {
 
 			$PROP["EMAIL"]['VALUE'] = $_POST["email"];
 			$PROP["PHONE"]['VALUE'] = $_POST["phone"];
-
+			$userID = $USER->GetID()?$USER->GetID():"";
+			
 			if ($product_id) {
 
 				$PROP["PRODUCT_ID"]['VALUE'] = $product_id;
@@ -236,7 +237,7 @@ switch ($action) {
 				  "IBLOCK_ID"      => 3,
 				  "PROPERTY_VALUES"=> $PROP,
 				  "NAME"           => $_POST["name"],
-				  "CODE"		   => $userID,
+				  "CODE"		   => $round,
 				  "ACTIVE"         => "Y",
 				  "PREVIEW_TEXT"   => $_POST['comment'],
 				  "DATE_ACTIVE_FROM" => ConvertTimeStamp(time(), "FULL")
