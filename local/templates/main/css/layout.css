@@ -3499,8 +3499,8 @@ li.bx-inclinkspersonal-item {
 		margin-bottom: 0; 
 	}
 
-	.required, .red{
-		color: #ff0000;
+	.required, .red, p.red, span.red, div.red{
+		color: #ff0000 !important;
 	}
 
 	.b-addressee{
@@ -4177,6 +4177,7 @@ li.bx-inclinkspersonal-item {
 	}
 .b-delivery-price{
 	margin-top: 24px;
+	margin-bottom: 16px;
 }
 
 .b-order-left{
@@ -4215,10 +4216,21 @@ li.bx-inclinkspersonal-item {
 			font-size: 18px;
 			line-height: 26px;
 		}
-.blockButton #b-basket-checkout-button{
+.b-delivery-error{
+	display: none;
+}
+.b-delivery-error.show{
+	display: block !important;
+}
+.blockButton #b-basket-checkout-button,
+.deliveryError5000 #b-basket-checkout-button{
 	display: none !important;
 }
 .blockButton #b-min-price-message{
+	display: block !important;
+	max-width: 175px;
+}
+.deliveryError5000 #b-delivery-error-5000-message{
 	display: block !important;
 	max-width: 175px;
 }
@@ -4521,7 +4533,7 @@ li.bx-inclinkspersonal-item {
 	.b-order-addr-new #map-address{
 		float: left;
 		width: calc(50% - 12px);
-		height: 350px;
+		height: 315px;
 		margin-top: -24px;
 		margin-bottom: -200px;
 	}

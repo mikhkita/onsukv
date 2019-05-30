@@ -495,6 +495,11 @@ p{
 	}*/
 }
 
+.b-delivery-info{
+		margin-top: 0px;
+		position: relative;
+		top: -19px;
+	}
 @media screen and (max-width: 600px){
 	#no_price_to_pocikpoint{
 		max-width: 100%;
@@ -726,11 +731,25 @@ p{
 	}
 }
 
-@media screen and (max-width: 376px){
-	
+@media screen and (max-width: 400px){
+	.cart-sum{
+		font-size: 14px;
+		padding-right: 15px;
+	}
+	.cart-sum:before{
+		font-size: 11px;
+		top: 51%;
+	}
+
+	.b-logo{
+		width: 128px;
+	}
 
 }
 @media screen and (max-width: 350px){
+	.b-logo{
+		width: 94px;
+	}
 	.b-catalog-img,
 	.b-category-right .b-catalog-img{
 		width: 100px;

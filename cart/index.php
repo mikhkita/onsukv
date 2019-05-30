@@ -2,7 +2,7 @@
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Оформление заказа");
 ?><?$APPLICATION->IncludeComponent(
-	"bitrix:sale.basket.basket",
+	"redder:sale.basket.basket",
 	"nevkusno",
 	Array(
 		"ACTION_VARIABLE" => "basketAction",
