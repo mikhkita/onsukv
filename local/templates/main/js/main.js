@@ -204,22 +204,22 @@ $(document).ready(function(){
         },100);
     });
 
-    var e = $('.b-menu-overlay, .mobile-menu');
-    var ev = $('.b-menu-overlay, .mobile-catalog');
+    // var e = $('.b-menu-overlay, .mobile-menu');
+    // var ev = $('.b-menu-overlay, .mobile-catalog');
 
-    e.touch();
-    ev.touch();
+    // e.touch();
+    // ev.touch();
 
-    e.on('swipeLeft', function(event) {
-        menuSlideout.close();
-    });
+    // e.on('swipeLeft', function(event) {
+    //     menuSlideout.close();
+    // });
 
-    ev.on('swipeRight', function(event) {
-        setTimeout(function(){
-            $(".b-menu-overlay").hide();
-        },200);
-        catalogSlideout.close();
-    });
+    // ev.on('swipeRight', function(event) {
+    //     setTimeout(function(){
+    //         $(".b-menu-overlay").hide();
+    //     },200);
+    //     catalogSlideout.close();
+    // });
 
 /******************************************/
 
@@ -296,7 +296,7 @@ $(document).ready(function(){
     });
 
     function isValidJSON(src) {
-        var filtered = src;
+        var filtered = src+"";
         filtered = filtered.replace(/\\["\\\/bfnrtu]/g, '@');
         filtered = filtered.replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']');
         filtered = filtered.replace(/(?:^|:|,)(?:\s*\[)+/g, '');
@@ -476,14 +476,9 @@ $(document).ready(function(){
             $("select#delivery").attr("data-date", date);
 
             $("#time").html('');
-            $("#b-time-input").hide();
-
             $("#mkad").val('');
-            $("#b-mkad-input").hide();
 
-            $(".b-pickpoint").hide();
-
-            $(".b-order-addr-cont").hide();
+            $(".b-pickpoint, .b-cdek-choose, .b-order-addr-cont, #b-time-input, #b-mkad-input").hide();
 
             if( isValidJSON(price) ){
                 var json = JSON.parse(price);
@@ -532,12 +527,34 @@ $(document).ready(function(){
                         $(".b-addr-radio:checked").trigger("change");
                     }
                     break;
+                case "120":
+                    $(".b-cdek-input").show();
+                    $("#cdek_type").trigger("change");
+                    break;
                 default:
                     
                     break;
             }
 
             disableDates();
+        });
+
+        $("#cdek_type").change(function(){
+            if( $(this).val() == 2 ){
+                $(".b-cdek-addr").hide();
+                $(".b-order-addr-cont").show();
+
+                if( !$(".b-addr-radio:checked").length ){
+                    $(".b-addr-radio").eq(0).prop("checked", true).trigger("change");
+                }else{
+                    $(".b-addr-radio:checked").trigger("change");
+                }
+            }else{
+                $(".b-cdek-addr").show();
+                $(".b-order-addr-cont").hide();
+            }
+
+            IPOLSDEK_pvz.setPrices();
         });
 
         $("#b-delivery-price-input").change(function(){
@@ -621,6 +638,7 @@ $(document).ready(function(){
             var address = $(this).attr("data-address"),
                 index = $(this).attr("data-index"),
                 region = $(this).attr("data-region"),
+                city = $(this).attr("data-city"),
                 room = $(this).attr("data-room"),
                 value = $(this).val();
 
@@ -634,13 +652,24 @@ $(document).ready(function(){
             }
 
             $("#js-order-adress-map-input").val(address);
+            $("#city").val(city);
             $("#number-room-input").val(room);
             $("#postal-code").val(index);
-            $("#region").val(region).trigger("change");
+            $("#region").val(region);
+
+            if( $("#delivery").val() == "120" ){
+                $("#city").trigger("change");
+            }else{
+                $("#region").trigger("change");
+            }
         });
 
         $("#region").change(function(){
             calculatePost();
+        });
+
+        $("#city").on("change", function(){
+            IPOLSDEK_pvz.chooseCity($(this).val());
         });
     }
 
@@ -699,6 +728,13 @@ $(document).ready(function(){
 
         return 0;
     }
+
+    $("body").on("change", "#basket-sort", function(){
+        BX.Sale.BasketComponent.sortSortedItems(true);
+        BX.Sale.BasketComponent.shownItems = [];
+        $("#basket-item-table").html("");
+        BX.Sale.BasketComponent.initializeBasketItems();
+    });
 
     function disableDates(){
         var date = $("select#delivery").attr("data-date"),
@@ -898,26 +934,32 @@ $(document).ready(function(){
         uploader.init();
     }
 
-    $('.menu-accordion').accordion({
-        header: "> div > h3",
-        collapsible: true,
-        heightStyle: "content",
-        active: false
-    });
+    if( $('.menu-accordion').length ){
+        $('.menu-accordion').accordion({
+            header: "> div > h3",
+            collapsible: true,
+            heightStyle: "content",
+            active: false
+        });
+    }
 
-    $('.b-accordion-item').accordion({
-        header: ">h3",
-        collapsible: true,
-        heightStyle: "content",
-        active: false
-    });
+    if( $('.b-accordion-item').length ){
+        $('.b-accordion-item').accordion({
+            header: ">h3",
+            collapsible: true,
+            heightStyle: "content",
+            active: false
+        });
+    }
 
-    $('.b-delivery-accordion-inner-item').accordion({
-        header: "h4",
-        collapsible: true,
-        heightStyle: "content",
-        active: false
-    });
+    if( $('.b-delivery-accordion-inner-item').length ){
+        $('.b-delivery-accordion-inner-item').accordion({
+            header: "h4",
+            collapsible: true,
+            heightStyle: "content",
+            active: false
+        });
+    }
 
     if( isIE() ){
         $("body").on('mousedown click', ".b-input input, .b-input textarea", function(e) {

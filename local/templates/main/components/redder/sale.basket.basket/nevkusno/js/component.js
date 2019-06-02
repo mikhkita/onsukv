@@ -45,6 +45,8 @@
 		/** Array of basket items with warnings */
 		warningItems: [],
 
+		gifts: [],
+
 		ids: {
 			item: 'basket-item-',
 			quantity: 'basket-item-quantity-',
@@ -92,6 +94,8 @@
 
 			this.adjustBasketWrapperHeight();
 			this.getCacheNode(this.ids.basketRoot).style.opacity = 1;
+
+			this.removeGiftOrNot(parameters.result);
 
 			this.bindInitialEvents();
 		},
@@ -687,11 +691,110 @@
 					{
 						BX.Sale.OrderAjaxComponent.sendRequest();
 					}
+
+					this.removeGiftOrNot(result);
 				}, this),
 				onfailure: BX.delegate(function() {
 					this.actionPool.doProcessing(false);
 				}, this)
 			});
+		},
+
+		removeGiftOrNot: function(result){
+			// JSON.stringify(result);
+			// alert();
+			// document.getElementById("panel-page").innerHTML = JSON.stringify(result);
+			// alert(typeof result.APPLIED_DISCOUNT_LIST);
+			if( typeof result.BASKET_DATA == "undefined" ){
+				var discountList = result.APPLIED_DISCOUNT_LIST,	
+					basketRenderData = result.BASKET_ITEM_RENDER_DATA;
+			}else{
+				var discountList = result.BASKET_DATA.APPLIED_DISCOUNT_LIST,
+					basketRenderData = result.BASKET_DATA.BASKET_ITEM_RENDER_DATA;
+			}
+			console.log(result);
+			var ids = [];
+			for( var i in discountList ){
+				var basket = discountList[i].RESULT.BASKET;
+				for( var j in basket ){
+					// alert();
+					var productID = basket[j].PRODUCT_ID*1,
+						id = this.getIDByProductID(productID, basketRenderData);
+
+					if( id && ids.indexOf(id) === -1 ){
+						ids.push(id);
+					}
+				}
+			}
+
+			if( this.gifts.length > 0 ){
+				var deleteIDs = this.arrayDiff(this.gifts, ids);
+				// console.log([this.gifts, ids]);
+				// console.log(deleteIDs);
+
+				for( var i in deleteIDs ){
+					var id = deleteIDs[i];
+
+					if( this.getQuantityByID(id, basketRenderData) == 1 ){
+						$("#basket-item-" + id).find('[data-entity="basket-item-delete"]').click();
+						$("#basket-item-" + id).remove();
+					}
+
+					this.adjustBasketWrapperHeight();
+				}
+			}
+
+			this.gifts = ids;
+			// console.log(result);
+
+			// console.log(ids);
+
+			// if( gifts.length > 0 ){
+
+			// }
+		},
+
+		getIDByProductID: function(id, items){
+			for( var i in items ){
+				var item = items[i];
+				if( item.PRODUCT_ID*1 == id*1 ){
+					return item.ID*1;
+				}
+			}
+			return false;
+		},
+
+		getQuantityByID: function(id, items){
+			for( var i in items ){
+				var item = items[i];
+				if( item.ID*1 == id*1 ){
+					return item.QUANTITY*1;
+				}
+			}
+			return false;
+		},
+
+		arrayDiff: function(a1, a2) {
+
+		    var a = [], diff = [];
+
+		    for (var i = 0; i < a1.length; i++) {
+		        a[a1[i]] = true;
+		    }
+
+		    for (var i = 0; i < a2.length; i++) {
+		        if (a[a2[i]]) {
+		            delete a[a2[i]];
+		        } else {
+		            a[a2[i]] = true;
+		        }
+		    }
+
+		    for (var k in a) {
+		        diff.push(k);
+		    }
+
+		    return diff;
 		},
 
 		isBasketIntegrated: function()
@@ -735,6 +838,14 @@
 			if (!BX.type.isPlainObject(result))
 			{
 				return;
+			}
+
+			for( var i in result.TOTAL_RENDER_DATA.COUPON_LIST ){
+				var coupon = result.TOTAL_RENDER_DATA.COUPON_LIST[i];
+				if( coupon.ID == 3 ){
+					result.TOTAL_RENDER_DATA.COUPON_LIST.splice(i, 1);
+					break;
+				}
 			}
 
 			if (result.BASKET_ITEM_RENDER_DATA)
@@ -792,7 +903,19 @@
 				return 0;
 			}
 
-			return parseFloat(this.items[a].SORT) - parseFloat(this.items[b].SORT);
+			var type = document.getElementById('basket-sort').value;
+
+			switch (type) {
+				case "price":
+					return (this.items[a].PRICE > this.items[b].PRICE)?1:-1;
+					break;
+				case "name":
+					return (this.items[a].NAME > this.items[b].NAME)?1:-1;
+					break;
+				default:
+					return (parseFloat(this.items[a].ID) > parseFloat(this.items[b].ID))?1:-1;
+					break;
+			}
 		},
 
 		getChangedSimilarOffers: function()
@@ -906,7 +1029,7 @@
 
 		checkMinPrice: function(totalData){
 			if( document.getElementById('b-basket-checkout-button') && typeof totalData.PRICE != "undefined" ){
-				console.log(totalData);
+				// console.log(totalData);
 				// alert(totalData.PRICE);
 				var price = totalData.PRICE,
 					basketRoot = document.getElementById("basket-root"),

@@ -462,10 +462,12 @@ function getReviewCount(){
 	global $DB;
 
 	// Неделю назад
-	$date = date('m,d,Y', time() - 7*24*60*60);
+	$time = time() - 7*24*60*60;
+	$userID = (isAuth())?$USER->GetID():0;
 
 	$arSelect = Array("ID");
-	$arFilter = Array("IBLOCK_ID"=>array(2,3), "ACTIVE" => "Y", "CODE" => $USER->GetID(), ">=DATE_CREATE" => date($DB->DateFormatToPHP(CLang::GetDateFormat("SHORT")), mktime(0,0,0,$date)));
+	$arFilter = Array("IBLOCK_ID"=>array(2,3), "ACTIVE" => "Y", "CODE" => $userID, ">=DATE_CREATE" => date($DB->DateFormatToPHP(CLang::GetDateFormat("SHORT")), mktime(0,0,0,date('m', $time), date('d', $time), date('Y', $time))));
+
 	$res = CIBlockElement::GetList(Array(), $arFilter, array(), $arSelect);
 	
 	return $res;

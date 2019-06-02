@@ -1,4 +1,5 @@
 <?
+/*
 define("NOT_CHECK_PERMISSIONS", true);
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.php");
 
@@ -38,3 +39,4 @@ $formName = isset($_REQUEST["formName"]) ? trim($_REQUEST["formName"]) : "extra_
 </body>
 </html>
 <?
+*/

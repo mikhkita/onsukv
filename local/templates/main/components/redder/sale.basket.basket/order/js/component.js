@@ -743,6 +743,14 @@
 				return;
 			}
 
+			for( var i in result.TOTAL_RENDER_DATA.COUPON_LIST ){
+				var coupon = result.TOTAL_RENDER_DATA.COUPON_LIST[i];
+				if( coupon.ID == 3 ){
+					result.TOTAL_RENDER_DATA.COUPON_LIST.splice(i, 1);
+					break;
+				}
+			}
+
 			if (result.BASKET_ITEM_RENDER_DATA)
 			{
 				var i, newData;

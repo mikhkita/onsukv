@@ -18,6 +18,15 @@ ymaps.ready(['AddressDelivery']).then(function init() {
         var response = result.geoObjects.get(0).properties.get('metaDataProperty');
         if(response){
             defaultOptions.city = response.GeocoderMetaData.text;
+
+            var addr = response.GeocoderMetaData.Address.Components;
+
+            for( var i in addr ){
+                if( addr[i].kind == "locality" && typeof IPOLSDEK_pvz != "undefined" ){
+                    IPOLSDEK_pvz.chooseCity(addr[i].name);
+                }
+            }
+
             defaultOptions.coords = response.GeocoderMetaData.InternalToponymInfo.Point.coordinates;
         }
         mapInit();
@@ -58,21 +67,21 @@ ymaps.ready(['AddressDelivery']).then(function init() {
             mapNew.setCenter(res.geoObjects.get(0).geometry.getCoordinates());
         });
 
-        $('.order-adress-map-form').submit(function(){
-            ymaps.geocode($('#js-order-adress-map-input').val(), {
-                results: 1,
-            }).then(function (res) {
-                if(res.geoObjects.properties._data.metaDataProperty.GeocoderResponseMetaData.found > 0){
-                    res.geoObjects.each(function(item){
-                        var address = item.properties._data.metaDataProperty.GeocoderMetaData.Address.Components;
-                        var label = getAddressLine(address);
-                        $('#js-order-adress-map-input').val(label).trigger("focusout");
-                    });
-                    addressClass.setPoint(res.geoObjects.get(0).geometry.getCoordinates());
-                }
-            });
-            return false;
-        });
+        // $('.order-adress-map-form').submit(function(){
+        //     ymaps.geocode($('#js-order-adress-map-input').val(), {
+        //         results: 1,
+        //     }).then(function (res) {
+        //         if(res.geoObjects.properties._data.metaDataProperty.GeocoderResponseMetaData.found > 0){
+        //             res.geoObjects.each(function(item){
+        //                 var address = item.properties._data.metaDataProperty.GeocoderMetaData.Address.Components;
+        //                 var label = getAddressLine(address);
+        //                 $('#js-order-adress-map-input').val(label).trigger("focusout");
+        //             });
+        //             addressClass.setPoint(res.geoObjects.get(0).geometry.getCoordinates());
+        //         }
+        //     });
+        //     return false;
+        // });
 
         //если есть дефолтный адрес
         if($('#js-order-adress-map-input').val()){
@@ -146,13 +155,18 @@ ymaps.ready(['AddressDelivery']).then(function init() {
             var address = e.get('geocode').properties._data.metaDataProperty.GeocoderMetaData.Address;
             $input = $('#js-order-adress-map-input');
             $input.val(getAddressLine(address.Components)).trigger("focusout");
-            var region = "";
+            var region = "",
+                city = "";
             address.Components.forEach(function(item, i, arr) {
                 if(item.kind == "province"){
                     region = item.name;
                 }
+                if(item.kind == "locality"){
+                    city = item.name;
+                }
             });
             $("#region").val(region).trigger("focusout").trigger("change");
+            $("#city").val(city).trigger("focusout").trigger("change");
             $("#postal-code").val(address.postal_code).trigger("focusout");
         });
 
@@ -160,12 +174,16 @@ ymaps.ready(['AddressDelivery']).then(function init() {
 
         function getAddressLine(address) {  
             var res = [];
-            var locations = ["locality","district","street","house"];
+            // console.log(address);
+            var locations = ["province","locality","district","street","house"];
             locations.forEach(function(_item, _i, _arr) {
                 address.forEach(function(item, i, arr) {
                     if(item.kind == _item){
                         if(_item == "district" && 
                             (item.name.indexOf("микрорайон") >= 0 || item.name.indexOf("район") >= 0)){
+                            return;
+                        }
+                        if(_item == "province" && ( (item.name.indexOf("округ") !== -1) ) ){
                             return;
                         }
                         res.push(item.name);

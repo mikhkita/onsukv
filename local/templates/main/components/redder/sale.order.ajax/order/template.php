@@ -57,6 +57,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
     include($server->getDocumentRoot().$templateFolder.'/confirm.php');
 }else{
 ?>
+<!-- <a href="javascript:void(0);" class="SDEK_selectPVZ" onclick="IPOLSDEK_pvz.selectPVZ('118','PVZ'); return false;">Выбрать пункт самовывоза</a> -->
 <div class="b-data-order b-block-gray b-padding">
    <!--  <div class="b-data-order-top clearfix">
         <h2 class="b-title">Данные к заказу</h2>
@@ -113,6 +114,13 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                         <? foreach ($arResult["DELIVERY"] as $key => $arDelivery): ?>
                             <option value="<?=$arDelivery["ID"]?>" data-price="<?=$arDelivery["CONFIG"]["MAIN"]["PRICE"]?>" data-date="<?=$arDelivery["CONFIG"]["MAIN"]["PERIOD"]?>"><?=$arDelivery["NAME"]?></option>
                         <? endforeach; ?>
+                    </select>
+                </div>
+                <div class="b-input b-cdek-input b-cdek-choose not-empty" style="display:none;" id="b-cdek-input">
+                    <label for="cdek_type">Доставка <span class="required">*</span></label>
+                    <select name="ORDER_PROP_20" id="cdek_type" required>
+                        <option value="1">До пункта самовывоза</option>
+                        <option value="2">До двери</option>
                     </select>
                 </div>
                 <div class="b-input not-empty">
@@ -185,7 +193,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                     </select>
                 </div>
                 <div class="b-input b-time-input not-empty" style="display:none;" id="b-time-input">
-                    <label for="last_name">Время доставки <span class="required">*</span></label>
+                    <label for="time">Время доставки <span class="required">*</span></label>
                     <select name="ORDER_PROP_9" id="time" required>
                         
                     </select>
@@ -284,8 +292,8 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                     <h4>Адрес доставки:</h4>
                     <? foreach ($arResult["ADDRESSES"] as $key => $arAddress): ?>
                         <div class="b-checkbox">
-                            <input type="radio" id="addr-<?=$arAddress["ID"]?>" class="b-addr-radio" name="address" data-index="<?=$arAddress["INDEX"]?>" data-region="<?=$arAddress["REGION"]?>" data-address="<?=$arAddress["ADDRESS"]?>" data-room="<?=$arAddress["ROOM"]?>">
-                            <label for="addr-<?=$arAddress["ID"]?>"><?=$arAddress["INDEX"]?>, <?=$arAddress["REGION"]?>, <?=$arAddress["ADDRESS"]?>, кв/оф. <?=$arAddress["ROOM"]?></label>
+                            <input type="radio" id="addr-<?=$arAddress["ID"]?>" class="b-addr-radio" name="address" data-index="<?=$arAddress["INDEX"]?>" data-region="<?=$arAddress["REGION"]?>" data-city="<?=$arAddress["CITY"]?>" data-address="<?=$arAddress["ADDRESS"]?>" data-room="<?=$arAddress["ROOM"]?>">
+                            <label for="addr-<?=$arAddress["ID"]?>"><?=$arAddress["INDEX"]?>, <?=$arAddress["ADDRESS"]?>, кв/оф. <?=$arAddress["ROOM"]?></label>
                         </div>
                     <? endforeach; ?>
                     <? if( count($arResult["ADDRESSES"]) ): ?>
@@ -311,10 +319,29 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                                 <label for="name">Индекс <span class="required">*</span></label>
                             </div>
                         </div>
-                        <input type="hidden" id="region" name="PROPERTY[25][0]" value="<?=$arResult["ELEMENT_PROPERTIES"][25][0]['VALUE']?>">
+                        <input type="hidden" id="region" name="PROPERTY[25][0]">
+                        <input type="hidden" id="city" name="PROPERTY[29][0]">
                     </div>
                     <div id="map-address"></div>
                 </div>
+            </div>
+            <div class="b-cdek-choose b-cdek-addr" style="display:none;">
+                <?$APPLICATION->IncludeComponent("ipol:ipol.sdekPickup", "cdek", Array(
+                    "CITIES" => "", // Подключаемые города (если не выбрано ни одного - подключаются все)
+                        "CNT_BASKET" => "N",    // Расчитывать доставку для корзины
+                        "CNT_DELIV" => "N", // Расчитывать доставку при подключении
+                        "COUNTRIES" => array(   // Подключенные страны
+                            0 => "rus",
+                        ),
+                        "FORBIDDEN" => array(   // Отключить расчет для профилей
+                            0 => "inpost",
+                        ),
+                        "NOMAPS" => "N",    // Не подключать Яндекс-карты (если их подключает что-то еще на странице)
+                        "PAYER" => "1", // Тип плательщика, от лица которого считать доставку
+                        "PAYSYSTEM" => "2", // Тип платежной системы, с которой будет считатся доставка
+                    ),
+                    false
+                );?>
             </div>
             <h4 class="b-delivery-price">Стоимость доставки: <span id="b-delivery-price">0</span> руб.</h4>
         </div>

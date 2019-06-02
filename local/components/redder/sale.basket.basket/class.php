@@ -1,18 +1,6 @@
 <?
 if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();
 
-// $countReviews = getParam("REVIEWS_COUNT_TO_DISCOUNT");
-// $coupons = CCatalogDiscountCoupon::GetCoupons();
-
-// print_r($coupons);
-// // die();
-
-// if( getReviewCount() >= intval($countReviews["VALUE"]) ){
-// 	CCatalogDiscountCoupon::SetCoupon("AJSD123uyiashjdk8932ioda");
-// }else{
-// 	CCatalogDiscountCoupon::SetCoupon("AJSD123uyiashjdk8932ioda");
-// }
-
 use Bitrix\Main,
 	Bitrix\Main\Localization\Loc,
 	Bitrix\Main\Loader,
@@ -2637,12 +2625,6 @@ class CBitrixBasketComponent extends CBitrixComponent
 			}
 
 			unset($coupons);
-		}
-
-		foreach ($result["COUPON_LIST"] as $key => $coupon) {
-			if( $coupon["COUPON"] == "AJSD123uyiashjdk8932ioda" ){
-				unset($result["COUPON_LIST"][$key]);
-			}
 		}
 
 		return $result;

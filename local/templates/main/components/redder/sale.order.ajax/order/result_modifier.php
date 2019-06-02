@@ -35,6 +35,7 @@ if( !empty($USER->GetID()) ){
 			"INDEX" => $arProps["INDEX"]["VALUE"],
 			"ROOM" => $arProps["ROOM"]["VALUE"],
 			"REGION" => $arProps["REGION"]["VALUE"],
+			"CITY" => $arProps["CITY"]["VALUE"],
 		);
 	}
 

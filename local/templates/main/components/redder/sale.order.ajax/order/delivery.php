@@ -1,6 +1,6 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 ?>
-
+<? /* ?>
 <script type="text/javascript">
 	function fShowStore(id, showImages, formWidth, siteId)
 	{
@@ -307,3 +307,4 @@
 ?>
 <div class="clear"></div>
 </div>
+<? */ ?>

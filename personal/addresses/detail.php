@@ -40,7 +40,7 @@
 			"MAX_LEVELS" => "100000",
 			"MAX_USER_ENTRIES" => "100000",
 			"PREVIEW_TEXT_USE_HTML_EDITOR" => "N",
-			"PROPERTY_CODES" => array("NAME","24","25","26","27"),
+			"PROPERTY_CODES" => array("NAME","24","25","26","27","29"),
 			"PROPERTY_CODES_REQUIRED" => array(),
 			"RESIZE_IMAGES" => "N",
 			"SEF_MODE" => "N",

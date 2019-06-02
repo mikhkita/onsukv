@@ -34,7 +34,7 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.ph
 		}
 	}
 
-	$count = 5;
+	$count = 14;
 
 	for ($i=0; $i < $count; $i++) { 
 

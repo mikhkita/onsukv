@@ -42,7 +42,7 @@
 		if (BX.type.isDomNode(entity))
 		{
 			BX.bind(entity, 'focus', function() {
-				filterNode.style.flex = 3;
+				filterNode.style.flex = 1;
 			});
 			BX.bind(entity, 'blur', BX.delegate(function() {
 				if (!this.mouseOverClearFilter)

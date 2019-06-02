@@ -216,6 +216,14 @@ if (empty($arResult['ERROR_MESSAGE']))
 								<span class="form-control-feedback basket-clear" data-entity="basket-filter-clear-btn"></span>
 							</div>
 						</div>
+						<div class="b-basket-sort-select">
+							<span>Сортировать по:</span> 
+							<select name="basket-sort" id="basket-sort">
+								<option value="id">Дате добавления</option>
+								<option value="name">Наименованию</option>
+								<option value="price">Стоимости</option>
+							</select>
+						</div>
 						<div class="basket-items-list-header-filter">
 							<a href="javascript:void(0)" class="basket-items-list-header-filter-item active"
 								data-entity="basket-items-count" data-filter="all" style="display: none;"></a>
