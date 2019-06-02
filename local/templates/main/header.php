@@ -6,7 +6,7 @@ $urlArr = $GLOBALS["urlArr"] = explode("/", $curPage);
 $GLOBALS["isMain"] = $isMain = ( $curPage == "/" )?true:false;
 $page = $GLOBALS["page"] = ( $urlArr[2] == null || $urlArr[2] == "" )?$urlArr[1]:$urlArr[2];
 $subPage = $GLOBALS["subpage"] = $urlArr[2];
-$GLOBALS["version"] = 411;
+$GLOBALS["version"] = 45;
 
 $is404 = defined('ERROR_404') && ERROR_404=='Y' && !defined('ADMIN_SECTION');
 
