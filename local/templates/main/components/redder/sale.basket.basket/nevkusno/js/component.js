@@ -94,6 +94,7 @@
 			this.getCacheNode(this.ids.basketRoot).style.opacity = 1;
 
 			this.bindInitialEvents();
+			this.insertGiftMessages(parameters.result.allSum);
 		},
 
 		getTemplate: function(templateName)
@@ -880,6 +881,16 @@
 		isItemAvailable: function(itemId)
 		{
 			var sortedItems = this.filter.isActive() ? this.filter.realSortedItems : this.sortedItems;
+			
+			if (this.items[itemId].AVAILABLE_QUANTITY == this.items[itemId].QUANTITY) {
+				var item = document.getElementById('basket-item-'+itemId),
+					msgContainer = document.getElementById('basket-item-'+itemId+'-message'),
+					msg = "доступно: "+this.items[itemId].AVAILABLE_QUANTITY+" шт.";
+
+				if( item ){
+					msgContainer.innerHTML = msg;
+				}
+			}
 
 			return !this.items[itemId].NOT_AVAILABLE
 				&& !this.items[itemId].SHOW_RESTORE
@@ -905,18 +916,60 @@
 		},
 
 		checkMinPrice: function(totalData){
-			if( document.getElementById('b-basket-checkout-button') && typeof totalData.PRICE != "undefined" ){
-				console.log(totalData);
+			if( document.getElementById('b-basket-checkout-button') && typeof totalData.PRICE != "undefined" ){;
 				// alert(totalData.PRICE);
 				var price = totalData.PRICE,
 					basketRoot = document.getElementById("basket-root"),
 					minPrice = basketRoot.dataset.minprice;
+
+					this.insertGiftMessages(price);
+
 				if( price*1 >= minPrice ){
   					basketRoot.classList.remove("blockButton");
 				}else{
 					basketRoot.classList.add("blockButton");
 				}
 			}
+		},
+
+		insertGiftMessages: function(price){
+			var div = document.getElementById("price-need-for-gift-messages");
+				div.innerHTML = "";
+
+			$arGiftList.forEach(function(arGift) {
+			  	arGift.PRODUCTS.forEach(function(arProduct){
+			  		if (price < arGift.PRICE) {
+			  			var sum = parseInt(arGift.PRICE) - parseInt(price),
+			  				str = '<p>Добавьте товаров в корзину на сумму <b>'+sum+' руб.</b> и получите ',
+			  				index = 0;
+
+		  				for(var i in arProduct.NAME){
+		  					index ++;
+		  				}
+
+		  				if (index > 1) {
+		  					if(arProduct.TYPE == "one"){
+		  						str += ("один из подарков: ");
+		  					} else {
+		  						str += ("подарки: ");
+		  					}
+		  				} else {
+		  					str += ("подарок: ");
+		  				}
+
+		  				var i = 0;
+
+		  				for (var name in arProduct.NAME) {
+							str += '<a href="'+arProduct.NAME[name]+'">'+name+'</a>';
+							if (index > 1 && (index-1) != i){
+								str += ", "; 
+		  					}
+							i++;
+						}
+						div.innerHTML += str;
+			  		}
+			  	});
+			});
 		},
 
 		checkBasketItemsAnimation: function(itemData)

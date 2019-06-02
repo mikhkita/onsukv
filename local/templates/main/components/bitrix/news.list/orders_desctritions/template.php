@@ -14,9 +14,15 @@ $this->setFrameMode(true);?>
 
 <? if(count($arResult["ITEMS"])): ?> 
     <? foreach ($arResult["ITEMS"] as $arItem): ?>
-    	<? $arDate = $arItem['PROPERTIES']['ORDER_DATE']['VALUE']; ?>
-    	<? $date = date("d", strtotime($arDate))." ".getRusMonth(date("m", strtotime($arDate))).", ".getRusDayOfWeek(date("w", strtotime($arDate))); ?>
-    	<? $isSunday = ( date("w", strtotime($arDate)) == 0 )?'data-isSunday="Y" disabled':""; ?>
-        <option value="<?=$arDate?>" <?=$isSunday?>> <?=$date?></option>
+    	<?
+    		$arDate = $arItem['PROPERTIES']['ORDER_DATE']['VALUE'];
+    		$date = date("d", strtotime($arDate))." ".getRusMonth(date("m", strtotime($arDate))).", ".getRusDayOfWeek(date("w", strtotime($arDate))); 
+    		$isSunday = ( date("w", strtotime($arDate)) == 0 )?'data-isSunday="Y"':'data-isSunday="N"';
+    		$dataDisabled = ( $arItem['CODE'] == "Y" )? 'data-disabled="Y"': 'data-disabled="N"'; 
+    		if ($arItem['CODE'] == "Y" || date("w", strtotime($arDate)) == 0){
+    			$disabled = "disabled";
+    		}
+    	?>
+        <option value="<?=$arDate?>" <?=$dataDisabled?> <?=$isSunday?> <?=$disabled?>> <?=$date?></option>
     <? endforeach; ?>
 <? endif; ?>

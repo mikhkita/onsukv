@@ -700,6 +700,8 @@ $(document).ready(function(){
         return 0;
     }
 
+    // console.log($arGiftList);
+
     function disableDates(){
         var date = $("select#delivery").attr("data-date"),
             deliveryID = $("select#delivery").val();
@@ -708,7 +710,7 @@ $(document).ready(function(){
             // if( deliveryID != 4 && $(this).attr("data-isSunday") == "Y" ){
             //     date++;
             // }
-            if( $(this).index() < date || ( deliveryID != 32 && $(this).attr("data-isSunday") == "Y" ) ){
+            if( $(this).index() < date || ( deliveryID != 32 && $(this).attr("data-isSunday") == "Y" )  || $(this).attr("data-disabled") == "Y"){
                 $(this).prop("disabled", true);
             }else{
                 $(this).prop("disabled", false);

@@ -176,6 +176,34 @@ if (empty($arResult['ERROR_MESSAGE']))
 		<?
 	}
 	?>
+
+	<?if ($arParams['USE_GIFTS'] === 'Y' && $arParams['GIFTS_PLACE'] === 'BOTTOM'):
+		$arDiscountList = Bitrix\Sale\Internals\DiscountTable::getList()->fetchAll();
+		$arGiftList = array();
+		$i = 0;
+		foreach($arDiscountList as $discountItem){
+			if(!$discountItem["SHORT_DESCRIPTION_STRUCTURE"]){ // если не скидка, а подарок
+				foreach($discountItem["CONDITIONS_LIST"]['CHILDREN'] as $CondBsktAmtGroup){
+					$arGiftList[$i]["LOGIC"] = $CondBsktAmtGroup["DATA"]["logic"];
+	    			$arGiftList[$i]["PRICE"] = $CondBsktAmtGroup["DATA"]["Value"];
+				}
+				foreach($discountItem["ACTIONS_LIST"]['CHILDREN'] as $k => $GiftCondGroup){
+					$arGiftList[$i]["PRODUCTS"][$k]['TYPE'] = $GiftCondGroup["CHILDREN"][0]['DATA']['Type'];
+					foreach ($GiftCondGroup["CHILDREN"][0]['DATA']['Value'] as $n => $id) {
+						$res = CIBlockElement::GetByID($id);
+						if($ar_res = $res->GetNext()){
+							$arGiftList[$i]["PRODUCTS"][$k]['NAME'][$ar_res['NAME']] = $ar_res["DETAIL_PAGE_URL"];
+						}
+					}
+				}
+				$i++;
+			}
+		}?>
+		<?$jsonArGiftList = json_encode($arGiftList);?>
+		<script>var $arGiftList = <?=$jsonArGiftList?></script>
+		<div class="b-text" id="price-need-for-gift-messages"></div>
+	<?endif;?>
+
 	<div id="basket-root" class="bx-basket bx-<?=$arParams['TEMPLATE_THEME']?> bx-step-opacity <?=( (intval($arResult["allSum"]) < $minPrice)?"blockButton":"" )?>" style="opacity: 0;" data-minprice="<?=$minPrice?>">
 		<?
 		if (

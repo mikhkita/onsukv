@@ -52,6 +52,7 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.ph
 			  "IBLOCK_ID"      => 8,
 			  "PROPERTY_VALUES"=> $PROP,
 			  "NAME"           => $settings["PARAM_VALUE"]["VALUE"],
+			  "CODE" 		   => "N",
 			  "ACTIVE"         => "Y",
 			  "DATE_ACTIVE_FROM" => ConvertTimeStamp(time(), "FULL")
 			);

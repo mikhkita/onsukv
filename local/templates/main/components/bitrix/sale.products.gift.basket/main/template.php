@@ -113,6 +113,7 @@ $obName = 'ob'.preg_replace('/[^a-zA-Z0-9_]/', 'x', $this->GetEditAreaId($this->
 $containerName = 'sale-products-gift-container';
 
 // print_r($arResult);
+
 ?>
 
 <div class="sale-products-gift bx-<?=$arParams['TEMPLATE_THEME']?>" data-entity="<?=$containerName?>">
@@ -127,7 +128,6 @@ $containerName = 'sale-products-gift-container';
 			$areaIds[$item['ID']] = $this->GetEditAreaId($uniqueId);
 			$this->AddEditAction($uniqueId, $item['EDIT_LINK'], $elementEdit);
 			$this->AddDeleteAction($uniqueId, $item['DELETE_LINK'], $elementDelete, $elementDeleteParams);
-
 			// custom gift labels
 			$item['LABEL_VALUE'] = $arParams['TEXT_LABEL_GIFT'] ?: Loc::getMessage('CT_SPGB_TPL_TEXT_LABEL_GIFT_DEFAULT');
 			$item['LABEL_ARRAY_VALUE'] = array('gift' => $item['LABEL_VALUE']);

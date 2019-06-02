@@ -14,9 +14,9 @@ use \Bitrix\Main;
  */
 
 $this->setFrameMode(true);
-
 if (isset($arResult['ITEM']))
 {
+
 	$item = $arResult['ITEM'];
 	$areaId = $arResult['AREA_ID'];
 	$itemIds = array(

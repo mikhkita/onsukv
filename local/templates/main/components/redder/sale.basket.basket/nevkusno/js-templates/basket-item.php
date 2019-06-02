@@ -395,6 +395,7 @@ if (!empty($arParams['LABEL_PROP_POSITION']))
 						}
 						?>
 					</div>
+					<div class="basket-item-message" id="basket-item-{{ID}}-message"></div>
 					{{#SHOW_LOADING}}
 						<div class="basket-items-list-item-overlay"></div>
 					{{/SHOW_LOADING}}

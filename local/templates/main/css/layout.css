@@ -4537,6 +4537,19 @@ li.bx-inclinkspersonal-item {
 		margin-top: -24px;
 		margin-bottom: -200px;
 	}
+#price-need-for-gift-messages{
+	margin-bottom: 20px;
+}
+.basket-item-message{
+	position: absolute;
+    top: calc(100% + 20px);
+    right: 0;
+    left: 0;
+    color: #a1a1a1;
+    text-align: center;
+    color: #f00;
+    font: italic 12px/14px "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
 
 
 @media only screen and (max-width: 1920px){
