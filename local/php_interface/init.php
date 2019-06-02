@@ -42,6 +42,7 @@ class MyEventHandlers
 			$arDelivery = CSaleDelivery::GetByID($deliveryID);
 
 			foreach ($temp["properties"] as $arProp) {
+				vardump($arProp);
 				if ($arProp["CODE"] == "CALL") {
 					if ($arProp["VALUE"][0] == "Y") {
 						$arProps[$arProp["CODE"]] = "Звонок оператора";
