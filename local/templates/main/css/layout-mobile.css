@@ -501,6 +501,10 @@ p{
 		top: -19px;
 	}
 @media screen and (max-width: 600px){
+	.b-cdek-addr{
+		position: relative;
+		top: -16px;
+	}
 	#no_price_to_pocikpoint{
 		max-width: 100%;
 	}

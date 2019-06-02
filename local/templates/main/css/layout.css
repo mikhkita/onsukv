@@ -4577,7 +4577,10 @@ li.bx-inclinkspersonal-item {
     color: #f00;
     font: italic 12px/14px "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
-
+#SDEK_pvz{
+	width: 100%;
+	max-width: 900px;
+}
 
 
 

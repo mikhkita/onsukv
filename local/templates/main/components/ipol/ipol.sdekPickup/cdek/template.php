@@ -369,8 +369,10 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 					$('#SDEK_pPrice').html(price);
 					$('#SDEK_pDate').html(date);
 
-					var intPrice = price.substr( 0, price.length - 5);
-					$("#b-delivery-price-input").val( (intPrice)?intPrice:0 ).trigger("change");
+					if( $("#delivery").val() == "120" ){
+						var intPrice = price.substr( 0, price.length - 5);
+						$("#b-delivery-price-input").val( (intPrice)?intPrice:0 ).trigger("change");
+					}
 
 					// $('#SDEK_cPrice').html(IPOLSDEK_pvz.prices.courier[0]);
 					// $('#SDEK_cDate').html(IPOLSDEK_pvz.prices.courier[1]);

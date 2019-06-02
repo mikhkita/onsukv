@@ -751,7 +751,7 @@ $(document).ready(function(){
             }
         });
 
-        if( deliveryID == 53 || deliveryID == 54 || deliveryID == 55 || deliveryID == 30 ){
+        if( deliveryID == 53 || deliveryID == 54 || deliveryID == 55 || deliveryID == 30 || deliveryID == 120 ){
             $("select#date").prop( "disabled", true );
         }else{
             $("select#date").prop( "disabled", false );

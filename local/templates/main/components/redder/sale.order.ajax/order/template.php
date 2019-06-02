@@ -190,9 +190,6 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                             ),
                             false
                         );?>
-                        <? foreach ($arResult["DATES"] as $key => $arDate): ?>
-                            <option value="<?=$arDate["KEY"]?>" data-isSunday="<?=$arDate["IS_SUNDAY"]?>"><?=$arDate["VALUE"]?></option>
-                        <? endforeach; ?>
                     </select>
                 </div>
                 <div class="b-input b-time-input not-empty" style="display:none;" id="b-time-input">
@@ -383,7 +380,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
             </div>
         </div>
         <input type="submit" value="Заказать" class="goal-click" data-goal="TRY_BUY" style="display:none;">
-        <?$APPLICATION->IncludeComponent("bitrix:sale.basket.basket", "order", Array(
+        <?$APPLICATION->IncludeComponent("redder:sale.basket.basket", "order", Array(
             "ACTION_VARIABLE" => "basketAction",    // Название переменной действия
                 "ADDITIONAL_PICT_PROP_1" => "-",    // Дополнительная картинка [Товары]
                 "AUTO_CALCULATION" => "Y",  // Автопересчет корзины
