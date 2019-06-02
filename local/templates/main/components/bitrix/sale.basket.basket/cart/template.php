@@ -11,8 +11,7 @@
 /** @var string $componentPath */
 /** @var CBitrixBasketComponent $component */
 
-// print_r($arResult);
-
+// vardump($arResult);
 $GLOBALS["isEmpty"] = true;
 
 if (count($arResult["ITEMS"]["AnDelCanBuy"])):

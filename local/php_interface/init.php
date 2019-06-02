@@ -23,6 +23,7 @@ AddEventHandler("search", "BeforeIndex", array("SearchHandlers", "BeforeIndexHan
 AddEventHandler("catalog", "OnStoreProductUpdate", Array("MyClass", "OnStoreProductUpdateHandler"));
 AddEventHandler("sale", "DiscountOnAfterUpdate", Array("MyClass", "DiscountOnAfterUpdateHandler"));
 AddEventHandler("main", "OnBeforeEventAdd", Array("MyEventHandlers", "OnBeforeEventAddHandler")); 
+AddEventHandler("sale", "OnOrderAdd", Array("MyClass", "OnOrderAddHandler"));
 
 
 class MyEventHandlers 
@@ -351,14 +352,49 @@ class MyClass {
  //    		updateWholesale($arFields["ID"]);
  //    	}
  //    }
+	function OnOrderAddHandler($ID, $arFields){ 
+
+		$deliveryDate = $arFields["ORDER_PROP"][8];
+		$orderCount = getOrderCountInDate($deliveryDate);
+
+		$arSelect = Array();
+		$arFilter = Array("IBLOCK_ID" => 8);
+		$res = CIBlockElement::GetList(Array(), $arFilter, false, Array("nPageSize"=>1000000), $arSelect);
+
+		while($ob = $res->GetNextElement()){
+			$arFields = $ob->GetFields();
+			$arProps = $ob->GetProperties();
+			$arOrder[$arFields['ID']] = array('MAXCOUNT' => $arFields['NAME'], 'DELIVERY_DATE' => $arProps["ORDER_DATE"]["VALUE"]);
+		} 
+
+		foreach($arOrder as $id => $item){
+			if ($item['DELIVERY_DATE'] == $deliveryDate) {
+				if ($item['MAXCOUNT'] <= $orderCount) {
+					$el = new CIBlockElement;
+					$arLoadProductArray = Array("CODE" => "Y");
+					$el->Update($id, $arLoadProductArray);
+				}
+			}
+		}
+		
+	}
+}
+
+function getOrderCountInDate($date){
+
+	$arFilter = Array("PROPERTY_VAL_BY_CODE_DELIVERY_DATE" => date($date));
+	$db_sales = CSaleOrder::GetList(array("DATE_INSERT" => "ASC"), $arFilter);
+	$count = 0;
+	while ($ar_sales = $db_sales->Fetch())
+	{
+		$count ++;
+	}
+
+	return $count;
 }
 
 function OnOrderUpdateHandler($ID, $arFields){ 
 	file_put_contents("/order.html", $arFields);
-}
-
-function OnOrderAddHandler($ID, $arFields){ 
-	file_put_contents("/addorder.html", $arFields);
 }
 
 function updateWholesale($itemID){

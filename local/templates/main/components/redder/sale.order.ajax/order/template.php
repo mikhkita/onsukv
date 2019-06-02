@@ -190,6 +190,9 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                             ),
                             false
                         );?>
+                        <? foreach ($arResult["DATES"] as $key => $arDate): ?>
+                            <option value="<?=$arDate["KEY"]?>" data-isSunday="<?=$arDate["IS_SUNDAY"]?>"><?=$arDate["VALUE"]?></option>
+                        <? endforeach; ?>
                     </select>
                 </div>
                 <div class="b-input b-time-input not-empty" style="display:none;" id="b-time-input">
@@ -283,10 +286,6 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                     </div>
                 <? endif; ?>
             <? endforeach; ?>
-            <div class="b-delivery-info b-text b-delivery-error" id="b-post-error-5000">
-                <p class="red">В магазине действует ограничение по сумме на Наложенный платеж - 5 000 руб. 
-                Вам нужно либо сократить сумму заказа, либо выбрать другой вид доставки.</p>
-            </div>
             <div class="b-order-addr-cont" style="display: none;">
                 <div class="b-row b-order-addr">
                     <h4>Адрес доставки:</h4>
@@ -384,7 +383,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
             </div>
         </div>
         <input type="submit" value="Заказать" class="goal-click" data-goal="TRY_BUY" style="display:none;">
-        <?$APPLICATION->IncludeComponent("redder:sale.basket.basket", "order", Array(
+        <?$APPLICATION->IncludeComponent("bitrix:sale.basket.basket", "order", Array(
             "ACTION_VARIABLE" => "basketAction",    // Название переменной действия
                 "ADDITIONAL_PICT_PROP_1" => "-",    // Дополнительная картинка [Товары]
                 "AUTO_CALCULATION" => "Y",  // Автопересчет корзины

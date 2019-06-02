@@ -28,6 +28,8 @@ $GLOBALS["season"] = getSeason();
 
 CModule::IncludeModule('iblock');
 
+// $count = getOrderCountInDate("30.05.2019");
+
 ?>
 <!DOCTYPE html>
 <html>

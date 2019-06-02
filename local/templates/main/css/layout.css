@@ -3896,11 +3896,8 @@ li.bx-inclinkspersonal-item {
 	.b-textarea{
 		width: calc(50% - 12px);
 		margin-right: 0;
-<<<<<<< HEAD
 		margin-bottom: 16px;
-=======
 		/*margin-bottom: 20px;*/
->>>>>>> e4fd62803ae99f0b07e56d1728dd6a30303a7237
 	}
 		.b-textarea textarea{
 			padding: 14px 22px 15px 22px;
@@ -4567,11 +4564,19 @@ li.bx-inclinkspersonal-item {
 		width: 200px;
 		padding: 9px 22px 10px 22px;
 	}
-
-
-
-
-
+#price-need-for-gift-messages{
+	margin-bottom: 20px;
+}
+.basket-item-message{
+	position: absolute;
+    top: calc(100% + 20px);
+    right: 0;
+    left: 0;
+    color: #a1a1a1;
+    text-align: center;
+    color: #f00;
+    font: italic 12px/14px "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
 
 
 
