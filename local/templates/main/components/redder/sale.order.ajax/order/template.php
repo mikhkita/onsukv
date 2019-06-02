@@ -303,20 +303,20 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                     <div class="order-adress-map-form-content">
                         <div class="b-addresss-item form-item __adress b-ui-autocomplete">
                             <div class="b-addresss-item__address b-input ui-menu ui-widget ui-widget-content ui-autocomplete ui-front">
-                                <input type="text" id="js-order-adress-map-input" class="js-order-adress-map-input ui-autocomplete-input" name="PROPERTY[NAME][0]" value="" autocomplete="off" required>
+                                <input type="text" id="js-order-adress-map-input" class="js-order-adress-map-input ui-autocomplete-input" name="ORDER_PROP_11[ADDRESS]" value="" autocomplete="off" required>
                                 <label for="name">Город, улица, дом <span class="required">*</span></label>
                             </div>
                             <div class="b-addresss-item__room b-input">
-                                <input type="text" id="number-room-input" name="PROPERTY[26][0]" value="" autocomplete="off" required>
+                                <input type="text" id="number-room-input" name="ORDER_PROP_11[ROOM]" value="" autocomplete="off" required>
                                 <label for="name">Квартира/офис <span class="required">*</span></label>
                             </div>
                             <div class="b-addresss-item__index b-input">
-                                <input type="text" id="postal-code" name="PROPERTY[24][0]" value="" autocomplete="off" required>
+                                <input type="text" id="postal-code" name="ORDER_PROP_11[INDEX]" value="" autocomplete="off" required>
                                 <label for="name">Индекс <span class="required">*</span></label>
                             </div>
                         </div>
-                        <input type="hidden" id="region" name="PROPERTY[25][0]">
-                        <input type="hidden" id="city" name="PROPERTY[29][0]">
+                        <input type="hidden" id="region" name="ORDER_PROP_11[REGION]">
+                        <input type="hidden" id="city" name="ORDER_PROP_11[CITY]">
                     </div>
                     <div id="map-address"></div>
                 </div>

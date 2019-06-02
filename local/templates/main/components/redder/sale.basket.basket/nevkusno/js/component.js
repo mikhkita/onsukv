@@ -1047,10 +1047,14 @@
 
 					this.insertGiftMessages(price);
 
-				if( price*1 >= minPrice ){
-  					basketRoot.classList.remove("blockButton");
-				}else{
-					basketRoot.classList.add("blockButton");
+				if (basketRoot) {
+					if( price*1 >= minPrice ){
+						basketRoot.classList.remove("blockButton");
+					}else{
+						basketRoot.classList.add("blockButton");
+					}
+				} else {
+					console.log('ok');
 				}
 			}
 		},

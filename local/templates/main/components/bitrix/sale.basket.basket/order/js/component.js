@@ -920,17 +920,19 @@
 					postError5000 = document.getElementById("b-post-error-5000"),
 					minPrice = basketRoot.dataset.minprice;
 
-				if( price >= 5000 && deliveryID == 55 ){
-					postError5000.classList.add("show");
-					basketRoot.classList.add("deliveryError5000");
-				}else{
-					postError5000.classList.remove("show");
-					basketRoot.classList.remove("deliveryError5000");
-				}
-				if( price >= minPrice ){
-  					basketRoot.classList.remove("blockButton");
-				}else{
-					basketRoot.classList.add("blockButton");
+				if(basketRoot){
+					if( price >= 5000 && deliveryID == 55 ){
+						postError5000.classList.add("show");
+						basketRoot.classList.add("deliveryError5000");
+					}else{
+						postError5000.classList.remove("show");
+						basketRoot.classList.remove("deliveryError5000");
+					}
+					if( price >= minPrice ){
+	  					basketRoot.classList.remove("blockButton");
+					}else{
+						basketRoot.classList.add("blockButton");
+					}
 				}
 			}
 		},
