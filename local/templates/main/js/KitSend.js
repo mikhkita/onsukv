@@ -221,6 +221,10 @@ $(document).ready(function(){
 			$(".b-add-postamat").after("<p class='red b-postamat-error'>Вам нужно выбрать постамат, в котором вы хотите получить вашу посылку.</p>");
 		}
 
+		if( $form.hasClass("b-data-order-form") && $("#delivery").val() == "120" && !$(".cdekaddr").length ){
+			$(".b-cdek-punkt").after("<p class='red b-postamat-error'>Вам нужно выбрать пункт самовывоза, в котором вы хотите получить вашу посылку.</p>");
+		}
+
   		if( $(this).find("input.error,select.error,textarea.error,.b-postamat-error").length == 0 ){
   			var $this = $(this),
   				$thanks = $($this.attr("data-block"));

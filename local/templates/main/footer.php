@@ -375,7 +375,8 @@
 
 	<script type="text/javascript" src="http://pickpoint.ru/select/postamat.js" charset="utf-8"></script>
 	
-	<script type="text/javascript" src="<?=SITE_TEMPLATE_PATH?>/js/jquery-3.2.1.min.js"></script>
+		<? /* ?><script type="text/javascript" src="<?=SITE_TEMPLATE_PATH?>/js/jquery-3.2.1.min.js"></script><? */ ?>
+		<script type="text/javascript" src="/bitrix/js/main/jquery/jquery-1.8.3.min.js"></script>
 
 	<?if($urlArr[2]=="addresses" && isset($urlArr[4]) || $urlArr[2]=="order"): ?>
 		<? if($urlArr[2]=="addresses" && isset($urlArr[4])): ?>
@@ -384,7 +385,7 @@
 		<script type="text/javascript" src="<?=SITE_TEMPLATE_PATH?>/js/AddressDeliveryClass.js"></script>
 		<script type="text/javascript" src="<?=SITE_TEMPLATE_PATH?>/js/address.js"></script>
 	<?endif;?>
-	
+
 	<script type="text/javascript" src="<?=SITE_TEMPLATE_PATH?>/js/jquery.fancybox.min.js"></script>
 	<script type="text/javascript" src="<?=SITE_TEMPLATE_PATH?>/js/jquery.formstyler.min.js"></script>
 	<!-- <script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false&key=AIzaSyD6Sy5r7sWQAelSn-4mu2JtVptFkEQ03YI"></script> -->
