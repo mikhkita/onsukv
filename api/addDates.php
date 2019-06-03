@@ -25,7 +25,7 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.ph
 
 	foreach ($arDates as $id => $item) {
 		$compareDates = $DB->CompareDates($item, date("d.m.Y", time())); 
-		if ($compareDates == '-1') {
+		if ($compareDates != '1') {
 			if(CIBlockElement::Delete($id)){
 				echo "delete\n";
 			} else {
