@@ -36,7 +36,7 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.ph
 
 	$count = 14;
 
-	for ($i=0; $i < $count; $i++) { 
+	for ($i=1; $i <= $count; $i++) { 
 
 		$PROP['ORDER_DATE'] = date("d.m.Y", time() + $i*24*60*60);
 		$flag = false;
