@@ -23,6 +23,7 @@ ymaps.ready(['AddressDelivery']).then(function init() {
 
             for( var i in addr ){
                 if( addr[i].kind == "locality" && typeof IPOLSDEK_pvz != "undefined" ){
+                    // alert(addr[i].name);
                     IPOLSDEK_pvz.chooseCity(addr[i].name);
                 }
             }

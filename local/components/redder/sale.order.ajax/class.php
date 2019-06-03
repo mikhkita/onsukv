@@ -512,12 +512,12 @@ class SaleOrderAjax extends \CBitrixComponent
 			$propsByPersonType = [];
 
 			$props = Sale\Property::getList([
-				'select' => ['ID', 'PERSON_TYPE_ID', 'IS_LOCATION', 'IS_ZIP', 'DEFAULT_VALUE'],
+				'select' => ['ID', 'PERSON_TYPE_ID', 'IS_LOCATION2', 'IS_ZIP', 'DEFAULT_VALUE'],
 				'filter' => [
 					[
 						'LOGIC' => 'OR',
 						'=IS_ZIP' => 'Y',
-						'=IS_LOCATION' => 'Y',
+						'=IS_LOCATION2' => 'Y',
 					],
 					[
 						'@PERSON_TYPE_ID' => [$currentPersonType, $lastPersonType],
@@ -532,9 +532,9 @@ class SaleOrderAjax extends \CBitrixComponent
 					continue;
 				}
 
-				if ($prop['IS_LOCATION'] === 'Y')
+				if ($prop['IS_LOCATION2'] === 'Y')
 				{
-					$propsByPersonType[$prop['PERSON_TYPE_ID']]['IS_LOCATION'] = $prop['ID'];
+					$propsByPersonType[$prop['PERSON_TYPE_ID']]['IS_LOCATION2'] = $prop['ID'];
 				}
 				else
 				{
@@ -2128,14 +2128,14 @@ class SaleOrderAjax extends \CBitrixComponent
 		$propertyUSER_PROPS = $arProperty['USER_PROPS'];
 
 		if ($arProperty['REQUIRED'] === 'Y' || $arProperty['IS_PROFILE_NAME'] === 'Y'
-			|| $arProperty['IS_LOCATION'] === 'Y' || $arProperty['IS_LOCATION4TAX'] === 'Y'
+			|| $arProperty['IS_LOCATION2'] === 'Y' || $arProperty['IS_LOCATION4TAX'] === 'Y'
 			|| $arProperty['IS_PAYER'] === 'Y' || $arProperty['IS_ZIP'] === 'Y')
 		{
 			$arProperty['REQUIED'] = 'Y';
 			$arProperty['REQUIED_FORMATED'] = 'Y';
 		}
 
-		if ($arProperty['IS_LOCATION'] === 'Y')
+		if ($arProperty['IS_LOCATION2'] === 'Y')
 		{
 			$deliveryId = CSaleLocation::getLocationIDbyCODE(current($arProperty['VALUE']));
 			$this->arUserResult['DELIVERY_LOCATION'] = $deliveryId;
@@ -2402,7 +2402,7 @@ class SaleOrderAjax extends \CBitrixComponent
 			}
 			else
 			{
-				if ($arProperty["IS_LOCATION"] == "Y" && intval($arProperty["INPUT_FIELD_LOCATION"]) > 0)
+				if ($arProperty['IS_LOCATION2'] == "Y" && intval($arProperty["INPUT_FIELD_LOCATION"]) > 0)
 				{
 					if (intval($locationFound["CITY_ID"]) <= 0)
 						unset($arDeleteFieldLocation[$arProperty["ID"]]);
@@ -4957,7 +4957,7 @@ class SaleOrderAjax extends \CBitrixComponent
 				$locations[$property['ID']]['showAlt'] = isset($this->arUserResult['ORDER_PROP'][$property['INPUT_FIELD_LOCATION']]);
 				$locations[$property['ID']]['lastValue'] = reset($property['VALUE']);
 
-				if ($property['IS_LOCATION'] === 'Y')
+				if ($property['IS_LOCATION2'] === 'Y')
 				{
 					$locations[$property['ID']]['coordinates'] = LocationTable::getRow(array(
 						'select' => array('LONGITUDE', 'LATITUDE'),
@@ -4978,7 +4978,7 @@ class SaleOrderAjax extends \CBitrixComponent
 		$showDefault = true;
 
 		$propertyId = (int)$property['ID'];
-		$isMultiple = $property['MULTIPLE'] == 'Y' && $property['IS_LOCATION'] != 'Y';
+		$isMultiple = $property['MULTIPLE'] == 'Y' && $property['IS_LOCATION2'] != 'Y';
 
 		$locationAltPropDisplayManual = $this->request->get('LOCATION_ALT_PROP_DISPLAY_MANUAL');
 		$altPropManual = isset($locationAltPropDisplayManual[$propertyId]) && (bool)$locationAltPropDisplayManual[$propertyId];
@@ -5296,7 +5296,7 @@ class SaleOrderAjax extends \CBitrixComponent
 								{
 									$property->setValue($value[$property->getPropertyId()]);
 									$arProperty = $property->getProperty();
-									if ($arProperty['IS_LOCATION'] === 'Y' || $arProperty['IS_ZIP'] === 'Y')
+									if ($arProperty['IS_LOCATION2'] === 'Y' || $arProperty['IS_ZIP'] === 'Y')
 									{
 										$recalculateDelivery = true;
 									}

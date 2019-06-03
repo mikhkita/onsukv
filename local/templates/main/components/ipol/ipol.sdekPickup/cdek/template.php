@@ -294,6 +294,9 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 				Y_selectPVZ: function(wat){
 					IPOLSDEK_pvz.cityPVZ[wat].placeMark.balloon.open();
 					IPOLSDEK_pvz.Y_map.setCenter([IPOLSDEK_pvz.cityPVZ[wat].cY,IPOLSDEK_pvz.cityPVZ[wat].cX]);
+
+					$(".cdekaddr, .b-postamat-error").remove();
+					$("#b-cdek-punk-addr").html(IPOLSDEK_pvz.cityPVZ[wat].Address).after( '<input type="hidden" class="cdekaddr" name="ORDER_PROP_8" value="' + IPOLSDEK_pvz.cityPVZ[wat].Address + '" />' );
 				},
 
 				Y_readyToBlink: false,
