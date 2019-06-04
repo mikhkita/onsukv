@@ -288,7 +288,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                     <h4>Адрес доставки:</h4>
                     <? foreach ($arResult["ADDRESSES"] as $key => $arAddress): ?>
                         <div class="b-checkbox">
-                            <input type="radio" id="addr-<?=$arAddress["ID"]?>" class="b-addr-radio" name="address" data-index="<?=$arAddress["INDEX"]?>" data-region="<?=$arAddress["REGION"]?>" data-city="<?=$arAddress["CITY"]?>" data-address="<?=$arAddress["ADDRESS"]?>" data-room="<?=$arAddress["ROOM"]?>">
+                            <input type="radio" id="addr-<?=$arAddress["ID"]?>" class="b-addr-radio" name="ORDER_PROP_13" data-index="<?=$arAddress["INDEX"]?>" data-region="<?=$arAddress["REGION"]?>" data-city="<?=$arAddress["CITY"]?>" data-address="<?=$arAddress["ADDRESS"]?>" data-room="<?=$arAddress["ROOM"]?>">
                             <label for="addr-<?=$arAddress["ID"]?>"><?=$arAddress["INDEX"]?>, <?=$arAddress["ADDRESS"]?>, кв/оф. <?=$arAddress["ROOM"]?></label>
                         </div>
                     <? endforeach; ?>
@@ -303,20 +303,20 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                     <div class="order-adress-map-form-content">
                         <div class="b-addresss-item form-item __adress b-ui-autocomplete">
                             <div class="b-addresss-item__address b-input ui-menu ui-widget ui-widget-content ui-autocomplete ui-front">
-                                <input type="text" id="js-order-adress-map-input" class="js-order-adress-map-input ui-autocomplete-input" name="ORDER_PROP_12" value="" autocomplete="off" required>
+                                <input type="text" id="js-order-adress-map-input" class="js-order-adress-map-input ui-autocomplete-input" name="ORDER_PROP_14" value="" autocomplete="off" required>
                                 <label for="name">Город, улица, дом <span class="required">*</span></label>
                             </div>
                             <div class="b-addresss-item__room b-input">
-                                <input type="text" id="number-room-input" name="ORDER_PROP_12" value="" autocomplete="off" required>
+                                <input type="text" id="number-room-input" name="ORDER_PROP_15" value="" autocomplete="off" required>
                                 <label for="name">Квартира/офис <span class="required">*</span></label>
                             </div>
                             <div class="b-addresss-item__index b-input">
-                                <input type="text" id="postal-code" name="ORDER_PROP_13" value="" autocomplete="off" required>
+                                <input type="text" id="postal-code" name="ORDER_PROP_16" value="" autocomplete="off" required>
                                 <label for="name">Индекс <span class="required">*</span></label>
                             </div>
                         </div>
-                        <input type="hidden" id="region" name="ORDER_PROP_14">
-                        <input type="hidden" id="city" value="Не выбрано" name="ORDER_PROP_12">
+                        <input type="hidden" id="region" name="ORDER_PROP_17">
+                        <input type="hidden" id="city" value="Не выбрано" name="ORDER_PROP_17">
                     </div>
                     <div id="map-address"></div>
                 </div>

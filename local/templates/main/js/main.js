@@ -1085,9 +1085,9 @@ function pickPointHandler(object){
     $(".pickpointinfo").remove();
     $( "#pickpoint-delivery-point" )
         .html( object.name + '<br />' + object.address )
-        .after( '<input type="hidden" class="pickpointinfo" name="ORDER_PROP_7[PickPointPostamat_ID]" value="' + object.id + '" />' )
-        .after( '<input type="hidden" class="pickpointinfo" name="ORDER_PROP_7[PickPointPostamat_Name]" value="' + object.name + '" />' )
-        .after( '<input type="hidden" class="pickpointinfo pickpointaddr" name="ORDER_PROP_7[PickPointPostamat_Addr]" value="' + object.address + '" />' );
+        .after( '<input type="hidden" class="pickpointinfo" name="ORDER_PROP_19" value="' + object.id + '" />' )
+        .after( '<input type="hidden" class="pickpointinfo" name="ORDER_PROP_18" value="' + object.name + '" />' )
+        .after( '<input type="hidden" class="pickpointinfo pickpointaddr" name="ORDER_PROP_7" value="' + object.address + '" />' );
 
     $(".b-postamat-error").remove();
 

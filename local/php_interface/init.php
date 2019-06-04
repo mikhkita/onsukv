@@ -48,14 +48,12 @@ class MyEventHandlers
 					} else {
 						$arProps[$arProp["CODE"]] = "Автоматический";
 					}
-				} elseif($arProp["CODE"] == "PICKPOINT") {
-					if (isset($arProp['VALUE'][1])) {
-						$arProps[$arProp["CODE"]] = "PickPoint, ID постамата : ".$arProp["VALUE"][2]."<br>".$arProp["VALUE"][1]."<br>Адрес постамата : ".$arProp["VALUE"][0]."";
-					}
 				} else {
 					$arProps[$arProp["CODE"]] = $arProp["VALUE"][0];
 				}
 			}
+
+			vardump($arProps);
 
 			$arBasketItems = array();
 			$arBasketFilter = array("LID" => 's1',"ORDER_ID" => $arFields["ORDER_ID"]);
@@ -104,8 +102,18 @@ class MyEventHandlers
 			if ($USER->GetID()) {
 				$userID = "(".$USER->GetID().")";
 			}
+
 			$processing = ($arProps["CALL"]) ? "Выбран <strong>".$arProps["CALL"]."</strong>" : $processing = "Не выбран";
-			$howToDelivery = (isset($arProps['PICKPOINT'])) ? $arProps['PICKPOINT'] : $arDelivery['NAME'];
+
+			if (isset($arProps['PICKPOINT_ADDRESS'])) {
+				$howToDelivery = $arProps['PICKPOINT_NAME']."<br>".$arProps['PICKPOINT_ADDRESS'];
+			} else {
+				$howToDelivery = $arDelivery['NAME'];
+			}
+
+			vardump($howToDelivery);
+			die();
+
 			$msg = "<html>".
 				"<head>".
 					"<title>Вкусный магазин: Новый заказ</title>".
@@ -154,7 +162,7 @@ class MyEventHandlers
 				            "<tr>".
 				                "<td nowrap='nowrap'>Адрес доставки: </td>".
 			                    "<td>&nbsp;</td>".
-			                    "<td>".$arDelivery['NAME']."</td>".
+			                    "<td>".$arProps["ADDRESS_INDEX"].", ".["ADDRESS"].", кв/оф. ".["ADDRESS_ROOM"]."</td>".
 			                "</tr>".
 				            "<tr>".
 				                "<td nowrap='nowrap'>Метро: </td>".
