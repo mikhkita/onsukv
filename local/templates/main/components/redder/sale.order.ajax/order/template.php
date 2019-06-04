@@ -106,7 +106,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
             </div>
         </div>
         <div class="b-inputs clearfix b-input-row b-last-input-row">
-            <div class="clearfix">
+            <div class="clearfix b-order-addr-input-cont">
                 <div class="b-input not-empty">
                     <label for="last_name">Способ доставки <span class="required">*</span></label>
                     <select name="DELIVERY_ID" id="delivery" data-price="0" data-date="1" required>
@@ -199,8 +199,8 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                     </select>
                 </div>
                 <div class="b-input b-mkad-input" style="display:none;" id="b-mkad-input">
-                    <input type="number" id="mkad" name="ORDER_PROP_10">
-                    <label for="mkad">Расстояние от МКАД</label>
+                    <label for="mkad">Расстояние от МКАД <span class="required">*</span></label>
+                    <input type="number" id="mkad" name="ORDER_PROP_10" required="">
                 </div>
                 <div class="b-input not-empty b-wide-input b-pickpoint" style="display: none;">
                     <?$APPLICATION->IncludeComponent(
