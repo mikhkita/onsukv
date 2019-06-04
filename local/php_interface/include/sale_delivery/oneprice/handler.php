@@ -20,6 +20,10 @@ class OnePriceHandler extends Base
         {
             $result = new CalculationResult();
             $price = floatval($this->config["MAIN"]["PRICE"]);
+
+            if( isset($_REQUEST["DELIVERY_PRICE"]) ){
+                $price = floatval($_REQUEST["DELIVERY_PRICE"]);
+            }
             // $weight = floatval($shipment->getWeight()) / 1000;
         
             $result->setDeliveryPrice($price);

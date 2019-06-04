@@ -105,7 +105,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                 <label for="email">Ваш E-mail <span class="required">*</span></label>
             </div>
         </div>
-        <div class="b-inputs clearfix b-input-row b-last-input-row">
+        <div class="b-inputs clearfix b-input-row">
             <div class="clearfix b-order-addr-input-cont">
                 <div class="b-input not-empty">
                     <label for="last_name">Способ доставки <span class="required">*</span></label>
@@ -298,7 +298,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                     <h4>Адрес доставки:</h4>
                     <? foreach ($arResult["ADDRESSES"] as $key => $arAddress): ?>
                         <div class="b-checkbox">
-                            <input type="radio" id="addr-<?=$arAddress["ID"]?>" class="b-addr-radio" name="ORDER_PROP_13" data-index="<?=$arAddress["INDEX"]?>" data-region="<?=$arAddress["REGION"]?>" data-city="<?=$arAddress["CITY"]?>" data-address="<?=$arAddress["ADDRESS"]?>" data-room="<?=$arAddress["ROOM"]?>">
+                            <input type="radio" id="addr-<?=$arAddress["ID"]?>" class="b-addr-radio" name="address" data-index="<?=$arAddress["INDEX"]?>" data-region="<?=$arAddress["REGION"]?>" data-city="<?=$arAddress["CITY"]?>" data-address="<?=$arAddress["ADDRESS"]?>" data-room="<?=$arAddress["ROOM"]?>">
                             <label for="addr-<?=$arAddress["ID"]?>"><?=$arAddress["INDEX"]?>, <?=$arAddress["ADDRESS"]?>, кв/оф. <?=$arAddress["ROOM"]?></label>
                         </div>
                     <? endforeach; ?>
@@ -326,7 +326,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                             </div>
                         </div>
                         <input type="hidden" id="region" name="ORDER_PROP_16">
-                        <input type="hidden" id="city" value="Не выбрано" name="ORDER_PROP_11">
+                        <input type="hidden" id="city" value="Не выбрано" name="ORDER_PROP_22">
                     </div>
                     <div id="map-address"></div>
                 </div>

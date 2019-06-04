@@ -20,8 +20,8 @@ class RussianHandler extends Base
         {
             $result = new CalculationResult();
 
-            if( isset($_REQUEST["PRICE_DELIVERY"]) ){
-                $price = floatval($_REQUEST["PRICE_DELIVERY"]);
+            if( isset($_REQUEST["DELIVERY_PRICE"]) ){
+                $price = floatval($_REQUEST["DELIVERY_PRICE"]);
             }else{
                 $price = floatval($this->config["MAIN"]["PRICE"]);
             }

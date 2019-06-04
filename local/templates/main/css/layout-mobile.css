@@ -501,6 +501,9 @@ p{
 		top: -19px;
 	}
 @media screen and (max-width: 600px){
+	.b-order-addr-input-cont{
+		margin-bottom: -40px;
+	}
 	.b-cdek-addr{
 		position: relative;
 		top: -16px;
