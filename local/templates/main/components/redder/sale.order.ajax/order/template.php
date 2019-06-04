@@ -326,7 +326,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                             </div>
                         </div>
                         <input type="hidden" id="region" name="ORDER_PROP_16">
-                        <input type="hidden" id="city" value="Не выбрано" name="ORDER_PROP_11">
+                        <input type="hidden" id="city" value="Не выбрано" name="ORDER_PROP_22">
                     </div>
                     <div id="map-address"></div>
                 </div>
