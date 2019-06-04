@@ -39,7 +39,9 @@ class MyEventHandlers
 			$description = $order->getField("USER_DESCRIPTION");
 			$deliveryID = $order->getField("DELIVERY_ID");
 			$arOrder = CSaleOrder::GetByID($arFields["ORDER_ID"]);
-			$arDelivery = CSaleDelivery::GetByID($deliveryID);
+			$arDelivery = Bitrix\Sale\Delivery\Services\Manager::getById($deliveryID);
+			
+			vardump($arFields);
 
 			foreach ($temp["properties"] as $arProp) {
 				if ($arProp["CODE"] == "CALL") {
@@ -103,9 +105,9 @@ class MyEventHandlers
 
 			$processing = ($arProps["CALL"]) ? "Выбран <strong>".$arProps["CALL"]."</strong>" : $processing = "Не выбран";
 
-			vardump($arProps);
+			vardump($arDelivery);
 
-			if (isset($arProps['PICKPOINT_ADDRESS'])) {
+			if (isset($arProps['PICKPOINT_ADDRESS']) && $arProps['PICKPOINT_ADDRESS']!="") {
 				$howToDelivery = $arProps['PICKPOINT_NAME']."<br>".$arProps['PICKPOINT_ADDRESS'];
 			} else {
 				$howToDelivery = $arDelivery['NAME'];
@@ -114,7 +116,7 @@ class MyEventHandlers
 				$address = "<tr>".
 				                "<td nowrap='nowrap'>Адрес доставки: </td>".
 			                    "<td>&nbsp;</td>".
-			                    "<td>".$arProps["ADDRESS_INDEX"].", ".$arProps["ADDRESS"].", кв/оф. ".$arProps["ADDRESS_ROOM"]."</td>".
+			                    "<td>".$arProps["INDEX"].", ".$arProps["ADDRESS"].", кв/оф. ".$arProps["ADDRESS_ROOM"]."</td>".
 		                    "</tr>";
 			}
 
@@ -216,7 +218,7 @@ class MyEventHandlers
 				            "<tr>".
 				            	"<td colspan='4'><strong>Стоимость доставки</strong>:</td>".
 				            	"<td></td>".
-				            	"<td colspan='2'>".$arDelivery['PRICE']."</td>".
+				            	"<td colspan='2'>".$arFields["DELIVERY_PRICE"]."</td>".
 				            "</tr>".
 				            "<tr>".
 				            	"<td colspan='4'><strong>Итого</strong>:</td>".
@@ -258,6 +260,7 @@ class MyEventHandlers
 			"</html>";
 			$arFields['MSG'] = $msg;
 			vardump($arFields['MSG']);
+			die();
 		}
     } 
 }
