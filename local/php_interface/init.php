@@ -48,10 +48,6 @@ class MyEventHandlers
 					} else {
 						$arProps[$arProp["CODE"]] = "Автоматический";
 					}
-				} elseif($arProp["CODE"] == "PICKPOINT") {
-					if (isset($arProp['VALUE'][1])) {
-						$arProps[$arProp["CODE"]] = "PickPoint, ID постамата : ".$arProp["VALUE"][2]."<br>".$arProp["VALUE"][1]."<br>Адрес постамата : ".$arProp["VALUE"][0]."";
-					}
 				} else {
 					$arProps[$arProp["CODE"]] = $arProp["VALUE"][0];
 				}
@@ -94,7 +90,7 @@ class MyEventHandlers
 
 			if ($arProps['DELIVERY_ DISTANCE'] != "") {
 				$delveryDistance = "<tr>".
-						            	"<td colspan='4'><strong>Удаленность от МКАД</strong>:</td>".
+						            	"<td colspan='4'><strong>Расстояние от МКАД</strong>:</td>".
 						            	"<td></td>".
 						            	"<td colspan='2'>".$arProps['DELIVERY_ DISTANCE']."</td>".
 						            "</tr>";
@@ -104,8 +100,24 @@ class MyEventHandlers
 			if ($USER->GetID()) {
 				$userID = "(".$USER->GetID().")";
 			}
+
 			$processing = ($arProps["CALL"]) ? "Выбран <strong>".$arProps["CALL"]."</strong>" : $processing = "Не выбран";
-			$howToDelivery = (isset($arProps['PICKPOINT'])) ? $arProps['PICKPOINT'] : $arDelivery['NAME'];
+
+			vardump($arProps);
+
+			if (isset($arProps['PICKPOINT_ADDRESS'])) {
+				$howToDelivery = $arProps['PICKPOINT_NAME']."<br>".$arProps['PICKPOINT_ADDRESS'];
+			} else {
+				$howToDelivery = $arDelivery['NAME'];
+			} 
+			if ($arProps["ADDRESS"] != '') {
+				$address = "<tr>".
+				                "<td nowrap='nowrap'>Адрес доставки: </td>".
+			                    "<td>&nbsp;</td>".
+			                    "<td>".$arProps["ADDRESS_INDEX"].", ".$arProps["ADDRESS"].", кв/оф. ".$arProps["ADDRESS_ROOM"]."</td>".
+		                    "</tr>";
+			}
+
 			$msg = "<html>".
 				"<head>".
 					"<title>Вкусный магазин: Новый заказ</title>".
@@ -151,10 +163,7 @@ class MyEventHandlers
 			                    "<td>&nbsp;</td>".
 			                    "<td>".$arProps["PHONE"]."</td>".
 			                "</tr>".
-				            "<tr>".
-				                "<td nowrap='nowrap'>Адрес доставки: </td>".
-			                    "<td>&nbsp;</td>".
-			                    "<td>".$arDelivery['NAME']."</td>".
+			                $address.
 			                "</tr>".
 				            "<tr>".
 				                "<td nowrap='nowrap'>Метро: </td>".
@@ -224,7 +233,7 @@ class MyEventHandlers
 				            "<tr>".
 				                "<td>Доп. информация о заказе: </td>".
 			                    "<td>&nbsp;</td>".
-			                    "<td></td>".
+			                    "<td>".$arProps['CDEK_INFO']."</td>".
 			                "</tr>".
 				            "<tr>".
 				                "<td>Комментарий к адресу: </td>".
@@ -248,10 +257,10 @@ class MyEventHandlers
 			    "</body>".
 			"</html>";
 			$arFields['MSG'] = $msg;
+			vardump($arFields['MSG']);
 		}
     } 
-} 
-
+}
 
 class SearchHandlers
 {
