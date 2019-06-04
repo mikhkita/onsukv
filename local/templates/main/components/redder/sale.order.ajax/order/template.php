@@ -298,7 +298,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                     <h4>Адрес доставки:</h4>
                     <? foreach ($arResult["ADDRESSES"] as $key => $arAddress): ?>
                         <div class="b-checkbox">
-                            <input type="radio" id="addr-<?=$arAddress["ID"]?>" class="b-addr-radio" name="ORDER_PROP_13" data-index="<?=$arAddress["INDEX"]?>" data-region="<?=$arAddress["REGION"]?>" data-city="<?=$arAddress["CITY"]?>" data-address="<?=$arAddress["ADDRESS"]?>" data-room="<?=$arAddress["ROOM"]?>">
+                            <input type="radio" id="addr-<?=$arAddress["ID"]?>" class="b-addr-radio" name="address" data-index="<?=$arAddress["INDEX"]?>" data-region="<?=$arAddress["REGION"]?>" data-city="<?=$arAddress["CITY"]?>" data-address="<?=$arAddress["ADDRESS"]?>" data-room="<?=$arAddress["ROOM"]?>">
                             <label for="addr-<?=$arAddress["ID"]?>"><?=$arAddress["INDEX"]?>, <?=$arAddress["ADDRESS"]?>, кв/оф. <?=$arAddress["ROOM"]?></label>
                         </div>
                     <? endforeach; ?>

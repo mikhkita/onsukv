@@ -258,6 +258,7 @@ class MyEventHandlers
 			"</html>";
 			$arFields['MSG'] = $msg;
 			vardump($arFields['MSG']);
+			die();
 		}
     } 
 }
