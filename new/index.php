@@ -2,6 +2,11 @@
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $count = getParam("NEW_COUNT");
 // setParam("NEW_COUNT", "200");
+
+$GLOBALS["arrFilter"] = array(
+	"ID" => getNewItems($count["VALUE"])
+);
+
 $APPLICATION->SetTitle($count["VALUE"]." последних новинок");?>
 <div class="new-page-view">
 	<p>Отображение:</p>

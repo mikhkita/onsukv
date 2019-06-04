@@ -802,6 +802,18 @@ function getDiscountProducts(){
 	return $out;
 }
 
+function getNewItems($count){
+	$out = array();
+	$arSelect = Array("ID");
+	$arFilter = Array("IBLOCK_ID"=>1, "ACTIVE" => "Y");
+	$res = CIBlockElement::GetList(Array("CREATED_DATE" => "DESC"), $arFilter, false, Array("nPageSize"=>$count), $arSelect);
+	while($ob = $res->GetNextElement()){
+		$arFields = $ob->GetFields();
+		$out[] = $arFields["ID"];
+	}
+	return $out;
+}
+
 function vardump($array){
 	echo "<pre>";
 	var_dump($array);

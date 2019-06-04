@@ -3800,7 +3800,7 @@ li.bx-inclinkspersonal-item {
 		.b-order-addr-input-cont .b-input:nth-child(4n){
 			margin-right: 24px;
 		}
-		.b-order-addr-input-cont .b-input:nth-child(5n){
+		.b-order-addr-input-cont .b-input.b-last-input{
 			margin-right: 0;
 		}
 		.b-input.full{
@@ -4193,7 +4193,8 @@ li.bx-inclinkspersonal-item {
 	.b-popup .b-checkbox label:before{
 		background-color: #FFF;
 	}
-.b-delivery-price{
+h4.b-delivery-price{
+	font-family: "ProximaNova-Bold";
 	margin-top: 24px;
 	margin-bottom: 16px;
 }

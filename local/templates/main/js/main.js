@@ -478,7 +478,7 @@ $(document).ready(function(){
             $("#time").html('');
             $("#mkad").val('');
 
-            $(".b-pickpoint, .b-cdek-choose, .b-order-addr-cont, #b-time-input, #b-mkad-input").hide();
+            $(".b-pickpoint, .b-cdek-choose, .b-order-addr-cont, #b-time-input, #b-mkad-input, #b-metro-input").hide();
 
             if( isValidJSON(price) ){
                 var json = JSON.parse(price);
@@ -498,6 +498,8 @@ $(document).ready(function(){
                 $("#delivery-info-"+$(this).val()).show();
             }
 
+            $("#b-date-deliv").html("Дата доставки");
+
             switch ($(this).val()) {
                 case "26":
                     $("#time").html(
@@ -512,6 +514,7 @@ $(document).ready(function(){
                         '<option value="с 10 до 15">с 10 до 15</option>'+
                         '<option value="с 13 до 18">с 13 до 18</option>'
                     );
+                    $("#b-metro-input").show();
                     $("#b-time-input").show();
                     break;
                 case "30":
@@ -520,6 +523,7 @@ $(document).ready(function(){
                 case "53":
                 case "54":
                 case "55":
+                    $("#b-date-deliv").html("Дата сборки");
                     $(".b-order-addr-cont").show();
                     if( !$(".b-addr-radio:checked").length ){
                         $(".b-addr-radio").eq(0).prop("checked", true).trigger("change");
@@ -969,6 +973,14 @@ $(document).ready(function(){
 
     $("body").on("focusin", ".b-input input, .b-input textarea", function(){
         $(this).parents(".b-input").addClass("focus");
+    });
+
+    $("body").on("change", ".b-input select", function(){
+        if( $(this).val() != ""){
+            $(this).parents(".b-input").addClass("not-empty");
+        }else{
+            $(this).parents(".b-input").removeClass("not-empty");
+        }
     });
 
     $("body").on("focusout", ".b-input input, .b-input textarea", function(){

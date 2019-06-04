@@ -112,7 +112,9 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                     <select name="DELIVERY_ID" id="delivery" data-price="0" data-date="1" required>
                         <option value="">Выберите тип доставки</option>
                         <? foreach ($arResult["DELIVERY"] as $key => $arDelivery): ?>
-                            <option value="<?=$arDelivery["ID"]?>" data-price="<?=$arDelivery["CONFIG"]["MAIN"]["PRICE"]?>" data-date="<?=$arDelivery["CONFIG"]["MAIN"]["PERIOD"]?>"><?=$arDelivery["NAME"]?></option>
+                            <? if( !in_array($arDelivery["ID"], array(117, 118)) ): ?>
+                                <option value="<?=$arDelivery["ID"]?>" data-price="<?=$arDelivery["CONFIG"]["MAIN"]["PRICE"]?>" data-date="<?=$arDelivery["CONFIG"]["MAIN"]["PERIOD"]?>"><?=$arDelivery["NAME"]?></option>
+                            <? endif; ?>
                         <? endforeach; ?>
                     </select>
                 </div>
@@ -124,7 +126,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                     </select>
                 </div>
                 <div class="b-input not-empty">
-                    <label for="last_name">Дата доставки <span class="required">*</span></label>
+                    <label for="last_name"><span id="b-date-deliv">Дата доставки</span> <span class="required">*</span></label>
                     <select name="ORDER_PROP_8" id="date" required>
                         <?$APPLICATION->IncludeComponent(
                             "bitrix:news.list", 
@@ -198,9 +200,17 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                         
                     </select>
                 </div>
-                <div class="b-input b-mkad-input" style="display:none;" id="b-mkad-input">
+                <div class="b-input b-mkad-input b-last-input" style="display:none;" id="b-mkad-input">
                     <label for="mkad">Расстояние от МКАД <span class="required">*</span></label>
                     <input type="number" id="mkad" name="ORDER_PROP_10" required="">
+                </div>
+                <div class="b-input b-metro-input b-last-input" style="display:none;" id="b-metro-input">
+                    <label for="metro">Расстояние от метро <span class="required">*</span></label>
+                    <select name="ORDER_PROP_20" id="metro" required>
+                        <option value=""></option>
+                        <option value="до 2 км. (не более 7 остановок транспортом)">до 2 км. (не более 7 остановок транспортом)</option>
+                        <option value="свыше 2 км. (более 7 остановок транспортом)">свыше 2 км. (более 7 остановок транспортом)</option>
+                    </select>
                 </div>
                 <div class="b-input not-empty b-wide-input b-pickpoint" style="display: none;">
                     <?$APPLICATION->IncludeComponent(
@@ -303,20 +313,20 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                     <div class="order-adress-map-form-content">
                         <div class="b-addresss-item form-item __adress b-ui-autocomplete">
                             <div class="b-addresss-item__address b-input ui-menu ui-widget ui-widget-content ui-autocomplete ui-front">
-                                <input type="text" id="js-order-adress-map-input" class="js-order-adress-map-input ui-autocomplete-input" name="ORDER_PROP_12" value="" autocomplete="off" required>
+                                <input type="text" id="js-order-adress-map-input" class="js-order-adress-map-input ui-autocomplete-input" name="ORDER_PROP_15" value="" autocomplete="off" required>
                                 <label for="name">Город, улица, дом <span class="required">*</span></label>
                             </div>
                             <div class="b-addresss-item__room b-input">
-                                <input type="text" id="number-room-input" name="ORDER_PROP_12" value="" autocomplete="off" required>
+                                <input type="text" id="number-room-input" name="ORDER_PROP_14" value="" autocomplete="off" required>
                                 <label for="name">Квартира/офис <span class="required">*</span></label>
                             </div>
                             <div class="b-addresss-item__index b-input">
-                                <input type="text" id="postal-code" name="ORDER_PROP_13" value="" autocomplete="off" required>
+                                <input type="text" id="postal-code" name="ORDER_PROP_12" value="" autocomplete="off" required>
                                 <label for="name">Индекс <span class="required">*</span></label>
                             </div>
                         </div>
-                        <input type="hidden" id="region" name="ORDER_PROP_14">
-                        <input type="hidden" id="city" value="Не выбрано" name="ORDER_PROP_12">
+                        <input type="hidden" id="region" name="ORDER_PROP_16">
+                        <input type="hidden" id="city" value="Не выбрано" name="ORDER_PROP_11">
                     </div>
                     <div id="map-address"></div>
                 </div>

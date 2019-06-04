@@ -296,7 +296,8 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 					IPOLSDEK_pvz.Y_map.setCenter([IPOLSDEK_pvz.cityPVZ[wat].cY,IPOLSDEK_pvz.cityPVZ[wat].cX]);
 
 					$(".cdekaddr, .b-postamat-error").remove();
-					$("#b-cdek-punk-addr").html(IPOLSDEK_pvz.cityPVZ[wat].Address).after( '<input type="hidden" class="cdekaddr" name="ORDER_PROP_8" value="' + IPOLSDEK_pvz.cityPVZ[wat].Address + '" />' );
+					console.log(IPOLSDEK_pvz);
+					$("#b-cdek-punk-addr").html(IPOLSDEK_pvz.cityPVZ[wat].Address).after( '<input type="hidden" class="cdekaddr" name="ORDER_PROP_21" value="Внутренний код ПВЗ : ' + wat + '<br>Название ПВЗ : ' + IPOLSDEK_pvz.cityPVZ[wat].Name + '<br>Адрес ПВЗ : ' + IPOLSDEK_pvz.cityPVZ[wat].Address + '<br>Город ПВЗ : ' + IPOLSDEK_pvz.city + '<br>" />' );
 				},
 
 				Y_readyToBlink: false,
