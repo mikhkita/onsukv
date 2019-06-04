@@ -303,20 +303,20 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                     <div class="order-adress-map-form-content">
                         <div class="b-addresss-item form-item __adress b-ui-autocomplete">
                             <div class="b-addresss-item__address b-input ui-menu ui-widget ui-widget-content ui-autocomplete ui-front">
-                                <input type="text" id="js-order-adress-map-input" class="js-order-adress-map-input ui-autocomplete-input" name="ORDER_PROP_14" value="" autocomplete="off" required>
+                                <input type="text" id="js-order-adress-map-input" class="js-order-adress-map-input ui-autocomplete-input" name="ORDER_PROP_15" value="" autocomplete="off" required>
                                 <label for="name">Город, улица, дом <span class="required">*</span></label>
                             </div>
                             <div class="b-addresss-item__room b-input">
-                                <input type="text" id="number-room-input" name="ORDER_PROP_15" value="" autocomplete="off" required>
+                                <input type="text" id="number-room-input" name="ORDER_PROP_14" value="" autocomplete="off" required>
                                 <label for="name">Квартира/офис <span class="required">*</span></label>
                             </div>
                             <div class="b-addresss-item__index b-input">
-                                <input type="text" id="postal-code" name="ORDER_PROP_16" value="" autocomplete="off" required>
+                                <input type="text" id="postal-code" name="ORDER_PROP_12" value="" autocomplete="off" required>
                                 <label for="name">Индекс <span class="required">*</span></label>
                             </div>
                         </div>
-                        <input type="hidden" id="region" name="ORDER_PROP_17">
-                        <input type="hidden" id="city" value="Не выбрано" name="ORDER_PROP_17">
+                        <input type="hidden" id="region" name="ORDER_PROP_16">
+                        <input type="hidden" id="city" value="Не выбрано" name="ORDER_PROP_11">
                     </div>
                     <div id="map-address"></div>
                 </div>
@@ -325,19 +325,22 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                 <div class="b-cdek-punkt" id="cdek-punkt">
                     Пункт самовывоза <span class="required">*</span>: <span class="b-cdek-punk-addr" id="b-cdek-punk-addr">не выбран</span>
                 </div>
-                <?$APPLICATION->IncludeComponent("ipol:ipol.sdekPickup", "cdek", Array(
-                    "CITIES" => "", // Подключаемые города (если не выбрано ни одного - подключаются все)
-                        "CNT_BASKET" => "N",    // Расчитывать доставку для корзины
-                        "CNT_DELIV" => "N", // Расчитывать доставку при подключении
-                        "COUNTRIES" => array(   // Подключенные страны
+                <?$APPLICATION->IncludeComponent(
+                    "ipol:ipol.sdekPickup",
+                    "cdek",
+                    Array(
+                        "CITIES" => "",
+                        "CNT_BASKET" => "N",
+                        "CNT_DELIV" => "N",
+                        "COUNTRIES" => array(
                             0 => "rus",
                         ),
-                        "FORBIDDEN" => array(   // Отключить расчет для профилей
+                        "FORBIDDEN" => array(
                             0 => "inpost",
                         ),
-                        "NOMAPS" => "N",    // Не подключать Яндекс-карты (если их подключает что-то еще на странице)
-                        "PAYER" => "1", // Тип плательщика, от лица которого считать доставку
-                        "PAYSYSTEM" => "2", // Тип платежной системы, с которой будет считатся доставка
+                        "NOMAPS" => "N",
+                        "PAYER" => "1",
+                        "PAYSYSTEM" => "2",
                     ),
                     false
                 );?>
