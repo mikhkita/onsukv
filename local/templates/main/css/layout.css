@@ -2298,6 +2298,9 @@ ul.accordion-list{
 		padding-top: 2px;
 		float: left;
 	}
+	.b-category-left-catalog{
+		margin-top: -80px;
+	}
 		.b-category-left ul>li{
 			margin-bottom: 10px;
 		}
@@ -4586,6 +4589,12 @@ h4.b-delivery-price{
 #price-need-for-gift-messages{
 	margin-bottom: 20px;
 }
+	#price-need-for-gift-messages p{
+		color: #d0021b!important;
+	}
+	.b-gift-list-message{
+		margin-bottom: 20px;
+	}
 .basket-item-message{
 	position: absolute;
     top: calc(100% + 20px);
@@ -4603,11 +4612,78 @@ h4.b-delivery-price{
 .b-cdek-punkt{
 	margin-top: 24px;
 }
+.sale-order-detail-about-order-inner-container-name-read-less,
+.sale-order-detail-about-order-inner-container-name-read-more, 
+.sale-order-list-cancel-payment,
+.sale-order-detail-show-link, 
+.sale-order-detail-hide-link, 
+.sale-order-detail-payment-options-methods-info-change-link{
+	border: unset;
+}
+.sale-order-detail-about-order-inner-container-name-read-less:after, 
+.sale-order-detail-about-order-inner-container-name-read-more:after, 
+.sale-order-detail-payment-options-methods-info-change-link:after, 
+.sale-order-detail-show-link:after, 
+.sale-order-detail-hide-link:after,
+.sale-order-detail-about-order-inner-container-name-read-less:hover:after, 
+.sale-order-detail-hide-link:hover:after{
+	background: unset;
+}
+.sale-order-list-title-container,
+.sale-order-detail-general-head{
+    background: #faf5ee;
+}
+	.b-text .sale-order-list-title-container h2{
+		margin-bottom: 10px;
+	}
+.sale-order-detail-general{
+    border: 1px solid #f2f2f2;
+}
+.sale-order-title{
+	margin-top: 0;
+}
+.b-order-history-item{
+	margin-bottom: 20px;
+	border: 1px solid #faf5ee;
+	border-radius: 4px;
+	padding: 20px;
+}
+	.b-order-history-column{
+		display: inline-block;
+		vertical-align: top;
+		width: calc(100%/4 - 12px);
+	}
+	.b-order-history-column:not(:last-child){
+		margin-right: 11px;
+	}
+	.b-order-history-1-column{
+		max-width: 175px;
+	}
+	.b-order-history-2-column{
+		max-width: 175px;
+	}
+	.b-order-history-3-column{
+	    width: calc(100% - 571px);
+	}
+	.b-order-history-4-column{
+		max-width: 175px;
+		text-align: center;
+	}
+		.b-order-history-column-top{
+			margin-bottom: 15px;
+		}
+		.b-order-history-column-bottom{
 
-
-
-
-
+		}
+			.b-order-history-item .b-btn{
+				width: 100%;
+				background: #fff;
+				border: 1px solid #C8AD89;
+			}
+			.b-order-history-item .b-btn:hover{
+				background: #C8AD89;
+				color: #fff;
+			}
 
 
 

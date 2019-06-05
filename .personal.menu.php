@@ -22,7 +22,7 @@ $aMenuLinks = Array(
 		"" 
 	),
 	Array(
-		"Текущие заказы", 
+		"Мои заказы", 
 		"personal/orders/", 
 		Array(), 
 		Array(), 
@@ -42,12 +42,5 @@ $aMenuLinks = Array(
 		Array(), 
 		"" 
 	),
-	Array(
-		"История заказов", 
-		"personal/orders/?filter_history=Y", 
-		Array(), 
-		Array(), 
-		"" 
-	)
 );
 ?>

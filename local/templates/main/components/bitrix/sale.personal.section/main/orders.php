@@ -13,6 +13,9 @@ if (strlen($arParams["MAIN_CHAIN_NAME"]) > 0)
 }
 
 $APPLICATION->AddChainItem(Loc::getMessage("SPS_CHAIN_ORDERS"), $arResult['PATH_TO_ORDERS']);
+
+$_REQUEST['show_all']='Y'; // Костыль для отображения всех заказов
+
 $APPLICATION->IncludeComponent(
 	"bitrix:sale.personal.order.list",
 	"main",
@@ -27,7 +30,7 @@ $APPLICATION->IncludeComponent(
 		"ORDERS_PER_PAGE" => $arParams["ORDERS_PER_PAGE"],
 		"SET_TITLE" =>$arParams["SET_TITLE"],
 		"ID" => $arResult["VARIABLES"]["ID"],
-		"NAV_TEMPLATE" => $arParams["NAV_TEMPLATE"],
+		"NAV_TEMPLATE" => 'main',
 		"ACTIVE_DATE_FORMAT" => $arParams["ACTIVE_DATE_FORMAT"],
 		"HISTORIC_STATUSES" => $arParams["ORDER_HISTORIC_STATUSES"],
 		"ALLOW_INNER" => $arParams["ALLOW_INNER"],

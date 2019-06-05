@@ -1067,7 +1067,7 @@
 			  	arGift.PRODUCTS.forEach(function(arProduct){
 			  		if (price < arGift.PRICE) {
 			  			var sum = parseInt(arGift.PRICE) - parseInt(price),
-			  				str = '<p>Добавьте товаров в корзину на сумму <b>'+sum+' руб.</b> и получите ',
+			  				str = '<div class="b-gift-list-message"><p>Добавьте товаров в корзину на сумму <b>'+sum+' руб.</b> и получите ',
 			  				index = 0;
 
 		  				for(var i in arProduct.NAME){
@@ -1086,13 +1086,13 @@
 
 		  				var i = 0;
 
+		  				str += "<ul>";
 		  				for (var name in arProduct.NAME) {
-							str += '<a href="'+arProduct.NAME[name]+'">'+name+'</a>';
-							if (index > 1 && (index-1) != i){
-								str += ", "; 
-		  					}
+							str += '<li><a href="'+arProduct.NAME[name]+'">'+name+'</a></li>';
 							i++;
 						}
+						str += "</ul></div>";
+
 						div.innerHTML += str;
 			  		}
 			  	});

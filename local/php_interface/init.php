@@ -40,8 +40,7 @@ class MyEventHandlers
 			$deliveryID = $order->getField("DELIVERY_ID");
 			$arOrder = CSaleOrder::GetByID($arFields["ORDER_ID"]);
 			$arDelivery = Bitrix\Sale\Delivery\Services\Manager::getById($deliveryID);
-			
-			vardump($arFields);
+			$pickpoint = "";
 
 			foreach ($temp["properties"] as $arProp) {
 				if ($arProp["CODE"] == "CALL") {
@@ -90,7 +89,7 @@ class MyEventHandlers
 		    $saleCount = $sum - $saleSum;
 		    $discount = (100-($saleCount*100/$sum)."%");
 
-			if ($arProps['DELIVERY_ DISTANCE'] != "") {
+			if ($arProps['DELIVERY_DISTANCE'] != "") {
 				$delveryDistance = "<tr>".
 						            	"<td colspan='4'><strong>Расстояние от МКАД</strong>:</td>".
 						            	"<td></td>".
@@ -105,20 +104,45 @@ class MyEventHandlers
 
 			$processing = ($arProps["CALL"]) ? "Выбран <strong>".$arProps["CALL"]."</strong>" : $processing = "Не выбран";
 
-			vardump($arDelivery);
+			$str = strval($arProps['PHONE']);
+			$arProps['PHONE'] = '+'.substr($str, 0, 1).'('.substr($str, 1, 3).')'.substr($str, 4, 3).'-'.substr($str, 7, 2).'-'.substr($str, 9, 2);
 
-			if (isset($arProps['PICKPOINT_ADDRESS']) && $arProps['PICKPOINT_ADDRESS']!="") {
-				$howToDelivery = $arProps['PICKPOINT_NAME']."<br>".$arProps['PICKPOINT_ADDRESS'];
+			if (isset($arProps['PICKPOINT_ADDRESS']) && !empty($arProps['PICKPOINT_ADDRESS'])) {
+				$howToDelivery = "PickPoint, ID постамата : ".$arProps['PICKPOINT_ID']."<br>".
+								"Название постамата :".$arProps['PICKPOINT_NAME']."<br>".
+								"Адрес постамата : ".$arProps['PICKPOINT_ADDRESS'];
+				$pickpoint = $howToDelivery;
 			} else {
 				$howToDelivery = $arDelivery['NAME'];
 			} 
-			if ($arProps["ADDRESS"] != '') {
+			if (!empty($arProps["ADDRESS"])) {
 				$address = "<tr>".
-				                "<td nowrap='nowrap'>Адрес доставки: </td>".
+				                "<td nowrap='nowrap'>Адрес доставки:</td>".
 			                    "<td>&nbsp;</td>".
-			                    "<td>".$arProps["INDEX"].", ".$arProps["ADDRESS"].", кв/оф. ".$arProps["ADDRESS_ROOM"]."</td>".
+			                    "<td>".$arProps["ADDRESS_INDEX"].", ".$arProps["ADDRESS"].", кв/оф. ".$arProps["ADDRESS_ROOM"]."</td>".
 		                    "</tr>";
 			}
+			if (isset($arProps["DELIVERY_TIME"]) && !empty($arProps["DELIVERY_TIME"])) {
+				$deliveryTime = "<tr>".
+					                "<td colspan='4'><strong>Время доставки:</strong></td>".
+				                    "<td>&nbsp;</td>".
+				    	   	        "<td colspan='2'>".$arProps["DELIVERY_TIME"]."</td>".
+				                "</tr>";
+            }
+            if (isset($arProps["UNDERGROUND_DISTANCE"]) && !empty($arProps["UNDERGROUND_DISTANCE"])) {
+				$undergroundDistance = "<tr>".
+					                "<td colspan='4'><strong>Расстояние от метро:</strong></td>".
+				                    "<td>&nbsp;</td>".
+				    	   	        "<td colspan='2'>".$arProps["UNDERGROUND_DISTANCE"]."</td>".
+				                "</tr>";
+            }
+            if (isset($arProps["CDEK_TYPE"]) && !empty($arProps["CDEK_TYPE"])) {
+            	if ($arProps["CDEK_TYPE"] == 1) {
+            		$cdekTypeInfo = "Доставка СДЭК : До пункта самовывоза <br>";
+            	} else {
+            		$cdekTypeInfo = "Доставка СДЭК : До двери <br>";
+            	}
+            }
 
 			$msg = "<html>".
 				"<head>".
@@ -126,6 +150,7 @@ class MyEventHandlers
 					"<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>".
 					"<style>".
 						"body,table {font-family: Arial; font-size:14px;}".
+						"td, th {padding: 2px 8px;}".
 					"</style>".
 				"</head>".
 				"<body>".
@@ -155,6 +180,7 @@ class MyEventHandlers
 			                    "<td>&nbsp;</td>".
 			    	   	        "<td>".$arProps["DELIVERY_DATE"]."</td>".
 			                "</tr>".
+			                $deliveryTime.
 				            "<tr>".
 				                "<td>Фамилия Имя: </td>".
 			                    "<td>&nbsp;</td>".
@@ -215,10 +241,11 @@ class MyEventHandlers
 				            	"<td colspan='2'>".$howToDelivery."</td>".
 				            "</tr>".
 				            $delveryDistance.
+				            $undergroundDistance.
 				            "<tr>".
 				            	"<td colspan='4'><strong>Стоимость доставки</strong>:</td>".
 				            	"<td></td>".
-				            	"<td colspan='2'>".$arFields["DELIVERY_PRICE"]."</td>".
+				            	"<td colspan='2'>".$arFields["DELIVERY_PRICE"]." руб.</td>".
 				            "</tr>".
 				            "<tr>".
 				            	"<td colspan='4'><strong>Итого</strong>:</td>".
@@ -235,7 +262,11 @@ class MyEventHandlers
 				            "<tr>".
 				                "<td>Доп. информация о заказе: </td>".
 			                    "<td>&nbsp;</td>".
-			                    "<td>".$arProps['CDEK_INFO']."</td>".
+			                    "<td>".
+			                    $cdekTypeInfo.
+			                    $arProps['CDEK_INFO'].
+			                    $pickpoint.
+			                    "</td>".
 			                "</tr>".
 				            "<tr>".
 				                "<td>Комментарий к адресу: </td>".
@@ -251,15 +282,20 @@ class MyEventHandlers
 				                "<td>Ссылка на заказ в админке: </td>".
 			                    "<td>&nbsp;</td>".
 			                    "<td>".
-			                    	"<a href='http://nevkusno.pro/bitrix/admin/sale_order_view.php?ID=".$arFields["ORDER_ID"]."'>Заказ № 249755</a>".
+			                    	"<a href='http://nevkusno.pro/bitrix/admin/sale_order_view.php?ID=".$arFields["ORDER_ID"]."'>Заказ № ".$arFields["ORDER_ID"]."</a>".
 			                    "</td>".
 				            "</tr>".
 				        "</tbody>".
 				    "</table>".
 			    "</body>".
 			"</html>";
+
 			$arFields['MSG'] = $msg;
-			vardump($arFields['MSG']);
+
+			vardump($arDelivery);
+			vardump($arFields);
+			vardump($arProps);
+
 			die();
 		}
     } 

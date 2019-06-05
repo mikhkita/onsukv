@@ -195,18 +195,18 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                     </select>
                 </div>
                 <div class="b-input b-time-input not-empty" style="display:none;" id="b-time-input">
-                    <label for="time">Время доставки <span class="required">*</span></label>
+                    <label for="time">Время доставки<span class="required">*</span></label>
                     <select name="ORDER_PROP_9" id="time" required>
                         
                     </select>
                 </div>
                 <div class="b-input b-mkad-input b-last-input" style="display:none;" id="b-mkad-input">
-                    <label for="mkad">Расстояние от МКАД <span class="required">*</span></label>
+                    <label for="mkad">Расстояние от МКАД<span class="required">*</span></label>
                     <input type="number" id="mkad" name="ORDER_PROP_10" required="">
                 </div>
                 <div class="b-input b-metro-input b-last-input" style="display:none;" id="b-metro-input">
-                    <label for="metro">Расстояние от метро <span class="required">*</span></label>
-                    <select name="ORDER_PROP_20" id="metro" required>
+                    <label for="metro">Расстояние от метро<span class="required">*</span></label>
+                    <select name="ORDER_PROP_23" id="metro" required>
                         <option value=""></option>
                         <option value="до 2 км. (не более 7 остановок транспортом)">до 2 км. (не более 7 остановок транспортом)</option>
                         <option value="свыше 2 км. (более 7 остановок транспортом)">свыше 2 км. (более 7 остановок транспортом)</option>
