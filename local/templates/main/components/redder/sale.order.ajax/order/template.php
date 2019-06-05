@@ -321,7 +321,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                                 <label for="name">Квартира/офис <span class="required">*</span></label>
                             </div>
                             <div class="b-addresss-item__index b-input">
-                                <input type="text" id="postal-code" name="ORDER_PROP_12" value="" autocomplete="off" required>
+                                <input type="text" id="postal-code" name="ORDER_PROP_24" value="" autocomplete="off" required>
                                 <label for="name">Индекс <span class="required">*</span></label>
                             </div>
                         </div>

@@ -638,6 +638,8 @@
 		{
 			this.lastAction = action;
 
+			this.startLoader();
+
 			data.deliveryPriceCustom = document.getElementById('b-delivery-price-input').value;
 
 			if (this.lastAction === 'recalculateAjax' && typeof data !== "undefined")
@@ -1006,6 +1008,7 @@
 
 		startLoader: function()
 		{
+			$(".basket-checkout-block-btn").addClass("loading");
 			// if (!this.loadingScreen)
 			// {
 			// 	this.loadingScreen = new BX.PopupWindow('loading_screen', null, {
@@ -1023,7 +1026,7 @@
 			// 	});
 			// 	BX.addClass(this.loadingScreen.popupContainer, 'bx-step-opacity');
 			// }
-			//
+			
 			// this.loadingScreen.show();
 		},
 
@@ -1032,6 +1035,7 @@
 		 */
 		endLoader: function()
 		{
+			// $(".basket-checkout-block-btn").removeClass("loading");
 			// if (this.loadingScreen && this.loadingScreen.isShown())
 			// {
 			// 	this.loadingScreen.close();

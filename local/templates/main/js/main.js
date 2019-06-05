@@ -433,7 +433,7 @@ $(document).ready(function(){
                     if( json.result == "success" ){
 
                         if( countQueue[id] == 0 && quantityDelays[id] == 0 ){
-                            console.log(json.quantity);
+                            // console.log(json.quantity);
                             $(".b-quantity-input[data-id='"+json.id+"']").val(json.quantity);
 
                             if( json.quantity == 0 ){
@@ -564,6 +564,8 @@ $(document).ready(function(){
         $("#b-delivery-price-input").change(function(){
             var price = $(this).val();
 
+            console.log($(this).val());
+
             $("#b-delivery-price").html( price );
 
             clearTimeout(delTimer);
@@ -617,7 +619,7 @@ $(document).ready(function(){
                     {
                         if ( this.match.test( addr_string ) && price_found === false )
                         {
-                            console.log(this);
+                            // console.log(this);
                             $("#b-delivery-price-input").val( this.price ).trigger("change");
 
                             price_found = true;
@@ -646,6 +648,8 @@ $(document).ready(function(){
                 room = $(this).attr("data-room"),
                 value = $(this).val();
 
+            $(".basket-checkout-block-btn").addClass("loading");
+
             if( value == "NEW" ){
                 address = index = region = room = "";   
 
@@ -673,11 +677,18 @@ $(document).ready(function(){
         });
 
         $("#city").on("change", function(){
+            // alert($(this).val());
+            // console.log($(this).val()+Math.random());
             IPOLSDEK_pvz.chooseCity($(this).val());
         });
     }
 
     function calculatePost(){
+        var deliveryID = $("select#delivery").val();
+        if( deliveryID != "53" && deliveryID != "54" && deliveryID != "55" ){
+            return true;
+        }
+        
         var sum = $(".basket-coupon-block-total-price-current").attr("data-price").replace(/\D\.+/g,""),
             weigth = $(".basket-coupon-block-total-price-current").attr("data-weigth").replace(/\D\.+/g,""),
             calc = $("#delivery").attr("data-price"),
@@ -920,7 +931,7 @@ $(document).ready(function(){
                     document.getElementById("pickfiles").className = "attach successful";
                     var json = JSON.parse(res.response);
                     $("#random_filename").val(json.filePath); 
-                    console.log(res.response);
+                    // console.log(res.response);
                 },
                 Error: function(up, err) {
                     // alert("При загрузке файла произошла ошибка.\n" + err.code + ": " + err.message);

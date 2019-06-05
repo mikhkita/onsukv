@@ -221,7 +221,7 @@ $(document).ready(function(){
 			$(".b-add-postamat").after("<p class='red b-postamat-error'>Вам нужно выбрать постамат, в котором вы хотите получить вашу посылку.</p>");
 		}
 
-		if( $form.hasClass("b-data-order-form") && $("#delivery").val() == "120" && !$(".cdekaddr").length ){
+		if( $form.hasClass("b-data-order-form") && $("#delivery").val() == "120" && $("#cdek_type").val() == "1" && !$(".cdekaddr").length ){
 			$(".b-cdek-punkt").after("<p class='red b-postamat-error'>Вам нужно выбрать пункт самовывоза, в котором вы хотите получить вашу посылку.</p>");
 		}
 
@@ -229,7 +229,12 @@ $(document).ready(function(){
   			var $this = $(this),
   				$thanks = $($this.attr("data-block"));
 
-  			if( $(this).find(".not-ajax").length ) return true;
+  			if( $(this).find(".not-ajax").length ){
+  				if( $("select#date").length ){
+  					$("select#date").prop("disabled", false);
+  				}
+  				return true;
+  			}
 
   			$this.find(".ajax").attr("onclick", "return false;");
 

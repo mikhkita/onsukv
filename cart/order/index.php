@@ -25,7 +25,7 @@ $APPLICATION->SetTitle("Оформление заказа");
 		"HIDE_ORDER_DESCRIPTION" => "N",
 		"ONLY_FULL_PAY_FROM_ACCOUNT" => "N",
 		"PATH_TO_AUTH" => "/auth/",
-		"PATH_TO_BASKET" => "/personal/cart/",
+		"PATH_TO_BASKET" => "/cart/",
 		"PATH_TO_PAYMENT" => "payment.php",
 		"PATH_TO_PERSONAL" => "index.php",
 		"PAY_FROM_ACCOUNT" => "N",

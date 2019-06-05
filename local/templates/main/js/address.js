@@ -168,6 +168,7 @@ ymaps.ready(['AddressDelivery']).then(function init() {
             });
             $("#region").val(region).trigger("focusout").trigger("change");
             $("#city").val(city).trigger("focusout").trigger("change");
+            // console.log(city);
             $("#postal-code").val(address.postal_code).trigger("focusout");
         });
 

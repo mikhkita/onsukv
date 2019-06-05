@@ -3774,7 +3774,19 @@ li.bx-inclinkspersonal-item {
 						background-color: transparent;
 						border: 1px solid transparent;
 					}
-
+.basket-checkout-block-btn.loading:after{
+	position: absolute;
+	content: "s";
+	font-size: 0px;
+	width: 100%;
+	height: 100%;
+	left: 0px;
+	top: 0px;
+	z-index: 10000;
+}
+	.basket-checkout-block-btn.loading .btn.btn-default{
+	    background: #ccc !important;
+	}
 	.b-input-row{
 		margin-bottom: 40px;
 	}

@@ -76,6 +76,9 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 
 				chooseCity: function(city){
 					var found = false;
+
+					$(".basket-checkout-block-btn").addClass("loading");
+
 					$("#no_price_to_pocikpoint").remove();
 					$('#SDEK_citySel a').each(function(){
 						$(this).css('display','');
@@ -375,7 +378,9 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 
 					if( $("#delivery").val() == "120" ){
 						var intPrice = price.substr( 0, price.length - 5);
-						$("#b-delivery-price-input").val( (intPrice)?intPrice:0 ).trigger("change");
+						// if( $("#b-delivery-price-input").val() != intPrice ){
+							$("#b-delivery-price-input").val( (intPrice)?intPrice:0 ).trigger("change");
+						// }
 					}
 
 					// $('#SDEK_cPrice').html(IPOLSDEK_pvz.prices.courier[0]);
