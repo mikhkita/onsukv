@@ -201,7 +201,6 @@ if (empty($arResult['ERROR_MESSAGE']))
 		}?>
 		<?$jsonArGiftList = json_encode($arGiftList);?>
 		<script>var $arGiftList = <?=$jsonArGiftList?></script>
-		<div class="b-text" id="price-need-for-gift-messages"></div>
 	<?endif;?>
 
 	<div id="basket-root" class="bx-basket bx-<?=$arParams['TEMPLATE_THEME']?> bx-step-opacity <?=( (intval($arResult["allSum"]) < $minPrice)?"blockButton":"" )?>" style="opacity: 0;" data-minprice="<?=$minPrice?>">
@@ -280,6 +279,7 @@ if (empty($arResult['ERROR_MESSAGE']))
 				</div>
 			</div>
 		</div>
+		<div class="b-text" id="price-need-for-gift-messages"></div>
 		<?
 		if (
 			$arParams['BASKET_WITH_ORDER_INTEGRATION'] !== 'Y'
