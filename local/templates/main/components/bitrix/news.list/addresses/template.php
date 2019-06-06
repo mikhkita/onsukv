@@ -4,11 +4,6 @@ $this->setFrameMode(true);
 
 <? if(count($arResult["ITEMS"])): ?>
 	<div class="b-addresss-list">
-		<!-- <div class="b-addresss-item-container">
-	        <div class="b-addresss-item">
-				<h3>Адрес</h3>
-	        </div>
-	    </div> -->
 		<?foreach($arResult["ITEMS"] as $arItem):?>
 		<div class="b-addresss-item-container">
 	        <div class="b-addresss-item">

@@ -3315,7 +3315,6 @@ li.bx-inclinkspersonal-item {
 
 
 
-
 @media (min-width: 992px)
 {
 	.text-md-right{
@@ -4487,6 +4486,15 @@ h4.b-delivery-price{
 		    width: 166px;
 			margin-right: 0;
 		}
+		.b-addresss-item__metro{
+			margin-top: 20px;
+			width: 435px;
+		}
+		.order-adress-map-form-content .b-addresss-item__metro{
+    		width: calc(50% - 16px);
+    		margin-left: 0;
+    		margin-top: 40px;
+		}
 	.b-addresss-btn-container{
 		width: 150px;
 		display: inline-block;
@@ -4647,23 +4655,27 @@ h4.b-delivery-price{
 	border: 1px solid #faf5ee;
 	border-radius: 4px;
 	padding: 20px;
+	display: block;
+	-webkit-transition: box-shadow .1s;
+	-o-transition: box-shadow .1s;
+	transition: box-shadow .1s;
+	text-decoration: none!important;
+}
+	.b-history-status{
+		display: inline;
+		color: #26a200;
+	}
+.b-order-history-item:hover{
+	box-shadow: 0 0 10px 5px #c8ad8940;
 }
 	.b-order-history-column{
 		display: inline-block;
 		vertical-align: top;
-		width: calc(100%/4 - 12px);
+		width: calc(100%/2 - 12px);
+		color: #282828;
 	}
 	.b-order-history-column:not(:last-child){
 		margin-right: 11px;
-	}
-	.b-order-history-1-column{
-		max-width: 175px;
-	}
-	.b-order-history-2-column{
-		max-width: 175px;
-	}
-	.b-order-history-3-column{
-	    width: calc(100% - 571px);
 	}
 	.b-order-history-4-column{
 		max-width: 175px;
@@ -4671,9 +4683,6 @@ h4.b-delivery-price{
 	}
 		.b-order-history-column-top{
 			margin-bottom: 15px;
-		}
-		.b-order-history-column-bottom{
-
 		}
 			.b-order-history-item .b-btn{
 				width: 100%;
@@ -4739,6 +4748,11 @@ h4.b-delivery-price{
 	    width: calc(100% - 180px);
     	margin-right: 20px;
 	}
+	.b-addresss-item__metro{
+		margin-top: 0;
+		width: calc(100% - 412px);
+		margin-left: 32px;
+	}
 }
 
 
@@ -4788,6 +4802,11 @@ h4.b-delivery-price{
 	}
 	.b-tile-item:nth-child(3n){
 		margin-right: 0;
+	}
+	.b-addresss-item__metro{
+		margin-top: 20px;
+		width: 365px;
+		margin-left: 0;
 	}
 
 

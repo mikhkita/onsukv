@@ -37,6 +37,9 @@ body {
 	.b-order-addr-new .b-addresss-item__room{
 		margin-right: 32px;
 	}
+	.order-adress-map-form-content .b-addresss-item__metro{
+		margin-top: 0;
+	}
 	.b-textarea{
 	    margin-bottom: 16px;
 	}

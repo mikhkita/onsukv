@@ -98,7 +98,8 @@
 			this.removeGiftOrNot(parameters.result);
 
 			this.bindInitialEvents();
-			this.insertGiftMessages(parameters.result.allSum);
+
+			this.insertGiftMessages((parameters.result.allSum)*1+(parameters.result.DISCOUNT_PRICE_ALL)*1);
 		},
 
 		getTemplate: function(templateName)
@@ -713,7 +714,7 @@
 				var discountList = result.BASKET_DATA.APPLIED_DISCOUNT_LIST,
 					basketRenderData = result.BASKET_DATA.BASKET_ITEM_RENDER_DATA;
 			}
-			console.log(result);
+			// console.log(result);
 			var ids = [];
 			for( var i in discountList ){
 				var basket = discountList[i].RESULT.BASKET;
@@ -1041,11 +1042,14 @@
 		checkMinPrice: function(totalData){
 			if( document.getElementById('b-basket-checkout-button') && typeof totalData.PRICE != "undefined" ){;
 				// alert(totalData.PRICE);
+				var priceWithoutDiscount = totalData.PRICE_WITHOUT_DISCOUNT_FORMATED.split(' руб.');
+					priceWithoutDiscount = priceWithoutDiscount[0].replace(/\s+/g, '')*1;
+
 				var price = totalData.PRICE,
 					basketRoot = document.getElementById("basket-root"),
 					minPrice = basketRoot.dataset.minprice;
 
-					this.insertGiftMessages(price);
+					this.insertGiftMessages(priceWithoutDiscount);
 
 				if (basketRoot) {
 					if( price*1 >= minPrice ){
@@ -1053,8 +1057,6 @@
 					}else{
 						basketRoot.classList.add("blockButton");
 					}
-				} else {
-					console.log('ok');
 				}
 			}
 		},

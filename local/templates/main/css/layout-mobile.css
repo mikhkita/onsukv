@@ -709,6 +709,13 @@ p{
 	.basket-checkout-block-total{
 		padding-top: 0;
 	}
+	.b-order-history-column{
+		width: 100%;
+		margin-bottom: 20px;
+	}
+	.b-order-history-column:not(:last-child){
+		margin-right: 0;
+	}
 }
 
 @media screen and (max-width: 500px){
@@ -733,8 +740,23 @@ p{
 		max-width: 100%;
 		margin-right: 0;
 	}
+	.order-adress-map-form-content .b-addresss-item__metro{
+		width: 100%;
+	}
 	.b-order-addr-new .b-addresss-item__index{
 		max-width: 100%;
+	}
+	.basket-checkout-section,
+	.basket-checkout-block-total-price-inner{
+		width: 100%;
+	}
+	.basket-coupon-block-total-price-current{
+		font-size: 24px;
+		font-family: 'ProximaNova-Regular';
+		margin-top: 0!important;
+	}
+	.basket-checkout-block-total-title{
+		vertical-align: middle;
 	}
 }
 

@@ -36,6 +36,14 @@ if (strlen($arResult["MESSAGE"]) > 0):?>
 				<input type="text" id="postal-code" name="PROPERTY[24][0]" value="<?=$arResult["ELEMENT_PROPERTIES"][24][0]['VALUE']?>" autocomplete="off" required>
 				<label for="name">Индекс <span class="required">*</span></label>
 			</div>
+			<div class="b-addresss-item__metro b-input hide">
+				<select name="PROPERTY[31]">
+					<option value>Выберите метро</option>
+					<? foreach ($arResult["PROPERTY_LIST_FULL"][31]['ENUM'] as $metro): ?>
+						<option value="<?=$metro['ID']?>"><?=$metro['VALUE']?></option>
+					<? endforeach; ?>
+				</select>
+			</div>
 			<input type="hidden" id="region" name="PROPERTY[25][0]" value="<?=$arResult["ELEMENT_PROPERTIES"][25][0]['VALUE']?>">
 			<input type="hidden" id="city" name="PROPERTY[29][0]" value="<?=$arResult["ELEMENT_PROPERTIES"][29][0]['VALUE']?>">
 			<input type="hidden" name="PROPERTY[27][0]" value="<?=$userID?>">
