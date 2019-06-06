@@ -46,7 +46,6 @@ use Bitrix\Main\Localization\Loc,
 if ($arParams["SET_TITLE"] == "Y")
 	$APPLICATION->SetTitle("Заказ оформлен");
 
-
 $paySystem = array_pop($arResult["PAY_SYSTEM_LIST"]);
 
 $delivery = Delivery\Services\Manager::getById($arResult["ORDER"]["DELIVERY_ID"]);

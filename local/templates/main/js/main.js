@@ -679,7 +679,9 @@ $(document).ready(function(){
         $("#city").on("change", function(){
             // alert($(this).val());
             // console.log($(this).val()+Math.random());
-            IPOLSDEK_pvz.chooseCity($(this).val());
+            if( $("select#delivery").val() == "120" ){
+                IPOLSDEK_pvz.chooseCity($(this).val());
+            }
         });
     }
 
@@ -712,7 +714,7 @@ $(document).ready(function(){
         // if( price == null ){
 
         // }else{
-        if( price >= 20000 || weigth*1 >= 10 || isNeedMessage() ){
+        if( sum*1 >= 20000 || weigth*1 >= 10 || isNeedMessage() ){
             $(".b-delivery-price").after('<span id="no_price_to_pocikpoint" class="red">Точная стоимость доставки будет рассчитана оператором индивидуально и может поменяться.</span>' );
         }
 

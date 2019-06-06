@@ -20,7 +20,7 @@ $isDelivery = $GLOBALS["isDelivery"] = ($urlArr[1] == "delivery");
 
 $isDetail = $GLOBALS["isDetail"] = ($urlArr[1] == "catalog" && isset($urlArr[4]));
 
-$notBText = $GLOBALS["notBText"] = ( in_array($page, array("cart", "order", "contacts", "success", "error", "search", "news", "new")) || $isCatalog || $isMain )?true: false;
+$notBText = $GLOBALS["notBText"] = ( in_array($page, array("cart", "order", "contacts", "success", "error", "search", "news", "new", "favourite")) || $isCatalog || $isMain )?true: false;
 
 $GLOBALS["HEADER_CATEGORIES"] = array();
 

@@ -377,7 +377,7 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 					$('#SDEK_pDate').html(date);
 
 					if( $("#delivery").val() == "120" ){
-						var intPrice = price.substr( 0, price.length - 5);
+						var intPrice = price.substr( 0, price.length - 5).replace(/[\D\.]+/g,"");
 						// if( $("#b-delivery-price-input").val() != intPrice ){
 							$("#b-delivery-price-input").val( (intPrice)?intPrice:0 ).trigger("change");
 						// }

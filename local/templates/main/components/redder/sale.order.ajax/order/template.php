@@ -107,10 +107,10 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
         </div>
         <div class="b-inputs clearfix b-input-row">
             <div class="clearfix b-order-addr-input-cont">
-                <div class="b-input not-empty">
+                <div class="b-input">
                     <label for="last_name">Способ доставки <span class="required">*</span></label>
                     <select name="DELIVERY_ID" id="delivery" data-price="0" data-date="1" required>
-                        <option value="">Выберите тип доставки</option>
+                        <option value=""></option>
                         <? foreach ($arResult["DELIVERY"] as $key => $arDelivery): ?>
                             <? if( !in_array($arDelivery["ID"], array(117, 118)) ): ?>
                                 <option value="<?=$arDelivery["ID"]?>" data-price="<?=$arDelivery["CONFIG"]["MAIN"]["PRICE"]?>" data-date="<?=$arDelivery["CONFIG"]["MAIN"]["PERIOD"]?>"><?=$arDelivery["NAME"]?></option>
@@ -307,6 +307,8 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                             <input type="radio" id="addr-new" class="b-addr-radio" name="address" value="NEW">
                             <label for="addr-new">Добавить адрес</label>
                         </div>
+                    <? else: ?>
+                        <input type="hidden" id="addr-new" name="address" value="NEW">
                     <? endif; ?>
                 </div>
                 <div class="b-row b-order-addr-new b-text clearfix" <? if(count($arResult["ADDRESSES"])): ?>style="display:none;"<? endif; ?>>
