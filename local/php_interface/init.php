@@ -26,6 +26,7 @@ AddEventHandler("catalog", "OnStoreProductUpdate", Array("MyClass", "OnStoreProd
 AddEventHandler("sale", "DiscountOnAfterUpdate", Array("MyClass", "DiscountOnAfterUpdateHandler"));
 AddEventHandler("main", "OnBeforeEventAdd", Array("MyEventHandlers", "OnBeforeEventAddHandler")); 
 AddEventHandler("sale", "OnOrderAdd", Array("MyClass", "OnOrderAddHandler"));
+AddEventHandler("sale", "OnOrderDelete", Array("MyClass", "OnOrderDeleteHandler"));
 
 
 class MyEventHandlers 
@@ -71,31 +72,49 @@ class MyEventHandlers
 			    $arItems["TOTAL_QUANTITY"] = $arFileds["QUANTITY"];
 			    $arBasketItems[] = $arItems;
 		    }
+
 		    $itemsText = "";
+		    $clientItemsText = "";
 		    $sum = 0;
 		    $saleSum = 0;
+
 		    foreach ($arBasketItems as $item) {
+
 		    	$itemsText.="<tr>".
             		"<td>".$item['PRODUCT_ID']."</td>".
             		"<td>".$item['NAME']."</td>".
-            		"<td>".$item['QUANTITY']."</td>".
-            		"<td>".$item['BASE_PRICE']."</td>".
+            		"<td>".round($item['QUANTITY'])."</td>".
+            		"<td>".round($item['BASE_PRICE'])."</td>".
             		"<td>".$item["TOTAL_QUANTITY"]."</td>". //Наличие
-            		"<td>".$item['QUANTITY']*$item['BASE_PRICE']."</td>". //Сумма
+            		"<td>".round($item['QUANTITY']*$item['BASE_PRICE'])."</td>".
             		"<td>".$item["COUNTRY"]."</td>". //Страна
             	"</tr>";
-            	$sum += $item['BASE_PRICE']*$item['QUANTITY'];
+
+            	$clientItemsText.="<tr>".
+            		"<td>".$item['NAME']."</td>".
+            		"<td>".round($item['BASE_PRICE'])."</td>".
+            		"<td>".round($item['QUANTITY'])."</td>".
+            		"<td>".round($item['QUANTITY']*$item['BASE_PRICE'])."</td>".
+            	"</tr>";
+
+            	$sum += round($item['BASE_PRICE']*$item['QUANTITY']);
             	$saleSum += $item['DISCOUNT_PRICE']*$item['QUANTITY'];
 		    }
 
+		    $saleSum = round($saleSum);
 		    $saleCount = $sum - $saleSum;
-		    $discount = (100-($saleCount*100/$sum)."%");
+		    $discount = (100-(round($saleCount*100/$sum))."%");
+		    $totalSum = $sum+$arFields["DELIVERY_PRICE"];
 
 			if ($arProps['DELIVERY_DISTANCE'] != "") {
-				$delveryDistance = "<tr>".
+				$delveryDistanceAdmin = "<tr>".
 						            	"<td colspan='4'><strong>Расстояние от МКАД</strong>:</td>".
 						            	"<td></td>".
-						            	"<td colspan='2'>".$arProps['DELIVERY_ DISTANCE']."</td>".
+						            	"<td colspan='2'>".$arProps['DELIVERY_DISTANCE']."</td>".
+						            "</tr>";
+	            $delveryDistanceClient = "<tr>".
+						            	"<td colspan='3'><strong>Расстояние от МКАД</strong>:</td>".
+						            	"<td>".$arProps['DELIVERY_DISTANCE']."</td>".
 						            "</tr>";
 			}
 
@@ -104,10 +123,46 @@ class MyEventHandlers
 				$userID = "(".$USER->GetID().")";
 			}
 
-			$processing = ($arProps["CALL"]) ? "Выбран <strong>".$arProps["CALL"]."</strong>" : $processing = "Не выбран";
+			$processinginfo = "";
+
+			if (!empty($arProps["CALL"]) && isset($arProps["CALL"])){
+				$processing = "Выбран <strong>".$arProps["CALL"]."</strong>";
+				$processinginfo = "<br>Вы выбрали Звонок оператора. В ближайшее время (обычно не более суток) операторы свяжутся с Вами по указанному телефону для подтверждения и уточнения по доставке.<br> 
+					Если операторы не смогли связаться по заказу, то отправляется письмо покупателю, что телефон был недоступен.<br>
+					Если Вы не дождались звонка в течении суток после отправки заказа, напишите нам info@nevkusno.ru, указав номер заказа.<br>
+					Без подтверждения заказа мы не отправляем товар!<br>
+					Если Вы хотите внести изменения в заказ или изменить способ доставки - дождитесь звонка оператора, или перезвоните сами по рекламным телефонам магазина.<br>";
+			} else {
+				$processing = "Не выбран";
+			}
 
 			$str = strval($arProps['PHONE']);
+
 			$arProps['PHONE'] = '+'.substr($str, 0, 1).'('.substr($str, 1, 3).')'.substr($str, 4, 3).'-'.substr($str, 7, 2).'-'.substr($str, 9, 2);
+			$deliveryDateText = "Дата доставки:";
+
+			switch ($arDelivery['ID']) {
+				case "30":
+					$deliveryDateText = "Дата cборки:";
+                    break;
+                case "53":
+                	$deliveryDateText = "Дата cборки:";
+                	break;
+                case "54":
+                	$deliveryDateText = "Дата cборки:";
+                	break;
+                case "55":
+                	$deliveryDateText = "Дата cборки:";
+                    break;
+                case "116":
+                	$deliveryDateText = "Дата cборки:";
+                    break;
+                case "120":
+                	$deliveryDateText = "Дата cборки:";
+                    break;
+                default:
+                    break;
+			}
 
 			if (isset($arProps['PICKPOINT_ADDRESS']) && !empty($arProps['PICKPOINT_ADDRESS'])) {
 				$howToDelivery = "PickPoint, ID постамата : ".$arProps['PICKPOINT_ID']."<br>".
@@ -125,17 +180,25 @@ class MyEventHandlers
 		                    "</tr>";
 			}
 			if (isset($arProps["DELIVERY_TIME"]) && !empty($arProps["DELIVERY_TIME"])) {
-				$deliveryTime = "<tr>".
+				$deliveryTimeAdmin = "<tr>".
 					                "<td colspan='4'><strong>Время доставки:</strong></td>".
 				                    "<td>&nbsp;</td>".
 				    	   	        "<td colspan='2'>".$arProps["DELIVERY_TIME"]."</td>".
 				                "</tr>";
+                $deliveryTimeClient = "<tr>".
+					                "<td colspan='3'><strong>Время доставки:</strong></td>".
+				    	   	        "<td>".$arProps["DELIVERY_TIME"]."</td>".
+				                "</tr>";
             }
             if (isset($arProps["UNDERGROUND_DISTANCE"]) && !empty($arProps["UNDERGROUND_DISTANCE"])) {
-				$undergroundDistance = "<tr>".
+				$undergroundDistanceAdmin = "<tr>".
 					                "<td colspan='4'><strong>Расстояние от метро:</strong></td>".
 				                    "<td>&nbsp;</td>".
 				    	   	        "<td colspan='2'>".$arProps["UNDERGROUND_DISTANCE"]."</td>".
+				                "</tr>";
+                $undergroundDistanceClient = "<tr>".
+					                "<td colspan='3'><strong>Расстояние от метро:</strong></td>".
+				    	   	        "<td>".$arProps["UNDERGROUND_DISTANCE"]."</td>".
 				                "</tr>";
             }
             if (isset($arProps["CDEK_TYPE"]) && !empty($arProps["CDEK_TYPE"])) {
@@ -146,7 +209,21 @@ class MyEventHandlers
             	}
             }
 
-			$msg = "<html>".
+            if (isset($arProps["ADDRESS_METRO"]) && !empty($arProps["ADDRESS_METRO"])) {
+
+				$properties = CIBlockPropertyEnum::GetList(Array("sort"=>"asc", "name"=>"asc"), Array("ACTIVE"=>"Y", "IBLOCK_ID"=>6, "CODE"=>"METRO", 'ID' => $arProps["ADDRESS_METRO"]));
+				while ($prop_fields = $properties->GetNext()){
+				  $metro = $prop_fields;
+				}
+
+            	$metro = "<tr>".
+			                "<td nowrap='nowrap'>Метро: </td>".
+			                    "<td>&nbsp;</td>".
+			                    "<td>".$metro['VALUE']."</td>".
+		                "</tr>";
+            }
+
+			$adminmsg = "<html>".
 				"<head>".
 					"<title>Вкусный магазин: Новый заказ</title>".
 					"<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>".
@@ -156,7 +233,7 @@ class MyEventHandlers
 					"</style>".
 				"</head>".
 				"<body>".
-					"Уважаемый администратор интернет-магазина! Поступил новый заказ:<br>".
+					"Уважаемый администратор интернет-магазина! Поступил новый заказ:<br><br>".
 					"<table border='0'>".
 						"<tbody>".
 							"<tr>".
@@ -178,11 +255,11 @@ class MyEventHandlers
 				                "<td colspan='3'></td>".
 			                "</tr>".
 				            "<tr>".
-				                "<td>Дата доставки: </td>".
+				                "<td>".$deliveryDateText."</td>".
 			                    "<td>&nbsp;</td>".
 			    	   	        "<td>".$arProps["DELIVERY_DATE"]."</td>".
 			                "</tr>".
-			                $deliveryTime.
+			                $deliveryTimeAdmin.
 				            "<tr>".
 				                "<td>Фамилия Имя: </td>".
 			                    "<td>&nbsp;</td>".
@@ -195,11 +272,7 @@ class MyEventHandlers
 			                "</tr>".
 			                $address.
 			                "</tr>".
-				            "<tr>".
-				                "<td nowrap='nowrap'>Метро: </td>".
-				                    "<td>&nbsp;</td>".
-				                    "<td>Молодежная</td>".
-			                "</tr>".
+				            $metro.
 				            "<tr>".
 				                "<td nowrap='nowrap'>Адрес электронной почты: </td>".
 				                "<td>&nbsp;</td>".
@@ -242,17 +315,17 @@ class MyEventHandlers
 				            	"<td></td>".
 				            	"<td colspan='2'>".$howToDelivery."</td>".
 				            "</tr>".
-				            $delveryDistance.
-				            $undergroundDistance.
+				            $delveryDistanceAdmin.
+				            $undergroundDistanceAdmin.
 				            "<tr>".
 				            	"<td colspan='4'><strong>Стоимость доставки</strong>:</td>".
 				            	"<td></td>".
-				            	"<td colspan='2'>".$arFields["DELIVERY_PRICE"]." руб.</td>".
+				            	"<td colspan='2'>".$arFields["DELIVERY_PRICE"]."</td>".
 				            "</tr>".
 				            "<tr>".
 				            	"<td colspan='4'><strong>Итого</strong>:</td>".
 				            	"<td></td>".
-				            	"<td colspan='2'>".$arFields["PRICE"]."</td>".
+				            	"<td colspan='2'>".$totalSum."</td>".
 				            "</tr>".
 				        "</tbody>".
 				    "</table>".
@@ -277,8 +350,8 @@ class MyEventHandlers
 			                "</tr>".
 				            "<tr>".
 			                  	"<td>Комментарий к заказу: </td>".
+			                  	"<td>&nbsp;</td>".
 			                    "<td>".$description."</td>".
-			                    "<td></td>".
 			                "</tr>".
 				            "<tr>".
 				                "<td>Ссылка на заказ в админке: </td>".
@@ -292,13 +365,128 @@ class MyEventHandlers
 			    "</body>".
 			"</html>";
 
-			$arFields['MSG'] = $msg;
+			$clientmsg = "<html>".
+				"<head>".
+					"<title>Вкусный магазин: Новый заказ</title>".
+					"<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>".
+					"<style>".
+						"body,table,p {font-family: Arial; font-size:14px;}".
+						"td, th {padding: 2px 8px;}".
+					"</style>".
+				"</head>".
+				"<body>".
+					"<b>Благодарим за Ваш заказ во 'Вкусном магазине'!</b><br><br>".
+					"Способ обработки заказа: ".$processing."<br>".
+					$processinginfo.
+					"<table border='0'>".
+						"<tbody>".
+							"<tr>".
+								"<td>Номер заказа:</td>".
+								"<td></td>".
+							    "<td><strong>".$arFields["ORDER_ID"]."</strong></td>".
+							"</tr>".
+				            "<tr>".
+				                "<td>Дата заказа:</td>".
+				                    "<td></td>".
+				                    "<td>".$arFields['ORDER_DATE']."</td>".
+				                "</tr>".
+				            "<tr>".
+				                "<td colspan='3'></td>".
+			                "</tr>".
+				            "<tr>".
+				                "<td>".$deliveryDateText."</td>".
+			                    "<td>&nbsp;</td>".
+			    	   	        "<td>".$arProps["DELIVERY_DATE"]."</td>".
+			                "</tr>".
+			                $deliveryTimeClient.
+				            "<tr>".
+				                "<td>Фамилия Имя: </td>".
+			                    "<td>&nbsp;</td>".
+			                    "<td>".$arProps["SURNAME"]." ".$arProps["NAME"]."</td>".
+			                "</tr>".
+				            "<tr>".
+				                "<td>Контактный телефон: </td>".
+			                    "<td>&nbsp;</td>".
+			                    "<td>".$arProps["PHONE"]."</td>".
+			                "</tr>".
+			                $address.
+			                "</tr>".
+				            $metro.
+				            "<tr>".
+				                "<td nowrap='nowrap'>Адрес электронной почты: </td>".
+				                "<td>&nbsp;</td>".
+				                "<td>".$arProps["EMAIL"]."</td>".
+			                "</tr>".
+				            "<tr>".
+				                "<td colspan='3'>&nbsp;</td>".
+			                "</tr>".
+				         "</tbody>".
+				     "</table>".
+				     "<table border='0' cellpadding='2' cellspacing='2'>".
+				     	"<tbody>".
+				     		"<tr>".
+					         	"<td>Наименование товара</td>".
+					         	"<td>Цена</td>".
+					         	"<td>Количество</td>".
+					         	"<td>Сумма, руб.</td>".
+					         "</tr>".
+			            	$clientItemsText.
+				            "<tr>".
+				            	"<td colspan='3'><strong>Сумма без скидки</strong>:</td>".
+				            	"<td>".$sum."</td>".
+				            "</tr>".
+				            "<tr>".
+				            	"<td colspan='3'><strong>Скидка</strong>:</td>".
+				            	"<td>".$discount."</td>".
+				            "</tr>".
+				            "<tr>".
+				            	"<td colspan='3'><strong>Сумма скидки</strong>:</td>".
+				            	"<td>".$saleSum."</td>".
+				            "</tr>".
+				            "<tr>".
+				            	"<td colspan='3'><strong>Способ доставки</strong>:</td>".
+				            	"<td>".$howToDelivery."</td>".
+				            "</tr>".
+				            $delveryDistanceClient.
+				            $undergroundDistanceClient.
+				            "<tr>".
+				            	"<td colspan='3'><strong>Стоимость доставки</strong>:</td>".
+				            	"<td>".$arFields["DELIVERY_PRICE"]."</td>".
+				            "</tr>".
+				            "<tr>".
+				            	"<td colspan='3'><strong>Итого</strong>:</td>".
+				            	"<td>".$totalSum."</td>".
+				            "</tr>".
+				        "</tbody>".
+				    "</table>".
+				    "<table border='0'>".
+				    	"<tbody>".
+				    		"<tr>".
+				                "<td colspan='3'>&nbsp;</td>".
+				            "</tr>".
+				            "<tr>".
+				                "<td>Доп. информация о заказе: </td>".
+			                    "<td>&nbsp;</td>".
+			                    "<td>".
+			                    $cdekTypeInfo.
+			                    $arProps['CDEK_INFO'].
+			                    $pickpoint.
+			                    "</td>".
+			                "</tr>".
+				            "<tr>".
+			                  	"<td>Комментарий к заказу: </td>".
+			                    "<td>".$description."</td>".
+			                    "<td></td>".
+			                "</tr>".
+				        "</tbody>".
+				    "</table>".
+			    "</body>".
+			"</html>";
 
-			// vardump($arDelivery);
-			// vardump($arFields);
-			// vardump($arProps);
-
-			// die();
+			$arFields['ADMIN_MSG'] = $adminmsg;
+			$arFields['CLIENT_EMAIL'] = $arProps["EMAIL"];
+			$arFields['CLIENT_MSG'] = $clientmsg;
+			
 		}
     } 
 }
@@ -519,29 +707,22 @@ class MyClass {
  //    }
 	function OnOrderAddHandler($ID, $arFields){ 
 
-		$deliveryDate = $arFields["ORDER_PROP"][8];
-		$orderCount = getOrderCountInDate($deliveryDate);
+		$date = date("Y-m-d", strtotime($arFields["ORDER_PROP"][8]));
 
-		$arSelect = Array();
-		$arFilter = Array("IBLOCK_ID" => 8);
-		$res = CIBlockElement::GetList(Array(), $arFilter, false, Array("nPageSize"=>1000000), $arSelect);
+		$arSelect = Array("ID");
+		$arFilter = Array("IBLOCK_ID"=>8, "PROPERTY_ORDER_DATE" => $date);
+		$res = CIBlockElement::GetList(Array(), $arFilter, false, Array("nPageSize"=>1000), $arSelect);
 
 		while($ob = $res->GetNextElement()){
 			$arFields = $ob->GetFields();
-			$arProps = $ob->GetProperties();
-			$arOrder[$arFields['ID']] = array('MAXCOUNT' => $arFields['NAME'], 'DELIVERY_DATE' => $arProps["ORDER_DATE"]["VALUE"]);
-		} 
-
-		foreach($arOrder as $id => $item){
-			if ($item['DELIVERY_DATE'] == $deliveryDate) {
-				if ($item['MAXCOUNT'] <= $orderCount) {
-					$el = new CIBlockElement;
-					$arLoadProductArray = Array("CODE" => "Y");
-					$el->Update($id, $arLoadProductArray);
-				}
-			}
+			updateOrderDate($arFields['ID']);
 		}
-		
+	}
+
+	function OnOrderDeleteHandler($ID, $success){
+
+		updateOrderDate();
+
 	}
 }
 
@@ -558,13 +739,8 @@ function getUserByEmail($email){
 
 function getOrderCountInDate($date){
 
-	$arFilter = Array("PROPERTY_VAL_BY_CODE_DELIVERY_DATE" => date($date));
-	$db_sales = CSaleOrder::GetList(array("DATE_INSERT" => "ASC"), $arFilter);
-	$count = 0;
-	while ($ar_sales = $db_sales->Fetch())
-	{
-		$count ++;
-	}
+	$arFilter = Array("PROPERTY_VAL_BY_CODE_DELIVERY_DATE" => date($date), "CANCELED" => "N");
+	$count = CSaleOrder::GetList(array("DATE_INSERT" => "ASC"), $arFilter, array());
 
 	return $count;
 }
@@ -1022,6 +1198,25 @@ function vardump($array){
 	echo "<pre>";
 	var_dump($array);
 	echo "</pre>";
+}
+
+function updateOrderDate($ID = 0){
+
+	if ($ID == 0) {
+		$arFilter = Array("IBLOCK_ID" => 8);
+	} else {
+		$arFilter = Array("IBLOCK_ID" => 8, "ID" => $ID);
+	}
+
+	$res = CIBlockElement::GetList(Array(), $arFilter, false, Array("nPageSize"=>1000000), Array());
+
+	while($ob = $res->GetNextElement()){
+		$el = new CIBlockElement;
+		$arFields = $ob->GetFields();
+		$arProps = $ob->GetProperties();
+		$orderCount = getOrderCountInDate($arProps['ORDER_DATE']["VALUE"]);
+		$result = $el->Update($arFields['ID'], Array("CODE" => $orderCount));
+	} 
 }
 
 getSectionChain();

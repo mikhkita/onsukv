@@ -1,7 +1,14 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Адреса доставки");?>
-<? if (isAuth()): ?>
+<? if (isAuth()): 
+
+	$GLOBALS["addressFilter"] = array(
+		"PROPERTY_USER" => $USER->GetID()
+	);
+
+?>
+
 <?$APPLICATION->IncludeComponent(
 	"bitrix:news.list",
 	"addresses",
@@ -26,7 +33,7 @@ $APPLICATION->SetTitle("Адреса доставки");?>
 		"DISPLAY_PREVIEW_TEXT" => "Y",
 		"DISPLAY_TOP_PAGER" => "N",
 		"FIELD_CODE" => array("NAME", "PREVIEW_TEXT"),
-		"FILTER_NAME" => "",
+		"FILTER_NAME" => "addressFilter",
 		"HIDE_LINK_WHEN_NO_DETAIL" => "N",
 		"IBLOCK_ID" => "6",
 		"IBLOCK_TYPE" => "content",

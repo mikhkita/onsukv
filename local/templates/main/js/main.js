@@ -31,7 +31,20 @@ $(document).ready(function(){
                 $(this).parents(".b-input").removeClass("not-empty");
             }
         });
+
     }
+
+    if($("#city").val() == "Москва"){
+        $('.b-addresss-item__metro').removeClass('hide');
+    }
+
+    $("#city").on('change', function(){
+        if ($(this).val() == "Москва") {
+            $('.b-addresss-item__metro').removeClass('hide');
+        } else {
+            $('.b-addresss-item__metro').addClass('hide');
+        }
+    });
 
     if( typeof autosize == "function" )
         autosize(document.querySelectorAll('textarea'));
@@ -518,10 +531,13 @@ $(document).ready(function(){
                     $("#b-time-input").show();
                     break;
                 case "30":
+                    $("#b-date-deliv").html("Дата сборки");
                     $(".b-pickpoint").show();
                     break;
                 case "53":
+                    $("#b-date-deliv").html("Дата сборки");
                 case "54":
+                    $("#b-date-deliv").html("Дата сборки");
                 case "55":
                     $("#b-date-deliv").html("Дата сборки");
                     $(".b-order-addr-cont").show();
@@ -531,7 +547,11 @@ $(document).ready(function(){
                         $(".b-addr-radio:checked").trigger("change");
                     }
                     break;
+                case "116":
+                    $("#b-date-deliv").html("Дата сборки");
+                    break;
                 case "120":
+                    $("#b-date-deliv").html("Дата сборки");
                     $(".b-cdek-input").show();
                     $("#cdek_type").trigger("change");
                     break;

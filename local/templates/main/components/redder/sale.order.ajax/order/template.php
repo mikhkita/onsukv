@@ -34,6 +34,13 @@ if( $userID = $USER->GetID() ){
     $arUser = $rsUser->Fetch();
 }
 
+$IBLOCK_ID = 6;
+$properties = CIBlockPropertyEnum::GetList(Array("sort"=>"asc", "name"=>"asc"), Array("ACTIVE"=>"Y", "IBLOCK_ID"=>$IBLOCK_ID, "CODE"=>"METRO"));
+while ($prop_fields = $properties->GetNext())
+{
+  $metroList[] = $prop_fields;
+}
+
 // $order = Sale\Order::create(SITE_ID, $USER->GetID());
 // $deliveryCollection = $order->getShipmentCollection();
 
@@ -121,6 +128,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                 <div class="b-input b-cdek-input b-cdek-choose not-empty" style="display:none;" id="b-cdek-input">
                     <label for="cdek_type">Доставка <span class="required">*</span></label>
                     <select name="ORDER_PROP_20" id="cdek_type" required>
+                        <option value="">Выберите тип доставки</option>
                         <option value="1">До пункта самовывоза</option>
                         <option value="2">До двери</option>
                     </select>
@@ -325,6 +333,14 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                             <div class="b-addresss-item__index b-input">
                                 <input type="text" id="postal-code" name="ORDER_PROP_24" value="" autocomplete="off" required>
                                 <label for="name">Индекс <span class="required">*</span></label>
+                            </div>
+                            <div class="b-addresss-item__metro b-input hide">
+                                <select name="ORDER_PROP_28">
+                                    <option value>Выберите метро</option>
+                                    <? foreach ($metroList as $metro): ?>
+                                        <option value="<?=$metro['ID']?>"><?=$metro['VALUE']?></option>
+                                    <? endforeach; ?>
+                                </select>
                             </div>
                         </div>
                         <input type="hidden" id="region" name="ORDER_PROP_16">
