@@ -1,5 +1,6 @@
 <?
 // use Bitrix\Sale;
+use Bitrix\Main;
 use Sale;
 
 // use Bitrix\Main\EventManager;
@@ -16,6 +17,7 @@ use Sale;
 
 // Исключаем поиск по описаниям
 AddEventHandler("search", "BeforeIndex", array("SearchHandlers", "BeforeIndexHandler"));
+AddEventHandler("main", "OnAfterUserLogin", Array("MyClass", "OnAfterUserLoginHandler"));
 
 // AddEventHandler("iblock", "OnAfterIBlockElementUpdate", Array("MyClass", "OnAfterIBlockElementUpdateHandler"));
 // AddEventHandler("iblock", "OnAfterIBlockElementAdd", Array("MyClass", "OnAfterIBlockElementAddHandler"));
@@ -490,6 +492,82 @@ class MyEventHandlers
     } 
 }
 
+Main\EventManager::getInstance()->addEventHandler(
+   'sale',
+   'OnSaleOrderSaved',
+   'OnSaleOrderSavedHandler'
+);
+
+function OnSaleOrderSavedHandler(Main\Event $event){
+	global $USER;
+	CModule::IncludeModule("iblock");
+
+	$order = $event->getParameter("ENTITY");
+	$isNew = $event->getParameter("IS_NEW");
+
+	// print_r($order->getUserId());
+	// var_dump($isNew);
+
+	// var_dump($_REQUEST);
+
+	// var_dump($order->getUserId());
+	// die();
+
+	if( !$isNew ) return true;
+
+	if( $_REQUEST["address"] == "NEW" && $order->getUserId() ){
+		$el = new CIBlockElement;
+		$arLoadProductArray = Array(
+			"IBLOCK_ID"      		=> 6,
+			"NAME"					=> $_REQUEST["ORDER_PROP_15"],
+			"PROPERTY_VALUES"		=> array(
+				"INDEX"				=> $_REQUEST["ORDER_PROP_24"],
+				"REGION"			=> $_REQUEST["ORDER_PROP_16"],
+				"ROOM"				=> $_REQUEST["ORDER_PROP_14"],
+				"USER"				=> $order->getUserId(),
+				"CITY"				=> $_REQUEST["ORDER_PROP_22"],
+				"METRO"				=> $_REQUEST["ORDER_PROP_18"],
+			),
+		);
+		if( $PRODUCT_ID = $el->Add($arLoadProductArray) ){
+			echo "string";
+		}else{
+			echo $el->LAST_ERROR;
+		}
+	}
+}
+
+// Main\EventManager::getInstance()->addEventHandler(
+//    'main',
+//    'OnAfterUserAdd',
+//    'OnAfterUserAddHandler1'
+// );
+
+// function OnAfterUserAddHandler1($event){
+// 	global $USER;
+
+// 	// print_r($event);
+// 	// die();
+// 	CModule::IncludeModule("iblock");
+
+// 	if( $_REQUEST["address"] == "NEW" ){
+// 		$el = new CIBlockElement;
+// 		$arLoadProductArray = Array(
+// 			"IBLOCK_ID"      		=> 6,
+// 			"NAME"					=> $_REQUEST["ORDER_PROP_15"],
+// 			"PROPERTY_VALUES"		=> array(
+// 				"INDEX"				=> $_REQUEST["ORDER_PROP_24"],
+// 				"REGION"			=> $_REQUEST["ORDER_PROP_16"],
+// 				"ROOM"				=> $_REQUEST["ORDER_PROP_14"],
+// 				"USER"				=> $event["ID"],
+// 				"CITY"				=> $_REQUEST["ORDER_PROP_22"],
+// 				"METRO"				=> $_REQUEST["ORDER_PROP_18"],
+// 			),
+// 		);
+// 		$PRODUCT_ID = $el->Add($arLoadProductArray);
+// 	}
+// }
+
 class SearchHandlers
 {
     function BeforeIndexHandler($arFields)
@@ -574,6 +652,45 @@ class MyClass {
 		}
 	}
 
+	function OnAfterUserLoginHandler(&$fields){
+        // если логин не успешен то
+        // print_r($fields);
+        // die();
+        if($fields['USER_ID']<=0){
+        	$_SESSION["AUTHORIZE_FAILURE_COUNTER"]++;
+
+        	if( $_SESSION["CHECK_OLD_AUTH"] ){
+        		unset($_SESSION["CHECK_OLD_AUTH"]);
+        	}else{
+        		$_SESSION["CHECK_OLD_AUTH"] = true;
+
+	        	// ищем пользователя по логину
+	            $rsUser = CUser::GetByLogin($fields['LOGIN']);
+	            // и если нашли, то
+	            if (!($arUser = $rsUser->Fetch())){
+                    $arUser = getUserByEmail($fields['LOGIN']);
+                    // var_dump($arUser);
+                    // die();
+	            }
+
+                if( $arUser ){
+                    $user = new CUser;
+                    $arRes = $user->Login($arUser['LOGIN'], $fields["PASSWORD"]);
+                    if( $arRes ){
+                    	$arFields['RESULT_MESSAGE'] = array("TYPE" => "OK", "MESSAGE" => "");
+                    }
+
+                    if( $_SESSION["AUTHORIZE_FAILURE_COUNTER"] >= 2 ){
+                        $arFields['RESULT_MESSAGE'] = array("TYPE" => "ERROR", "MESSAGE" => "Неверный логин или пароль");
+                    }else{
+                        $arFields['RESULT_MESSAGE'] = array("TYPE" => "OK", "MESSAGE" => "");
+                    }
+                    unset($_SESSION["AUTHORIZE_FAILURE_COUNTER"]);
+                }
+        	}
+        }
+    }
+
 	// public static function OnAfterIBlockElementUpdateHandler($arFields){
  //    	global $GLOBALS;
 
@@ -613,6 +730,17 @@ class MyClass {
 		vardump($arFields);
 
 	}
+}
+
+function getUserByEmail($email){
+	global $USER;
+
+	$filter = Array("EMAIL" => $email);
+	$rsUsers = CUser::GetList(($by = "NAME"), ($order = "desc"), $filter);
+	if($arUser = $rsUsers->Fetch()) {
+		return $arUser;
+	}
+	return false;
 }
 
 function getOrderCountInDate($date){
@@ -1042,6 +1170,34 @@ function getNewItems($count){
 		$out[] = $arFields["ID"];
 	}
 	return $out;
+}
+
+function updateStore($productID, $weight, $quantity, $amount){
+	Cmodule::IncludeModule('catalog');
+
+	$weight = floatval($weight)*1000;
+
+	$arFields = array(
+	    "PRODUCT_ID" => $productID,
+	    "STORE_ID" => 1,
+	    "AMOUNT" => $amount,
+	);
+
+	$ID = CCatalogStoreProduct::UpdateFromForm($arFields);
+
+	\Bitrix\Main\Loader::includeModule('catalog'); 
+	$obProduct = new CCatalogProduct(); 
+
+	$arFields = array(
+		'QUANTITY' => $quantity,
+		'WEIGHT' => $weight,
+		'SUBSCRIBE' => 'D'
+	);
+
+	$result = $obProduct->Update($productID, $arFields); 
+
+	return ($result && $ID)?true:false;
+
 }
 
 function vardump($array){

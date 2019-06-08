@@ -15,6 +15,13 @@ $aMenuLinks = Array(
 		"" 
 	),
 	Array(
+		"Любимые товары", 
+		"personal/favourite/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
 		"Корзина", 
 		"cart/", 
 		Array(), 
@@ -27,13 +34,6 @@ $aMenuLinks = Array(
 		Array(), 
 		Array(), 
 		"" 
-	),
-	Array(
-		"Личный счет", 
-		"personal/account/", 
-		Array(), 
-		Array(), 
-		"CBXFeatures::IsFeatureEnabled('SaleAccounts')" 
 	),
 	Array(
 		"Подписки на товары", 
