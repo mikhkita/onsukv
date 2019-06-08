@@ -383,7 +383,8 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
         </div>
        <div class="b-inputs b-input-row b-for-payment clearfix">
             <div class="b-for-payment-left">
-                <!-- <div class="b-radio b-payment-method" style="display: none;">
+                <?/*?>
+                <div class="b-radio b-payment-method" style="display: none;">
                     <p>Способ оплаты:</p>
                     <div class="b-payment-method-list">
                         <? foreach ($arResult["PAY_SYSTEM"] as $key => $payment): ?>
@@ -397,7 +398,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                 <div class="b-checkbox b-basket-checkbox">
                     <input id="politics1" class="" type="checkbox" name="politics" checked required>
                     <label for="politics1">Настоящим подтверждаю, что я ознакомлен и согласен с <a href="/politics/">политикой по обработке персональных данных</a></label>
-                </div> -->
+                </div><?*/?>
                 <?
                 $sales = CSaleOrder::GetList(array("SORT" => "ASC"), array("USER_ID" => $USER->GetID()), false, false, array()); 
                 $class = "invisible-checkbox";

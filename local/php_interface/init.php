@@ -24,6 +24,7 @@ AddEventHandler("catalog", "OnStoreProductUpdate", Array("MyClass", "OnStoreProd
 AddEventHandler("sale", "DiscountOnAfterUpdate", Array("MyClass", "DiscountOnAfterUpdateHandler"));
 AddEventHandler("main", "OnBeforeEventAdd", Array("MyEventHandlers", "OnBeforeEventAddHandler")); 
 AddEventHandler("sale", "OnOrderAdd", Array("MyClass", "OnOrderAddHandler"));
+AddEventHandler("sale", "OnBeforeUserAdd", Array("MyClass", "OnBeforeUserAddHandler"));
 AddEventHandler("sale", "OnOrderDelete", Array("MyClass", "OnOrderDeleteHandler"));
 
 
@@ -605,6 +606,11 @@ class MyClass {
 	function OnOrderDeleteHandler($ID, $success){
 
 		updateOrderDate();
+
+	}
+	function OnBeforeUserAddHandler(&$arFields){
+
+		vardump($arFields);
 
 	}
 }
