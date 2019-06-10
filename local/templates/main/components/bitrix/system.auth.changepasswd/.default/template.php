@@ -3,6 +3,11 @@
 <?ShowMessage($arParams["~AUTH_RESULT"]);?>
 <div class="bx-auth">
 	<form action="<?=$arResult["AUTH_FORM"]?>" name="bform" method="POST" class="b-confirm-form">
+		<input type="hidden" name="backurl" value="<?=$arResult["BACKURL"]?>" />
+		<input type="hidden" name="AUTH_FORM" value="Y">
+		<input type="hidden" name="TYPE" value="CHANGE_PWD">
+		<input type="hidden" name="USER_LOGIN" maxlength="50" value="<?=$arResult["LAST_LOGIN"]?>" class="bx-auth-input" />
+		<input type="hidden" name="USER_CHECKWORD" maxlength="50" value="<?=$arResult["USER_CHECKWORD"]?>" class="bx-auth-input" />
 		<div class="b-popup-error">
 		</div>
 		<div class="b-popup-form">
