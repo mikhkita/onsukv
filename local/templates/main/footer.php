@@ -200,11 +200,15 @@
 			</div>
 			<div class="b-popup b-popup-forget-password" id="b-popup-forget-password">
 				<div class="b-popup-header"><h3>Восстановление пароля</h3></div>
-				<form action="kitsend.php"method="POST" id="b-form-ask">
+				<form action="/personal/?forgot_password=yes"method="POST" id="b-form-ask">
+					<input type="hidden" name="backurl" value="/personal/">
+					<input type="hidden" name="AUTH_FORM" value="Y">
+					<input type="hidden" name="TYPE" value="SEND_PWD">
+					<input type="hidden" name="send_account_info" value="Y">
 					<div class="b-popup-form">
 						<div class="b-input-container">
 							<div class="b-input-string">
-								<input type="text" id="name" name="name" placeholder="Имя или e-mail" required/>
+								<input type="text" id="name" name="USER_EMAIL" placeholder="E-mail" required/>
 							</div>
 						</div>
 						<input type="submit" style="display:none;">
