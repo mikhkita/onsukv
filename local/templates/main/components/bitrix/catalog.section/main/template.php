@@ -26,7 +26,7 @@ $arFilters = Array(
 			$this->AddEditAction($arItem['ID'], $arItem['EDIT_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_EDIT"));
 			$this->AddDeleteAction($arItem['ID'], $arItem['DELETE_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_DELETE"), array("CONFIRM" => GetMessage('CT_BNL_ELEMENT_DELETE_CONFIRM')));
 			?>
-			<div class="b-catalog-item clearfix<? if( !$arItem["CATALOG_QUANTITY"] ): ?> with-notice<? endif; ?>" id="<?=$this->GetEditAreaId($arItem['ID']);?>">
+			<div class="b-catalog-item clearfix<? if( intval($arItem["CATALOG_QUANTITY"]) <= 0 ): ?> with-notice<? endif; ?>" id="<?=$this->GetEditAreaId($arItem['ID']);?>">
 				<div class="b-catalog-back"></div>
 				<a href="<?=detailPageUrl($arItem["DETAIL_PAGE_URL"])?>" class="b-catalog-img" style="background-image:url('<?=$renderImage["src"]?>');"></a>
 				<div class="b-catalog-desc">
@@ -59,7 +59,7 @@ $arFilters = Array(
 							<? endif; ?>
 						</div>
 						<div class="b-right-button b-basket-count-cont<? if( isset($arItem["BASKET"]) ): ?> b-item-in-basket<? endif; ?>">
-							<? if( $arItem["CATALOG_QUANTITY"] ): ?>
+							<? if( intval($arItem["CATALOG_QUANTITY"]) > 0 ): ?>
 								<div class="b-basket-count">
 									<div class="b-input-cont">
 										<a href="#" class="icon-minus b-change-quantity" data-side="-"></a>
@@ -84,7 +84,7 @@ $arFilters = Array(
 							<? endif; ?>
 						</div>
 					</div>
-					<? if( !$arItem["CATALOG_QUANTITY"] ): ?>
+					<? if( intval($arItem["CATALOG_QUANTITY"]) <= 0 ): ?>
 						<div class="b-catalog-item-empty-text">Вы можете оставить заявку на данный товар. Когда товар будет в наличии, Вам придет автоматическое письмо на почту.</div>
 					<? endif; ?>
 					<? if( $GLOBALS["isWholesale"] ): ?>

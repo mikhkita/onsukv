@@ -1,7 +1,9 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Адреса доставки");?>
-<? if (isAuth()): 
+<? 
+
+if (isAuth()): 
 
 	$GLOBALS["addressFilter"] = array(
 		"PROPERTY_USER" => $USER->GetID()

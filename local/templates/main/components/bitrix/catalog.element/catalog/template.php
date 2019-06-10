@@ -72,7 +72,7 @@ $APPLICATION->AddHeadString('<link rel="canonical" href="https://nevkusno.ru' . 
 				</div>
 			<? endif; ?>
 			<div class="b-detail-count b-basket-count-cont<? if( isset($arResult["BASKET"]) ): ?> b-item-in-basket<? endif; ?>">
-				<? if( $arResult["CATALOG_QUANTITY"] ): ?>
+				<? if( intval($arResult["CATALOG_QUANTITY"]) > 0 ): ?>
 					<div class="b-basket-count">
 						<div class="b-input-cont">
 							<a href="#" class="icon-minus b-change-quantity" data-side="-"></a>
