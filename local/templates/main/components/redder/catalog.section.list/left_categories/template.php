@@ -15,16 +15,6 @@ $this->setFrameMode(true);
 <?if( count($arResult["SECTIONS"]) ): ?>
 	<ul>
 		<?foreach($arResult["SECTIONS"] as $arItem):?>
-			<? if( $arItem["PICTURE"] ): ?>
-				<li class="b-with-image">
-					<a href="<?=detailPageUrl($arItem["SECTION_PAGE_URL"])?>" class="clearfix <? if( $GLOBALS["SECTION_ID"] == $arItem["ID"] ): ?>active icon-tick<? endif; ?><?=(($arItem["UF_HIGHLIGHT"])?" highlight":"")?>">
-						<img src="<?=$arItem["PICTURE"]["SRC"]?>" alt="">
-						<span><?=$arItem["NAME"]?></span>
-					</a>
-				</li>
-			<? endif; ?>
-		<?endforeach;?>
-		<?foreach($arResult["SECTIONS"] as $arItem):?>
 			<? if($arItem["ID"] == 1144 || $arItem["UF_HIDE"] ){
 				continue;
 			} ?>

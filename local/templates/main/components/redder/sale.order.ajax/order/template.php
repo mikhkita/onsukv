@@ -335,8 +335,9 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                                 <label for="name">Индекс <span class="required">*</span></label>
                             </div>
                             <div class="b-addresss-item__metro b-input hide">
-                                <select name="ORDER_PROP_28">
-                                    <option value>Выберите метро</option>
+                                <label for="metro-station">Выберите метро<span class="required">*</span></label>
+                                <select name="ORDER_PROP_28" required>
+                                    <option value></option>
                                     <? foreach ($metroList as $metro): ?>
                                         <option value="<?=$metro['ID']?>"><?=$metro['VALUE']?></option>
                                     <? endforeach; ?>

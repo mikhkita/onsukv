@@ -124,6 +124,8 @@ else
 			$date = $arDate[0]." ".getRusMonth($arDate[1])." ".$arDate[2];
 			$price = 0;
 			$discount = 0;
+			$tracking = "";
+			$operator = "";
 			foreach($order["BASKET_ITEMS"] as $item){
 				$price += $item["BASE_PRICE"]*$item["QUANTITY"];
 				$discount += $item["DISCOUNT_PRICE"]*$item["QUANTITY"];
@@ -141,7 +143,18 @@ else
 						$status = $arResult['INFO']['STATUS'][$orderHeaderStatus]['NAME'];
 					}
 				}
+				if ($arProp["CODE"] == "TRACKING"){
+					if (!empty($arProp['VALUE'][0])){
+						$tracking = $arProp['VALUE'][0];
+					}
+				}
+				if ($arProp["CODE"] == "OPERATOR"){
+					if (!empty($arProp['VALUE'][0])){
+						$operator = $arProp['VALUE'][0];
+					}
+				}
 			}
+
 			?>
 			<a href="<?=$order["ORDER"]["URL_TO_DETAIL"]?>" class="b-order-history-item">
 				<div class="b-order-history-column b-order-history-1-column">
@@ -150,8 +163,8 @@ else
 					</div>
 					<div class="b-order-history-column-bottom">
 						Вид доставки: <?=$order['SHIPMENT'][0]["DELIVERY_NAME"]?><br>
-						Номер отправления: 82X756GCAJKH31JKHBAS<br>
-						Оператор: Мосина Е.В.
+						Номер отправления: <?=$tracking?><br>
+						Оператор: <?=$operator?>
 					</div>
 				</div>
 				<div class="b-order-history-column b-order-history-3-column">
