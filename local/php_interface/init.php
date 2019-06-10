@@ -45,6 +45,7 @@ class MyEventHandlers
 			$arOrder = CSaleOrder::GetByID($arFields["ORDER_ID"]);
 			$arDelivery = Bitrix\Sale\Delivery\Services\Manager::getById($deliveryID);
 			$pickpoint = "";
+			$arFields['ORDER_DATE'] = date("Y-m-d h:i:s", strtotime($arFields['ORDER_DATE']));
 
 			foreach ($temp["properties"] as $arProp) {
 				if ($arProp["CODE"] == "CALL") {
@@ -107,12 +108,6 @@ class MyEventHandlers
 		    $discount = (100-(round($saleCount*100/$sum))."%");
 		    $totalSum = $sum+$arFields["DELIVERY_PRICE"];
 
-		    // vardump($arFields);
-		    // echo "==============";
-		    // vardump($arProps);
-
-		    // die();
-
 			if ($arProps['DELIVERY_DISTANCE'] != "") {
 				$delveryDistanceAdmin = "<tr>".
 						            	"<td colspan='4'><strong>Расстояние от МКАД</strong>:</td>".
@@ -146,6 +141,8 @@ class MyEventHandlers
 
 			$arProps['PHONE'] = '+'.substr($str, 0, 1).' ('.substr($str, 1, 3).') '.substr($str, 4, 3).'-'.substr($str, 7, 2).'-'.substr($str, 9, 2);
 			$deliveryDateText = "Дата доставки:";
+
+			$arProps["DELIVERY_DATE"] = date("d", strtotime($arProps['DELIVERY_DATE']))." ".getRusMonth(date("m", strtotime($arProps['DELIVERY_DATE']))).", ".getRusDayOfWeek(date("w", strtotime($arProps['DELIVERY_DATE'])));
 
 			switch ($arDelivery['ID']) {
 				case "30":
