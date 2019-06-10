@@ -7,7 +7,7 @@ $userTable = \Bitrix\Main\UserTable::getMap();
 // print_r($userTable);
 // echo "</pre>";
 
-include 'users/last.php';
+include 'users/all.php';
 // include 'articles/articles_journals.php';
 // include 'articles/files.php';
 // include 'articles/tags.php';
@@ -18,7 +18,7 @@ foreach ($values as $value) {
 	$result[] = array_combine($keys, $value);
 }
 
-$added = file_get_contents("users-result.txt");
+$added = file_get_contents("users/users-result.txt");
 $added = explode("|", $added);
 $tmp = array();
 foreach ($added as $key => $value) {
@@ -85,7 +85,7 @@ $params = array(
 	"USER_ID" => "ID",
 	"FIRSTNAME" => "NAME",
 	"LASTNAME" => "LAST_NAME",
-	"BIRTH" => "PERSONAL_BIRTHDATE",
+	"BIRTH" => "PERSONAL_BIRTHDAY",
 	"EMAIL" => "EMAIL",
 	"SUBSCRIBE" => "",
 	"MAINPHONE" => "PERSONAL_PHONE",
@@ -106,7 +106,7 @@ $replace_symbols = array('\\r\\n\\r\\n', '\\r\\n', '\"');
 $IDs = array();
 
 foreach ($result as $element) { //element - вся информация о элементе
-	if( isset($added[$element["id"]]) ){
+	if( isset($added[$element["USER_ID"]]) ){
 		continue;
 	}
 	$PROP = array();
@@ -119,32 +119,42 @@ foreach ($result as $element) { //element - вся информация о эл�
 	foreach ($params as $param => $param_bitrix) {
 		if(!empty($param_bitrix)){
 			switch ($param_bitrix) {
-				// case "EMAIL":
-				// 	// if( !empty($element[$param]) ){
-				// 	// 	$arFields[$param_bitrix] = str_replace($replace_symbols, array("", "", '"'), trim($element[$param]) );
-				// 	// 	$arFields["LOGIN"] = str_replace($replace_symbols, array("", "", '"'), trim($element[$param]) );
-				// 	// }else{
-				// 	// 	$arFields[$param_bitrix] = "temp@email.ru";
-				// 	// 	$arFields["LOGIN"] = "user-".$element["id"];
-				// 	// }
-				// 	break;
-				case "PASSWORD":
+				case "LOGIN":
+					if( mb_strlen($element[$param], "UTF-8") < 3 ){
+						$arFields[$param_bitrix] = trim(str_replace($replace_symbols, array("", "", '"'), $element["EMAIL"]));
+					}else{
+						$arFields[$param_bitrix] = trim(str_replace($replace_symbols, array("", "", '"'), $element[$param]));
+					}
 					// if( !empty($element[$param]) ){
-						$arFields[$param] = md5($element[$param]."nev");
-						$arFields["WORK_ZIP"] = md5(rand().time().rand());
+					// 	$arFields[$param_bitrix] = str_replace($replace_symbols, array("", "", '"'), trim($element[$param]) );
+					// 	$arFields["LOGIN"] = str_replace($replace_symbols, array("", "", '"'), trim($element[$param]) );
+					// }else{
+					// 	$arFields[$param_bitrix] = "temp@email.ru";
+					// 	$arFields["LOGIN"] = "user-".$element["id"];
+					// }
+					break;
+				case "PASSWORD":
+					if( empty($element[$param]) ){
+						$arFields[$param_bitrix] = md5(rand());
+					}else{
+						$arFields[$param_bitrix] = $element[$param];
+					}
+						// $arFields["WORK_ZIP"] = md5(rand().time().rand());
 					// }
 					break;
 				case "ACTIVE":
 					$arFields[$param_bitrix] = intval($element[$param]) == 1 ? "Y" : "N";
 					break;
 				case "DATE_REGISTER":
-				case "PERSONAL_BIRTHDATE":
+				case "PERSONAL_BIRTHDAY":
 				case "LAST_LOGIN":
-					$arFields[$param_bitrix] = $element[$param];
+					if( !in_array($element[$param], array("0000-06-06 00:00:00", "1970-01-01 12:00:00", "0000-00-00 00:00:00", "0000-04-09 00:00:00")) ){
+						$arFields[$param_bitrix] = date("d.m.Y h:i:s", strtotime($element[$param]));
+					}
 					break;
 				
 				default:
-					$arFields[$param_bitrix] = str_replace($replace_symbols, array("", "", '"'), $element[$param]);
+					$arFields[$param_bitrix] = trim(str_replace($replace_symbols, array("", "", '"'), $element[$param]));
 					break;
 			}
 		}
@@ -157,12 +167,12 @@ foreach ($result as $element) { //element - вся информация о эл�
 
 
 	if($USER_ID = $el->Add($arFields)){
-		$IDs[$element["id"]] = $USER_ID;
-		file_put_contents("users-logs.txt", "New ID: ".$USER_ID, FILE_APPEND);
+		$IDs[$element["USER_ID"]] = $USER_ID;
+		file_put_contents("users/users-logs.txt", "New ID: ".$USER_ID."\n", FILE_APPEND);
 		
-		file_put_contents("users-result.txt", $element["id"].",".$USER_ID."|", FILE_APPEND);
+		file_put_contents("users/users-result.txt", $element["USER_ID"].",".$USER_ID."|", FILE_APPEND);
 	}else{
-		file_put_contents("users-logs.txt", "Error: ".$el->LAST_ERROR."(".$element["id"].")", FILE_APPEND);
+		file_put_contents("users/users-logs.txt", "Error: ".$el->LAST_ERROR."(".$element["USER_ID"].")"."\n", FILE_APPEND);
 	}
 }
 

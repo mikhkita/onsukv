@@ -573,12 +573,14 @@ $(document).ready(function(){
                 }else{
                     $(".b-addr-radio:checked").trigger("change");
                 }
+
+                $("#city").trigger("change");
             }else{
                 $(".b-cdek-addr").show();
                 $(".b-order-addr-cont").hide();
-            }
 
-            IPOLSDEK_pvz.setPrices();
+                IPOLSDEK_pvz.setPrices();
+            }
         });
 
         $("#b-delivery-price-input").change(function(){

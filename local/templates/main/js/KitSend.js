@@ -233,6 +233,11 @@ $(document).ready(function(){
   				if( $("select#date").length ){
   					$("select#date").prop("disabled", false);
   				}
+  				if( $(this).is("#ORDER_FORM") ){
+  					// alert();
+  					$(".basket-checkout-block-btn").addClass("loading");
+  					$("#b-basket-checkout-button").after("<p class='b-order-submit-message'>Подождите, идет создание заказа</p>");
+  				}
   				return true;
   			}
 

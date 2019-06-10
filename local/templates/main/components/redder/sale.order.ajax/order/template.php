@@ -128,7 +128,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                 <div class="b-input b-cdek-input b-cdek-choose not-empty" style="display:none;" id="b-cdek-input">
                     <label for="cdek_type">Доставка <span class="required">*</span></label>
                     <select name="ORDER_PROP_20" id="cdek_type" required>
-                        <option value="">Выберите тип доставки</option>
+                        <!-- <option value="">Выберите тип доставки</option> -->
                         <option value="1">До пункта самовывоза</option>
                         <option value="2">До двери</option>
                     </select>

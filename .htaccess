@@ -27,6 +27,7 @@ ErrorDocument 404 /404.php
   RewriteRule .* - [E=REMOTE_USER:%{HTTP:Authorization}]
 
   Redirect 301 /personal/cart/ /cart/order/
+  Redirect 301 /catalog/wholesale/ /wholesale/
 </IfModule>
 
 <IfModule mod_dir.c>
