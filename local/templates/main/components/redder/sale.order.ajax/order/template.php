@@ -335,8 +335,9 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                                 <label for="name">Индекс <span class="required">*</span></label>
                             </div>
                             <div class="b-addresss-item__metro b-input hide">
-                                <select name="ORDER_PROP_28">
-                                    <option value>Выберите метро</option>
+                                <label for="metro-station">Выберите метро<span class="required">*</span></label>
+                                <select name="ORDER_PROP_28" required>
+                                    <option value></option>
                                     <? foreach ($metroList as $metro): ?>
                                         <option value="<?=$metro['ID']?>"><?=$metro['VALUE']?></option>
                                     <? endforeach; ?>
@@ -385,7 +386,8 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
         </div>
        <div class="b-inputs b-input-row b-for-payment clearfix">
             <div class="b-for-payment-left">
-                <!-- <div class="b-radio b-payment-method" style="display: none;">
+                <?/*?>
+                <div class="b-radio b-payment-method" style="display: none;">
                     <p>Способ оплаты:</p>
                     <div class="b-payment-method-list">
                         <? foreach ($arResult["PAY_SYSTEM"] as $key => $payment): ?>
@@ -399,7 +401,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                 <div class="b-checkbox b-basket-checkbox">
                     <input id="politics1" class="" type="checkbox" name="politics" checked required>
                     <label for="politics1">Настоящим подтверждаю, что я ознакомлен и согласен с <a href="/politics/">политикой по обработке персональных данных</a></label>
-                </div> -->
+                </div><?*/?>
                 <?
                 $sales = CSaleOrder::GetList(array("SORT" => "ASC"), array("USER_ID" => $USER->GetID()), false, false, array()); 
                 $class = "invisible-checkbox";

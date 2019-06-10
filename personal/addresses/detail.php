@@ -31,7 +31,7 @@
 			"DETAIL_TEXT_USE_HTML_EDITOR" => "N",
 			"ELEMENT_ASSOC" => "PROPERTY_BY",
 			"ELEMENT_ASSOC_PROPERTY" => "USER",
-			"GROUPS" => array(),
+			"GROUPS" => array("3"),
 			"IBLOCK_ID" => "6",
 			"IBLOCK_TYPE" => "",
 			"LEVEL_LAST" => "Y",

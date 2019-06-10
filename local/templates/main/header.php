@@ -312,6 +312,34 @@ CModule::IncludeModule('iblock');
 					<a href="#b-popup-ask" class="dashed fancy">Задать вопрос</a>
 				</div>
 				<div class="b-header-block menu-header-block">
+					<div class="b-auth-block b-auth-left-block">
+						<?$APPLICATION->IncludeComponent("redder:catalog.section.list", "holiday_categories", Array(
+							"ADD_SECTIONS_CHAIN" => "N",	// Включать раздел в цепочку навигации
+								"CACHE_GROUPS" => "Y",	// Учитывать права доступа
+								"CACHE_TIME" => "36000000",	// Время кеширования (сек.)
+								"CACHE_TYPE" => "N",	// Тип кеширования
+								"COUNT_ELEMENTS" => "Y",	// Показывать количество элементов в разделе
+								"IBLOCK_ID" => "1",	// Инфоблок
+								"IBLOCK_TYPE" => "content",	// Тип инфоблока
+								"SECTION_CODE" => "",	// Код раздела
+								"SECTION_FIELDS" => array(	// Поля разделов
+									0 => "NAME",
+									1 => "PICTURE",
+								),
+								"SECTION_ID" => ($GLOBALS["isWholesale"] || $GLOBALS["isSale"])?$GLOBALS["HEADER_CATEGORIES"]:$GLOBALS["SECTIONS"][0]["ID"],	// ID раздела
+								"SECTION_URL" => "",	// URL, ведущий на страницу с содержимым раздела
+								"SECTION_USER_FIELDS" => array(	// Свойства разделов
+									"UF_HIGHLIGHT",
+									"UF_HIDE",
+								),
+								"SHOW_PARENT_NAME" => "Y",	// Показывать название раздела
+								"TOP_DEPTH" => "1",	// Максимальная отображаемая глубина разделов
+								"VIEW_MODE" => "LINE",	// Вид списка подразделов
+								"PROPERTY" => $property,
+							),
+							false
+						);?>
+					</div>
 					<?$APPLICATION->IncludeComponent("bitrix:catalog.section.list", "header_categories", Array(
 						"ADD_SECTIONS_CHAIN" => "N",	// Включать раздел в цепочку навигации
 							"CACHE_GROUPS" => "Y",	// Учитывать права доступа
