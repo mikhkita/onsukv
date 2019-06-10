@@ -326,7 +326,7 @@ CModule::IncludeModule('iblock');
 									0 => "NAME",
 									1 => "PICTURE",
 								),
-								"SECTION_ID" => ($GLOBALS["isWholesale"] || $GLOBALS["isSale"])?$GLOBALS["HEADER_CATEGORIES"]:$GLOBALS["SECTIONS"][0]["ID"],	// ID раздела
+								"SECTION_ID" => $GLOBALS["HEADER_CATEGORIES"],	// ID раздела
 								"SECTION_URL" => "",	// URL, ведущий на страницу с содержимым раздела
 								"SECTION_USER_FIELDS" => array(	// Свойства разделов
 									"UF_HIGHLIGHT",

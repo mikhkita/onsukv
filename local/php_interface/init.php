@@ -110,12 +110,12 @@ class MyEventHandlers
 
 			if ($arProps['DELIVERY_DISTANCE'] != "") {
 				$delveryDistanceAdmin = "<tr>".
-						            	"<td colspan='4'><strong>Расстояние от МКАД</strong>:</td>".
+						            	"<td><strong>Расстояние от МКАД</strong>:</td>".
 						            	"<td></td>".
-						            	"<td colspan='2'>".$arProps['DELIVERY_DISTANCE']."</td>".
+						            	"<td>".$arProps['DELIVERY_DISTANCE']."</td>".
 						            "</tr>";
 	            $delveryDistanceClient = "<tr>".
-						            	"<td colspan='3'><strong>Расстояние от МКАД</strong>:</td>".
+						            	"<td><strong>Расстояние от МКАД</strong>:</td>".
 						            	"<td>".$arProps['DELIVERY_DISTANCE']."</td>".
 						            "</tr>";
 			}
@@ -184,23 +184,23 @@ class MyEventHandlers
 			}
 			if (isset($arProps["DELIVERY_TIME"]) && !empty($arProps["DELIVERY_TIME"])) {
 				$deliveryTimeAdmin = "<tr>".
-					                "<td colspan='4'><strong>Время доставки:</strong></td>".
+					                "<td>Время доставки:</td>".
 				                    "<td>&nbsp;</td>".
-				    	   	        "<td colspan='2'>".$arProps["DELIVERY_TIME"]."</td>".
+				    	   	        "<td>".$arProps["DELIVERY_TIME"]."</td>".
 				                "</tr>";
                 $deliveryTimeClient = "<tr>".
-					                "<td colspan='3'><strong>Время доставки:</strong></td>".
+					                "<td>Время доставки:</td>".
 				    	   	        "<td>".$arProps["DELIVERY_TIME"]."</td>".
 				                "</tr>";
             }
             if (isset($arProps["UNDERGROUND_DISTANCE"]) && !empty($arProps["UNDERGROUND_DISTANCE"])) {
 				$undergroundDistanceAdmin = "<tr>".
-					                "<td colspan='4'><strong>Расстояние от метро:</strong></td>".
+					                "<td>Расстояние от метро:</td>".
 				                    "<td>&nbsp;</td>".
-				    	   	        "<td colspan='2'>".$arProps["UNDERGROUND_DISTANCE"]."</td>".
+				    	   	        "<td>".$arProps["UNDERGROUND_DISTANCE"]."</td>".
 				                "</tr>";
                 $undergroundDistanceClient = "<tr>".
-					                "<td colspan='3'><strong>Расстояние от метро:</strong></td>".
+					                "<td>Расстояние от метро:</td>".
 				    	   	        "<td>".$arProps["UNDERGROUND_DISTANCE"]."</td>".
 				                "</tr>";
             }
