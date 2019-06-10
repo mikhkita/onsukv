@@ -694,16 +694,18 @@ class MyClass {
 	}
 
 	function OnAfterUserLoginHandler(&$fields){
+		global $USER;
         // если логин не успешен то
-        // print_r($fields);
+        // var_dump($fields);
         // die();
-        if($fields['USER_ID']<=0){
-        	$_SESSION["AUTHORIZE_FAILURE_COUNTER"]++;
+        if($fields['USER_ID'] == 0 && !$_SESSION["EMAIL_TRY"] ){
+        	// echo "string";
+        	$_SESSION["EMAIL_TRY"] = true;
 
-        	if( $_SESSION["CHECK_OLD_AUTH"] ){
-        		unset($_SESSION["CHECK_OLD_AUTH"]);
-        	}else{
-        		$_SESSION["CHECK_OLD_AUTH"] = true;
+        	// if( $_SESSION["CHECK_OLD_AUTH"] ){
+        	// 	unset($_SESSION["CHECK_OLD_AUTH"]);
+        	// }else{
+        		// $_SESSION["CHECK_OLD_AUTH"] = true;
 
 	        	// ищем пользователя по логину
 	            $rsUser = CUser::GetByLogin($fields['LOGIN']);
@@ -714,21 +716,37 @@ class MyClass {
                     // die();
 	            }
 
-                if( $arUser ){
-                    $user = new CUser;
-                    $arRes = $user->Login($arUser['LOGIN'], $fields["PASSWORD"]);
+	            // var_dump($arUser);
+                    // die();
+
+                if( isset($arUser["ID"]) ){
+                    // if (!is_object($USER)){
+                    // 	$USER = new CUser;
+                    // }
+                    // var_dump($USER);
+                    // die();
+                    // vardump($arUser);
+                    // vardump($fields);
+                    // die();
+                    $arRes = letsLogin($arUser['LOGIN'], $fields["PASSWORD"]);
                     if( $arRes ){
                     	$arFields['RESULT_MESSAGE'] = array("TYPE" => "OK", "MESSAGE" => "");
-                    }
-
-                    if( $_SESSION["AUTHORIZE_FAILURE_COUNTER"] >= 2 ){
-                        $arFields['RESULT_MESSAGE'] = array("TYPE" => "ERROR", "MESSAGE" => "Неверный логин или пароль");
+                    	$_SESSION["EMAIL_TRY"] = false;
                     }else{
-                        $arFields['RESULT_MESSAGE'] = array("TYPE" => "OK", "MESSAGE" => "");
+                    	$arFields['RESULT_MESSAGE'] = array("TYPE" => "ERROR", "MESSAGE" => "Неверный логин или пароль");
                     }
-                    unset($_SESSION["AUTHORIZE_FAILURE_COUNTER"]);
+                    // vardump($arRes);
+                    // die();
+
+                    // if( $_SESSION["AUTHORIZE_FAILURE_COUNTER"] >= 2 ){
+                    // }else{
+                        // $arFields['RESULT_MESSAGE'] = array("TYPE" => "OK", "MESSAGE" => "");
+                    // }
+                    // unset($_SESSION["AUTHORIZE_FAILURE_COUNTER"]);
                 }
-        	}
+        	// }
+        }else{
+        	$_SESSION["EMAIL_TRY"] = false;
         }
     }
 
@@ -771,6 +789,12 @@ class MyClass {
 		vardump($arFields);
 
 	}
+}
+
+function letsLogin($login, $password){
+	$USER = new CUser;
+
+	return $USER->Login($login, $password);
 }
 
 function getUserByEmail($email){
