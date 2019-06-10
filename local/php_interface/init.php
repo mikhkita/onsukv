@@ -50,9 +50,9 @@ class MyEventHandlers
 			foreach ($temp["properties"] as $arProp) {
 				if ($arProp["CODE"] == "CALL") {
 					if ($arProp["VALUE"][0] == "Y") {
-						$arProps[$arProp["CODE"]] = "Звонок оператора";
+						$arProps[$arProp["CODE"]] = "ЗВОНОК ОПЕРАТОРА";
 					} else {
-						$arProps[$arProp["CODE"]] = "Автоматический";
+						$arProps[$arProp["CODE"]] = "СБОРКА БЕЗ ПОДТВЕРЖДЕНИЯ ОПЕРАТОРОМ";
 					}
 				} else {
 					$arProps[$arProp["CODE"]] = $arProp["VALUE"][0];
@@ -110,12 +110,12 @@ class MyEventHandlers
 
 			if ($arProps['DELIVERY_DISTANCE'] != "") {
 				$delveryDistanceAdmin = "<tr>".
-						            	"<td><strong>Расстояние от МКАД</strong>:</td>".
+						            	"<td colspan='4'><strong>Расстояние от МКАД</strong>:</td>".
 						            	"<td></td>".
-						            	"<td>".$arProps['DELIVERY_DISTANCE']."</td>".
+						            	"<td colspan='2'>".$arProps['DELIVERY_DISTANCE']."</td>".
 						            "</tr>";
 	            $delveryDistanceClient = "<tr>".
-						            	"<td><strong>Расстояние от МКАД</strong>:</td>".
+						            	"<td colspan='3'><strong>Расстояние от МКАД</strong>:</td>".
 						            	"<td>".$arProps['DELIVERY_DISTANCE']."</td>".
 						            "</tr>";
 			}
@@ -195,12 +195,12 @@ class MyEventHandlers
             }
             if (isset($arProps["UNDERGROUND_DISTANCE"]) && !empty($arProps["UNDERGROUND_DISTANCE"])) {
 				$undergroundDistanceAdmin = "<tr>".
-					                "<td>Расстояние от метро:</td>".
+					                "<td colspan='4'><strong>Удаленность от метро:</strong></td>".
 				                    "<td>&nbsp;</td>".
-				    	   	        "<td>".$arProps["UNDERGROUND_DISTANCE"]."</td>".
+				    	   	        "<td colspan='2'>".$arProps["UNDERGROUND_DISTANCE"]."</td>".
 				                "</tr>";
                 $undergroundDistanceClient = "<tr>".
-					                "<td>Расстояние от метро:</td>".
+					                "<td colspan='3'><strong>Удаленность от метро:</strong></td>".
 				    	   	        "<td>".$arProps["UNDERGROUND_DISTANCE"]."</td>".
 				                "</tr>";
             }
