@@ -394,7 +394,7 @@ class MyEventHandlers
 				                    "<td>".$arFields['ORDER_DATE']."</td>".
 				                "</tr>".
 				            "<tr>".
-				                "<td colspan='3'></td>".
+				                "<td colspan='3'>&nbsp;</td>".
 			                "</tr>".
 				            "<tr>".
 				                "<td>".$deliveryDateText."</td>".
