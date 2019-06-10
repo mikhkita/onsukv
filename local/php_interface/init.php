@@ -360,7 +360,7 @@ class MyEventHandlers
 				                "<td>Ссылка на заказ в админке: </td>".
 			                    "<td>&nbsp;</td>".
 			                    "<td>".
-			                    	"<a href='http://nevkusno.pro/bitrix/admin/sale_order_view.php?ID=".$arFields["ORDER_ID"]."'>Заказ № ".$arFields["ORDER_ID"]."</a>".
+			                    	"<a href='http://vkus.ca03222.tmweb.ru/bitrix/admin/sale_order_view.php?ID=".$arFields["ORDER_ID"]."'>Заказ № ".$arFields["ORDER_ID"]."</a>".
 			                    "</td>".
 				            "</tr>".
 				        "</tbody>".
@@ -394,7 +394,7 @@ class MyEventHandlers
 				                    "<td>".$arFields['ORDER_DATE']."</td>".
 				                "</tr>".
 				            "<tr>".
-				                "<td colspan='3'></td>".
+				                "<td colspan='3'>&nbsp;</td>".
 			                "</tr>".
 				            "<tr>".
 				                "<td>".$deliveryDateText."</td>".

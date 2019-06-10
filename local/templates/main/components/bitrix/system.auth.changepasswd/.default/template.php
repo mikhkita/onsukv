@@ -15,7 +15,7 @@
 			<input type="text" name="MAIL"/>
 			<input type="submit" name="change_pwd" style="display:none;">
 			<div class="b-btn-container">
-				<a href="#" class="b-btn ajax">Готово</a>
+				<a href="#" class="b-btn">Изменить</a>
 			</div>
 		</div>
 		<a href="#b-popup-success-reg" class="b-thanks-link fancy" style="display:none;"></a>
