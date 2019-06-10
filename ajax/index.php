@@ -356,7 +356,7 @@ switch ($action) {
 				$password = $_POST['password'];
 				$user = new CUser;
 				$hash = md5($email.$hashKey);
-				$link = "https://www.nevkusno.ru/ajax/?action=CONFIRM_USER&email=".$email."&hash=".$hash;
+				$link = "http://vkus.ca03222.tmweb.ru/ajax/?action=CONFIRM_USER&email=".$email."&hash=".$hash;
 
 				$arFields = Array(
 				  // "NAME"              => "Пользователь",
