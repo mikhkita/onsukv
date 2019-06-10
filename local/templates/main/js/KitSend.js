@@ -88,8 +88,8 @@ $(document).ready(function(){
 			    $(element).removeClass("error").parents(".b-input").removeClass("error");
 			}
 		});
-		if( $(this).find("input[name=phone], input[name=addressee-phone], input[name=ORDER_PROP_4]").length ){
-			$(this).find("input[name=phone], input[name=addressee-phone], input[name=ORDER_PROP_4]").each(function(){
+		if( $(this).find("input[name=phone], input[name=addressee-phone], input[name=ORDER_PROP_4], input[name=PERSONAL_PHONE]").length ){
+			$(this).find("input[name=phone], input[name=addressee-phone], input[name=ORDER_PROP_4], input[name=PERSONAL_PHONE]").each(function(){
 				if (typeof IMask == 'function') {
 					var phoneMask = new IMask($(this)[0], {
 			        	mask: '+{7} (000) 000-00-00',

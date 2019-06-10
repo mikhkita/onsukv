@@ -356,10 +356,10 @@ switch ($action) {
 				$password = $_POST['password'];
 				$user = new CUser;
 				$hash = md5($email.$hashKey);
-				$link = "nevkusno.pro/ajax/?action=CONFIRM_USER&email=".$email."&hash=".$hash;
+				$link = "https://www.nevkusno.ru/ajax/?action=CONFIRM_USER&email=".$email."&hash=".$hash;
 
 				$arFields = Array(
-				  "NAME"              => "Пользователь",
+				  // "NAME"              => "Пользователь",
 				  "EMAIL"             => $email,
 				  "LOGIN"             => $email,
 				  "LID"               => "ru",
@@ -404,6 +404,7 @@ switch ($action) {
 			);
 			
 			if ($user->Update($arUser["ID"], $fields)) {
+				$USER->Authorize($arUser["ID"]);
 			 	LocalRedirect("/personal/");
 			} 
 			else {
