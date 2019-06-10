@@ -369,7 +369,7 @@ switch ($action) {
 				);
 
 				if ($user->Add($arFields)){
-				    if(CEvent::Send("NEW_CONFIRM_USER", "s1", array('EMAIL' => $email, "LINK" => $link))){
+				    if(CEvent::Send("NEW_USER_CONFIRM", "s1", array('EMAIL' => $email, "LINK" => $link))){
 						echo "1";
 					} else {
 						returnError("Ошибка регистрации.");

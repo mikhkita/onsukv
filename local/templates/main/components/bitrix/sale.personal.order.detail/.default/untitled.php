@@ -47,6 +47,14 @@ else
 			</h1> -->
 		</div>
 		<?
+		if ($arParams['GUEST_MODE'] !== 'Y')
+		{
+			?>
+			<a class="sale-order-detail-back-to-list-link-up" href="<?= htmlspecialcharsbx($arResult["URL_TO_LIST"]) ?>">
+				&larr; <?= Loc::getMessage('SPOD_RETURN_LIST_ORDERS') ?>
+			</a>
+			<?
+		}
 
 		$paymentChangeData = array();
 		$orderHeaderStatus = null;
@@ -271,7 +279,7 @@ else
 													<div class="sale-order-detail-order-item-td sale-order-detail-order-item-properties bx-text-right">
 														<div class="sale-order-detail-order-item-td-title col-xs-7 col-sm-5 visible-xs visible-sm"><?= Loc::getMessage('SPOD_ORDER_PRICE')?></div>
 														<div class="sale-order-detail-order-item-td-text">
-															<strong class="bx-price all"><?=round($basketItem['FORMATED_SUM'])?> руб.</strong>
+															<strong class="bx-price all"><?=$basketItem['FORMATED_SUM']?></strong>
 														</div>
 													</div>
 												</div>
@@ -341,7 +349,7 @@ else
 							if ($arResult['PRODUCT_SUM_FORMATED'] != $arResult['PRICE_FORMATED'] && !empty($arResult['PRODUCT_SUM_FORMATED']))
 							{
 								?>
-								<li class="sale-order-detail-total-payment-list-right-item"><?=round($arResult['PRODUCT_SUM'])?> руб.</li>
+								<li class="sale-order-detail-total-payment-list-right-item"><?=$arResult['PRODUCT_SUM_FORMATED']?></li>
 								<?
 							}
 
@@ -359,7 +367,7 @@ else
 								<?
 							}
 							?>
-							<li class="sale-order-detail-total-payment-list-right-item"><?=round($arResult['PRICE'])?> руб.</li>
+							<li class="sale-order-detail-total-payment-list-right-item"><?=$arResult['PRICE_FORMATED']?></li>
 						</ul>
 					</div>
 				</div>
@@ -373,7 +381,7 @@ else
 			<?
 		}
 		?>
-		<a class="b-repeat-order" href="<?= $arResult["URL_TO_COPY"] ?>">Повторить&nbsp;заказ</a>
+		<a href="<?=$arResult["URL_TO_COPY"]?>" class="b-btn b-order-btn">Повторить&nbsp;заказ</a>
 	</div>
 	<?
 	$javascriptParams = array(

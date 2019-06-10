@@ -529,7 +529,7 @@ textarea:-moz-placeholder {
 		    margin: 0 auto;
 		    min-width: 150px;
 		    padding: 15px 20px 17px 17px;
-		    border-radius: 26px;
+		    border-radius: 50px;
 		    font-size: 16px;
 		    font-family: 'MuseoSansCyrl-700';
 		    background: #FFAC00;
@@ -4669,13 +4669,14 @@ h4.b-delivery-price{
 }
 .sale-order-list-title-container,
 .sale-order-detail-general-head{
-    background: #faf5ee;
+    background: #f6f1ea;
 }
 	.b-text .sale-order-list-title-container h2{
 		margin-bottom: 10px;
 	}
 .sale-order-detail-general{
-    border: 1px solid #f2f2f2;
+	border-radius: 4px;
+    border: 1px solid #f6f1ea;
 }
 .sale-order-title{
 	margin-top: 0;
@@ -4695,7 +4696,7 @@ h4.b-delivery-price{
 		display: inline;
 		color: #26a200;
 	}
-.b-order-history-item:hover{
+a.b-order-history-item:hover{
 	box-shadow: 0 0 10px 5px #c8ad8940;
 }
 	.b-order-history-column{
@@ -4733,8 +4734,36 @@ p.b-order-submit-message{
 .basket-item-image-link{
 	max-width: 100%;
 }
-
-
+.sale-order-detail-back-to-list-link-down{
+	display: inline-block;
+}
+.b-repeat-order{
+	float: right;
+}
+.sale-order-detail-back-to-list-link-down,
+.b-repeat-order{
+    padding: 19px 0 11px 0;
+}
+.sale-order-detail-order-section{
+	border: 0;
+    border-bottom: 1px solid #f6f1ea;
+}
+.sale-order-detail-order-item-td{
+	border-top: 1px solid #f6f1ea;
+}
+.sale-order-detail-payment-options-order-content-title{
+	background: #faf5ee;
+}
+#pwd_form{
+	display: none;
+}
+.b-confirm-form{
+	max-width: 270px;
+	margin-bottom: 20px;
+}
+	.b-confirm-form .b-btn-container{
+		text-align: left;
+	}
 
 
 
