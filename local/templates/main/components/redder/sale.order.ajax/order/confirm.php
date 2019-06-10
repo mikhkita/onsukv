@@ -48,11 +48,15 @@ if ($arParams["SET_TITLE"] == "Y")
 
 $paySystem = array_pop($arResult["PAY_SYSTEM_LIST"]);
 
-$delivery = Delivery\Services\Manager::getById($arResult["ORDER"]["DELIVERY_ID"]);
+// print_r($arResult);
+
+if( $arResult["ORDER"]["DELIVERY_ID"] ){
+	$delivery = Delivery\Services\Manager::getById($arResult["ORDER"]["DELIVERY_ID"]);
+}
 
 $payment = CSalePaySystem::GetByID($arResult["ORDER"]["PAY_SYSTEM_ID"], $arResult["ORDER"]["PERSON_TYPE_ID"]);
 
-$order = Sale\Order::load($arResult["ORDER"]["ID"]);
+$order = Sale\Order::load($arResult["ORDER_ID"]);
 
 // Получение свойств заказа
 $propertyCollection = $order->getPropertyCollection();

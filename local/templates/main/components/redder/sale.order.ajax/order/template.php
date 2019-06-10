@@ -103,8 +103,8 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                 <input type="text" id="last_name" name="ORDER_PROP_2" value="<?=( isset($arUser["LAST_NAME"])?$arUser["LAST_NAME"]:"")?>" required>
                 <label for="last_name">Ваша фамилия <span class="required">*</span></label>
             </div>
-            <div class="b-input<?=( isset($arUser["WORK_PHONE"])?" not-empty":"")?>">
-                <input type="tel" id="phone" pattern="[0-9]*" name="ORDER_PROP_4" value="<?=( isset($arUser["WORK_PHONE"])?$arUser["WORK_PHONE"]:"")?>" required>
+            <div class="b-input<?=( isset($arUser["PERSONAL_PHONE"])?" not-empty":"")?>">
+                <input type="tel" id="phone" pattern="[0-9]*" name="ORDER_PROP_4" value="<?=( isset($arUser["PERSONAL_PHONE"])?$arUser["PERSONAL_PHONE"]:"")?>" required>
                 <label for="phone">Ваш телефон <span class="required">*</span></label>
             </div>
             <div class="b-input b-email-input<?=( isset($arUser["EMAIL"])?" not-empty":"")?>">

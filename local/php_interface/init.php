@@ -107,6 +107,12 @@ class MyEventHandlers
 		    $discount = (100-(round($saleCount*100/$sum))."%");
 		    $totalSum = $sum+$arFields["DELIVERY_PRICE"];
 
+		    // vardump($arFields);
+		    // echo "==============";
+		    // vardump($arProps);
+
+		    // die();
+
 			if ($arProps['DELIVERY_DISTANCE'] != "") {
 				$delveryDistanceAdmin = "<tr>".
 						            	"<td colspan='4'><strong>Расстояние от МКАД</strong>:</td>".
@@ -119,9 +125,8 @@ class MyEventHandlers
 						            "</tr>";
 			}
 
-			global $USER;
-			if ($USER->GetID()) {
-				$userID = "(".$USER->GetID().")";
+			if ($userID = $order->getUserId()) {
+				$userID = " ( ".$userID." )";
 			}
 
 			$processinginfo = "";
@@ -139,7 +144,7 @@ class MyEventHandlers
 
 			$str = strval($arProps['PHONE']);
 
-			$arProps['PHONE'] = '+'.substr($str, 0, 1).'('.substr($str, 1, 3).')'.substr($str, 4, 3).'-'.substr($str, 7, 2).'-'.substr($str, 9, 2);
+			$arProps['PHONE'] = '+'.substr($str, 0, 1).' ('.substr($str, 1, 3).') '.substr($str, 4, 3).'-'.substr($str, 7, 2).'-'.substr($str, 9, 2);
 			$deliveryDateText = "Дата доставки:";
 
 			switch ($arDelivery['ID']) {
@@ -202,7 +207,7 @@ class MyEventHandlers
 				    	   	        "<td>".$arProps["UNDERGROUND_DISTANCE"]."</td>".
 				                "</tr>";
             }
-            if (isset($arProps["CDEK_TYPE"]) && !empty($arProps["CDEK_TYPE"])) {
+            if (isset($arProps["CDEK_TYPE"]) && !empty($arProps["CDEK_TYPE"]) && intval($arDelivery["ID"]) == 120) {
             	if ($arProps["CDEK_TYPE"] == 1) {
             		$cdekTypeInfo = "Доставка СДЭК : До пункта самовывоза <br>";
             	} else {
@@ -253,7 +258,7 @@ class MyEventHandlers
 				                    "<td>".$arFields['ORDER_DATE']."</td>".
 				                "</tr>".
 				            "<tr>".
-				                "<td colspan='3'></td>".
+				                "<td colspan='3'>&nbsp;</td>".
 			                "</tr>".
 				            "<tr>".
 				                "<td>".$deliveryDateText."</td>".
@@ -488,6 +493,23 @@ class MyEventHandlers
 			$arFields['CLIENT_EMAIL'] = $arProps["EMAIL"];
 			$arFields['CLIENT_MSG'] = $clientmsg;
 			
+		}else if($event==="USER_INFO"){
+			// vardump($arFields);
+
+			$rsUser = CUser::GetByID(intval($arFields["USER_ID"]));
+			$arUser = $rsUser->Fetch();
+
+			$password = substr(md5(rand()), 0, 8 );
+
+			$arUser["PASSWORD"] = $arUser["CONFIRM_PASSWORD"] = $password;
+
+			// vardump($arUser);
+
+			$user = new CUser;
+			$user->Update(intval($arFields["USER_ID"]), $arUser);
+			// echo $user->LAST_ERROR;
+
+			$arFields["PASSWORD"] = $password;
 		}
     } 
 }
@@ -537,36 +559,58 @@ function OnSaleOrderSavedHandler(Main\Event $event){
 	}
 }
 
-// Main\EventManager::getInstance()->addEventHandler(
-//    'main',
-//    'OnAfterUserAdd',
-//    'OnAfterUserAddHandler1'
-// );
+Main\EventManager::getInstance()->addEventHandler(
+   'main',
+   'OnAfterUserAdd',
+   'OnAfterUserAddHandler1'
+);
 
-// function OnAfterUserAddHandler1($event){
-// 	global $USER;
+function OnAfterUserAddHandler1($event){
+	global $USER;
 
-// 	// print_r($event);
-// 	// die();
-// 	CModule::IncludeModule("iblock");
+	CModule::IncludeModule("iblock");
 
-// 	if( $_REQUEST["address"] == "NEW" ){
-// 		$el = new CIBlockElement;
-// 		$arLoadProductArray = Array(
-// 			"IBLOCK_ID"      		=> 6,
-// 			"NAME"					=> $_REQUEST["ORDER_PROP_15"],
-// 			"PROPERTY_VALUES"		=> array(
-// 				"INDEX"				=> $_REQUEST["ORDER_PROP_24"],
-// 				"REGION"			=> $_REQUEST["ORDER_PROP_16"],
-// 				"ROOM"				=> $_REQUEST["ORDER_PROP_14"],
-// 				"USER"				=> $event["ID"],
-// 				"CITY"				=> $_REQUEST["ORDER_PROP_22"],
-// 				"METRO"				=> $_REQUEST["ORDER_PROP_18"],
-// 			),
-// 		);
-// 		$PRODUCT_ID = $el->Add($arLoadProductArray);
-// 	}
-// }
+	// print_r($event);
+	// die();
+
+	if( isset($_REQUEST["ORDER_PROP_2"]) ){
+		// $rsUser = CUser::GetByID(23);
+		// $arUser = $rsUser->Fetch();
+		// print_r($arUser);
+		$event["LAST_NAME"] = $_REQUEST["ORDER_PROP_2"];
+		unset($event["PASSWORD"]);
+		unset($event["CONFIRM_PASSWORD"]);
+		unset($event["RESULT"]);
+		unset($event["CHECKWORD_TIME"]);
+
+		$user = new CUser;
+		$user->Update($event["ID"], $event);
+		// $strError .= $user->LAST_ERROR;
+		echo $user->LAST_ERROR;
+		// die();
+		// $arUser["LAST"]
+	}
+
+	// print_r($event);
+	// die();
+
+	// if( $_REQUEST["address"] == "NEW" ){
+		// $el = new CIBlockElement;
+		// $arLoadProductArray = Array(
+		// 	"IBLOCK_ID"      		=> 6,
+		// 	"NAME"					=> $_REQUEST["ORDER_PROP_15"],
+		// 	"PROPERTY_VALUES"		=> array(
+		// 		"INDEX"				=> $_REQUEST["ORDER_PROP_24"],
+		// 		"REGION"			=> $_REQUEST["ORDER_PROP_16"],
+		// 		"ROOM"				=> $_REQUEST["ORDER_PROP_14"],
+		// 		"USER"				=> $event["ID"],
+		// 		"CITY"				=> $_REQUEST["ORDER_PROP_22"],
+		// 		"METRO"				=> $_REQUEST["ORDER_PROP_18"],
+		// 	),
+		// );
+		// $PRODUCT_ID = $el->Add($arLoadProductArray);
+	// }
+}
 
 class SearchHandlers
 {

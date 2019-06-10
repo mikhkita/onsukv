@@ -273,9 +273,9 @@ $(document).ready(function(){
 				            }
 				        }else{
 				        	$form.find(".b-popup-error").html(json.error);
-				        	switch (json.error) {
+				        	switch (json.action) {
 				                case "messageError":
-				                    $(".b-popup-error").html(json.message);
+				                    $form.find(".b-popup-error").html(json.message);
 				                break;
 				            }
 				        }
@@ -301,7 +301,9 @@ $(document).ready(function(){
 				},
 				complete: function(){
 					$this.find(".ajax").removeAttr("onclick");
-					$this.find("input[type=text],textarea").val("");
+					if( !$this.is("#b-form-auth") ){
+						$this.find("input[type=text],textarea").val("");
+					}
 				}
 			});
   		}else{

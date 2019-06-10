@@ -5,7 +5,7 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 	global $APPLICATION;
 	if($arParams['NOMAPS']!='Y')
 		$APPLICATION->AddHeadString('<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>');
-	$APPLICATION->AddHeadString('<link href="/bitrix/js/'.CDeliverySDEK::$MODULE_ID.'/jquery.jscrollpane.css" type="text/css"  rel="stylesheet" />');
+	// $APPLICATION->AddHeadString('<link href="/bitrix/js/'.CDeliverySDEK::$MODULE_ID.'/jquery.jscrollpane.css" type="text/css"  rel="stylesheet" />');
 
 	$order = ($arParams['CNT_DELIV'] == 'Y') ? CUtil::PhpToJSObject($arResult['ORDER']) : 'false';
 
@@ -139,7 +139,7 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 						}else
 							html+='<p id="PVZ_'+i+'" onclick="IPOLSDEK_pvz.markChosenPVZ(\''+i+'\')" onmouseover="IPOLSDEK_pvz.Y_blinkPVZ(\''+i+'\',true)" onmouseout="IPOLSDEK_pvz.Y_blinkPVZ(\''+i+'\')" >'+IPOLSDEK_pvz.paintPVZ(i)+'</p>';
 					$('#SDEK_wrapper').html(html);
-					IPOLSDEK_pvz.scrollPVZ=$('#SDEK_wrapper').jScrollPane({autoReinitialise:true});
+					// IPOLSDEK_pvz.scrollPVZ=$('#SDEK_wrapper').jScrollPane({autoReinitialise:true});
 				},
 
 				paintPVZ: function(ind){ //painting PVZ-address, if color if given
@@ -169,7 +169,7 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 				},
 
 				makeScrollHint: function(){
-					$('.sdek_baloonInfo').jScrollPane({contentWidth: '0px',autoReinitialise:true});
+					// $('.sdek_baloonInfo').jScrollPane({contentWidth: '0px',autoReinitialise:true});
 					IPOLSDEK_pvz.scrollHintInited = false;
 				},
 
@@ -432,7 +432,7 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 			}
 			IPOLSDEK_pvz.ymapsBidner();
 			IPOL_JSloader.checkScript('',"/bitrix/js/<?=CDeliverySDEK::$MODULE_ID?>/jquery.mousewheel.js");
-			IPOL_JSloader.checkScript('$("body").jScrollPane',"/bitrix/js/<?=CDeliverySDEK::$MODULE_ID?>/jquery.jscrollpane.js",IPOLSDEK_pvz.jquiready);
+			// IPOL_JSloader.checkScript('$("body").jScrollPane',"/bitrix/js/<?=CDeliverySDEK::$MODULE_ID?>/jquery.jscrollpane.js",IPOLSDEK_pvz.jquiready);
 		</script>
 		<div id='SDEK_pvz'>
 			<div id='SDEK_title'>

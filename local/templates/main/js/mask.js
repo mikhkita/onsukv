@@ -4,7 +4,10 @@ function isString(str) {
 }
 
 /** Conforms string with fallback */
-function conform(res, str, fallback = '') {
+function conform(res, str, fallback) {
+  if( typeof fallback == "undefined" ){
+    fallback = "";
+  }
   return isString(res) ? res : res ? str : fallback;
 }
 
