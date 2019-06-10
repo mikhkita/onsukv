@@ -1,8 +1,10 @@
 <?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
 
+<?ShowMessage($arParams["~AUTH_RESULT"]);?>
 <div class="bx-auth">
 	<form action="<?=$arResult["AUTH_FORM"]?>" name="bform" method="POST" class="b-confirm-form">
-		<div class="b-popup-error"></div>
+		<div class="b-popup-error">
+		</div>
 		<div class="b-popup-form">
 			<div class="b-input-container">
 				<div class="b-input-string">
