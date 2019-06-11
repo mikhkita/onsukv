@@ -1011,7 +1011,7 @@
 					msgContainer = document.getElementById('basket-item-'+itemId+'-message'),
 					msg = "доступно: "+this.items[itemId].AVAILABLE_QUANTITY+" шт.";
 
-				if( item ){
+				if( item && msgContainer ){
 					msgContainer.innerHTML = msg;
 				}
 			}
