@@ -28,6 +28,8 @@ $GLOBALS["season"] = getSeason();
 
 CModule::IncludeModule('iblock');
 
+// CJSCore::Init();
+
 // $count = getOrderCountInDate("30.05.2019");
 
 ?>
@@ -36,7 +38,19 @@ CModule::IncludeModule('iblock');
 <head>
 	<title><?$APPLICATION->ShowTitle()?></title>
 
-	<?$APPLICATION->ShowHead();?>
+	<?
+	$APPLICATION->ShowHead();
+	?>
+	<?
+ //    $APPLICATION->ShowMeta("keywords");      // Вывод мета - тега keywords
+ //    $APPLICATION->ShowMeta("description");      // Вывод мета - тега description
+
+	// $APPLICATION->ShowCSS();         // Подключение файлов стилей CSS
+
+ //    // if($USER->IsAdmin())
+ //       $APPLICATION->ShowHeadStrings();   // Отображает специальные стили, JavaScript
+ //       $APPLICATION->ShowHeadScripts();      // Вывод скриптов
+    ?>
 
 	<!-- Google Tag Manager -->
 	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -50,7 +64,6 @@ CModule::IncludeModule('iblock');
 
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/reset.css" type="text/css">
-	<link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/jquery-ui.min.css" type="text/css">
 	<link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/jquery.fancybox.css" type="text/css">
 	<link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/KitAnimate.css" type="text/css">
 	<link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/layout.css?<?=$GLOBALS["version"]?>" type="text/css">

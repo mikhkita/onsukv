@@ -119,11 +119,11 @@ $(document).ready(function(){
 
 		if( $(this).hasClass("b-data-order-form") ){
 			$(this).find("input[type='text'], input[type='tel'], input[type='email'], textarea, select").blur(function(){
-			   $(this).valid();
+			   // $(this).valid();
 			});
 
 			$(this).find("input[type='text'], input[type='tel'], input[type='email'], textarea, select").keyup(function(){
-			   $(this).valid();
+			   // $(this).valid();
 			});
 		}
 	});
