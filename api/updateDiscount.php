@@ -78,7 +78,8 @@ function updateUserDiscount($userID, $discountValue = null){
 		$conditions = unserialize($arDiscount['CONDITIONS']);
 
 		$conditions['CHILDREN'][0]['DATA']['value'][] = $userID;
-		$conditions['CHILDREN'][0]['DATA']['value'] = array_filter(array_unique($conditions['CHILDREN'][0]['DATA']['value']), 'userIdFilter');
+		$conditions['CHILDREN'][0]['DATA']['value'] = array_values(array_filter(array_unique($conditions['CHILDREN'][0]['DATA']['value']), 'userIdFilter'));
+
 		$arDiscount['CONDITIONS'] = serialize($conditions);
 		global $APPLICATION;
 
@@ -86,7 +87,6 @@ function updateUserDiscount($userID, $discountValue = null){
 		    $ex = $APPLICATION->GetException();
 		    vardump($ex->GetString());
 		} else {
-			vardump($conditions);
 			vardump("update ok");
 		}
 

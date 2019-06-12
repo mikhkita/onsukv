@@ -408,6 +408,30 @@ $(document).ready(function(){
 
     var quantityDelays = [];
 
+    $('.bx-catalog-subscribe-button').on("click",function(){
+        if (!$(this).hasClass('disabled')) {
+            var href = $(this).attr("href"),
+                id = $(this).attr("id"),
+                name = $(this).parents(".b-catalog-desc").find("h6 a").text();
+
+            name = name.replace(/ /g, "_");
+            var url = href + "&id="+ id + "&name=" + name;
+
+            $.ajax({
+                type: "GET",
+                url: url,
+                success: function(msg){
+                    console.log(msg);
+                },
+                error: function(){
+                    // alert("Ошибка добавления в корзину");
+                }
+            });
+
+        }
+        return false;
+    });
+
     function ajaxChangeQuantity(id, quantity){
         if( typeof quantityDelays[id] == "undefined" ){
             quantityDelays[id] = 0;
