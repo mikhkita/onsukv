@@ -440,7 +440,6 @@ switch ($action) {
 				  "PROPERTY_VALUES"=> $PROP,
 				  "NAME"           => $name,
 				  "CODE"           => $_REQUEST["id"],
-				  "ACTIVE"         => "Y",
 				);
 
 				if($PRODUCT_ID = $el->Add($arLoadProductArray))

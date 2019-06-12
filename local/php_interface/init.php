@@ -1445,6 +1445,13 @@ function userIdFilter($var){
 	return ($var !== NULL && $var !== FALSE && $var !== '');
 }
 
+function convertPhoneNumber($str){
+	if (strlen($str) == 11 && substr($str, 0, 1) == "7") {
+		$str = '+'.substr($str, 0, 1).' ('.substr($str, 1, 3).') '.substr($str, 4, 3).'-'.substr($str, 7, 2).'-'.substr($str, 9, 2);
+	} 
+	return $str;
+}
+
 getSectionChain();
 
 ?>
