@@ -60,6 +60,8 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 				
 				paysystem: '<?=$arParams['PAYSYSTEM']?>',
 
+				isMobile: false,
+
 				init: function(){
 					IPOLSDEK_pvz.punctMode = (IPOLSDEK_pvz.profiles.length == 1) ? IPOLSDEK_pvz.profiles[0] : 'ALL';
 					$('#SDEK_modController').css('display','none');
@@ -72,6 +74,33 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 						$('#SDEK_map').css('display','none');
 						$('#SDEK_info').css('display','none');
 					<?}?>
+
+					$(window).resize(function(){
+						this.resize();
+					});
+					this.resize();
+				},
+
+				resize: function(){
+					var myWidth = myHeight = 0;
+
+			       	if( typeof( window.innerWidth ) == 'number' ) {
+			            myWidth = window.innerWidth;
+			            myHeight = window.innerHeight;
+			        } else if( document.documentElement && ( document.documentElement.clientWidth || 
+			        document.documentElement.clientHeight ) ) {
+			            myWidth = document.documentElement.clientWidth;
+			            myHeight = document.documentElement.clientHeight;
+			        } else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
+			            myWidth = document.body.clientWidth;
+			            myHeight = document.body.clientHeight;
+			        }
+
+			        if( myWidth > 600 ){
+			            this.isMobile = false;
+			        }else{
+			            this.isMobile = true;
+			        }
 				},
 
 				chooseCity: function(city){
@@ -139,6 +168,7 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 						}else
 							html+='<p id="PVZ_'+i+'" onclick="IPOLSDEK_pvz.markChosenPVZ(\''+i+'\')" onmouseover="IPOLSDEK_pvz.Y_blinkPVZ(\''+i+'\',true)" onmouseout="IPOLSDEK_pvz.Y_blinkPVZ(\''+i+'\')" >'+IPOLSDEK_pvz.paintPVZ(i)+'</p>';
 					$('#SDEK_wrapper').html(html);
+					
 					// IPOLSDEK_pvz.scrollPVZ=$('#SDEK_wrapper').jScrollPane({autoReinitialise:true});
 				},
 
@@ -222,7 +252,9 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 					}).then(function (res) {
 							var firstGeoObject = res.geoObjects.get(0);
 							var coords = firstGeoObject.geometry.getCoordinates();
-							coords[1]-=0.2;
+							if( !this.isMobile ){
+								coords[1]-=0.2;
+							}
 							if(!IPOLSDEK_pvz.Y_map){
 								IPOLSDEK_pvz.Y_map = new ymaps.Map("SDEK_map",{
 									zoom:10,
@@ -380,8 +412,13 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 						var intPrice = price.substr( 0, price.length - 5).replace(/[\D\.]+/g,"");
 						// if( $("#b-delivery-price-input").val() != intPrice ){
 							$("#b-delivery-price-input").val( (intPrice)?intPrice:0 ).trigger("change");
+							$("#b-srok-delivery").text(date);
+							$(".b-srok-delivery").show();
 						// }
 					}
+
+					$(".cdekaddr, .b-postamat-error").remove();
+					$("#b-cdek-punk-addr").html("не выбран");
 
 					// $('#SDEK_cPrice').html(IPOLSDEK_pvz.prices.courier[0]);
 					// $('#SDEK_cDate').html(IPOLSDEK_pvz.prices.courier[1]);

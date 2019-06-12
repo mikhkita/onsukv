@@ -501,6 +501,12 @@ p{
 		top: -19px;
 	}
 @media screen and (max-width: 600px){
+	#SDEK_map .ymaps-2-1-74-controls__control{
+		left: 16px !important;
+	}
+	#SDEK_info{
+		display: none;
+	}
 	.b-order-addr-input-cont{
 		margin-bottom: -40px;
 	}

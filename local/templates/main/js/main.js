@@ -497,7 +497,10 @@ $(document).ready(function(){
             $("#time").html('');
             $("#mkad").val('');
 
-            $(".b-pickpoint, .b-cdek-choose, .b-order-addr-cont, #b-time-input, #b-mkad-input, #b-metro-input").hide();
+            $(".b-pickpoint, .b-cdek-choose, .b-order-addr-cont, #b-time-input, #b-mkad-input, #b-metro-input, #b-srok-delivery").hide();
+
+            $(".cdekaddr, .b-postamat-error").remove();
+            $("#b-cdek-punk-addr").html("не выбран");
 
             // if( isValidJSON(price) ){
             //     var json = JSON.parse(price);
@@ -562,6 +565,10 @@ $(document).ready(function(){
                     $("#b-date-deliv").html("Дата сборки");
                     $(".b-cdek-input").show();
                     $("#cdek_type").trigger("change");
+
+                    if( $("#b-srok-delivery").text() != "" ){
+                        $("#b-srok-delivery").show();
+                    }
                     break;
                 default:
                     
