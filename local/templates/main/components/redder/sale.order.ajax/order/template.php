@@ -375,7 +375,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                     false
                 );?>
             </div>
-            <h4 class="b-delivery-price">Стоимость доставки: <span id="b-delivery-price">0</span> руб.</h4>
+            <h4 class="b-delivery-price">Стоимость доставки: <span id="b-delivery-price">0 руб.</span></h4>
             <p class="b-srok-delivery" style="display: none;">Примерный срок доставки после отправления <span id="b-srok-delivery"></span></p>
         </div>
         <div class="b-row clearfix">

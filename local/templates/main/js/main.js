@@ -521,9 +521,9 @@ $(document).ready(function(){
             $("#time").html('');
             $("#mkad").val('');
 
-            $(".b-pickpoint, .b-cdek-choose, .b-order-addr-cont, #b-time-input, #b-mkad-input, #b-metro-input, #b-srok-delivery").hide();
+            $(".b-pickpoint, .b-cdek-choose, .b-order-addr-cont, #b-time-input, #b-mkad-input, #b-metro-input, .b-srok-delivery").hide();
 
-            $(".cdekaddr, .b-postamat-error").remove();
+            $(".cdekaddr, .b-postamat-error, #no_price_to_pocikpoint").remove();
             $("#b-cdek-punk-addr").html("не выбран");
 
             // if( isValidJSON(price) ){
@@ -568,6 +568,7 @@ $(document).ready(function(){
                 case "30":
                     $("#b-date-deliv").html("Дата сборки");
                     $(".b-pickpoint").show();
+                    $( window ).trigger( 'pickpoint_ready' );
                     break;
                 case "53":
                     $("#b-date-deliv").html("Дата сборки");
@@ -591,7 +592,7 @@ $(document).ready(function(){
                     $("#cdek_type").trigger("change");
 
                     if( $("#b-srok-delivery").text() != "" ){
-                        $("#b-srok-delivery").show();
+                        $(".b-srok-delivery").show();
                     }
                     break;
                 default:
@@ -627,7 +628,7 @@ $(document).ready(function(){
 
             console.log($(this).val());
 
-            $("#b-delivery-price").html( price );
+            $("#b-delivery-price").html( price + " руб." );
 
             clearTimeout(delTimer);
             delTimer = setTimeout(function(){
@@ -693,11 +694,11 @@ $(document).ready(function(){
                 } );
             }
 
-            if ( price_found === false )
+            if ( price_found === false && $(".pickpointaddr").length && $(".pickpointaddr").val() != "" )
             {
-                $(".b-delivery-price").after(
-                    '<span id="no_price_to_pocikpoint">Окончательную стоимость рассчитывает оператор</span>' );
                 $("#b-delivery-price-input").val( 0 ).trigger("change");
+
+                $("#b-delivery-price").html('<span id="no_price_to_pocikpoint">Окончательную стоимость рассчитывает оператор</span>' );
             }
         } );
 
