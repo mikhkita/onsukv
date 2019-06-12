@@ -56,6 +56,9 @@ body {
 	.b-order-addr-new .b-addresss-item__room{
 		margin-right: 24px;
 	}
+	.order-adress-map-form .b-addresss-item__metro{
+		margin-left: 24px;
+	}
 	.order-adress-map-form-content .b-addresss-item__metro{
 		margin-top: 0;
 	}

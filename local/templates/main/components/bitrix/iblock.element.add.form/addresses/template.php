@@ -36,8 +36,9 @@ if (strlen($arResult["MESSAGE"]) > 0):?>
 				<label for="name">Индекс <span class="required">*</span></label>
 			</div>
 			<div class="b-addresss-item__metro b-input hide">
+                <label for="metro-station">Выберите метро<span class="required">*</span></label>
 				<select name="PROPERTY[31]">
-					<option value>Выберите метро</option>
+					<option value></option>
 					<? foreach ($arResult["PROPERTY_LIST_FULL"][31]['ENUM'] as $metro): ?>
 						<option value="<?=$metro['ID']?>"><?=$metro['VALUE']?></option>
 					<? endforeach; ?>

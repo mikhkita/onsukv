@@ -28,6 +28,8 @@ AddEventHandler("main", "OnBeforeEventAdd", Array("MyEventHandlers", "OnBeforeEv
 AddEventHandler("sale", "OnOrderAdd", Array("MyClass", "OnOrderAddHandler"));
 AddEventHandler("sale", "OnBeforeUserAdd", Array("MyClass", "OnBeforeUserAddHandler"));
 AddEventHandler("sale", "OnOrderDelete", Array("MyClass", "OnOrderDeleteHandler"));
+AddEventHandler("main", "OnBeforeUserUpdate", Array("MyClass", "OnBeforeUserUpdateHandler"));
+
 
 
 class MyEventHandlers 
@@ -82,14 +84,18 @@ class MyEventHandlers
 
 		    foreach ($arBasketItems as $item) {
 
+		    	if (round($item['QUANTITY']) == 1 && $item['BASE_PRICE'] == $item["DISCOUNT_PRICE"]) {
+		    		$item['BASE_PRICE'] = $item['DISCOUNT_PRICE'] = 0;
+		    	}
+
 		    	$itemsText.="<tr>".
             		"<td>".$item['PRODUCT_ID']."</td>".
             		"<td>".$item['NAME']."</td>".
             		"<td>".round($item['QUANTITY'])."</td>".
             		"<td>".round($item['BASE_PRICE'])."</td>".
-            		"<td>".$item["TOTAL_QUANTITY"]."</td>". //Наличие
+            		"<td>".$item["TOTAL_QUANTITY"]."</td>".
             		"<td>".round($item['QUANTITY']*$item['BASE_PRICE'])."</td>".
-            		"<td>".$item["COUNTRY"]."</td>". //Страна
+            		"<td>".$item["COUNTRY"]."</td>".
             	"</tr>";
 
             	$clientItemsText.="<tr>".
@@ -103,22 +109,13 @@ class MyEventHandlers
             	$saleSum += $item['DISCOUNT_PRICE']*$item['QUANTITY'];
 		    }
 
+		    vardump("arBasketItems");
+		    vardump($arBasketItems);
+
 		    $saleSum = round($saleSum);
 		    $saleCount = $sum - $saleSum;
 		    $discount = (100-(round($saleCount*100/$sum))."%");
-		    $totalSum = $sum+$arFields["DELIVERY_PRICE"];
-
-			if ($arProps['DELIVERY_DISTANCE'] != "") {
-				$delveryDistanceAdmin = "<tr>".
-						            	"<td colspan='4'><strong>Расстояние от МКАД</strong>:</td>".
-						            	"<td></td>".
-						            	"<td colspan='2'>".$arProps['DELIVERY_DISTANCE']."</td>".
-						            "</tr>";
-	            $delveryDistanceClient = "<tr>".
-						            	"<td colspan='3'><strong>Расстояние от МКАД</strong>:</td>".
-						            	"<td>".$arProps['DELIVERY_DISTANCE']."</td>".
-						            "</tr>";
-			}
+		    $totalSum = $saleCount + $arFields["DELIVERY_PRICE"];
 
 			if ($userID = $order->getUserId()) {
 				$userID = " ( ".$userID." )";
@@ -175,6 +172,11 @@ class MyEventHandlers
 			} else {
 				$howToDelivery = $arDelivery['NAME'];
 			} 
+
+			if (isset($arProps['DELIVERY_DISTANCE']) && !empty($arProps['DELIVERY_DISTANCE'])) {
+				$howToDelivery = $howToDelivery.", ".$arProps['DELIVERY_DISTANCE']." км.";
+			}
+
 			if (!empty($arProps["ADDRESS"])) {
 				$address = "<tr>".
 				                "<td nowrap='nowrap'>Адрес доставки:</td>".
@@ -204,7 +206,11 @@ class MyEventHandlers
 				    	   	        "<td>".$arProps["UNDERGROUND_DISTANCE"]."</td>".
 				                "</tr>";
             }
-            if (isset($arProps["CDEK_TYPE"]) && !empty($arProps["CDEK_TYPE"]) && intval($arDelivery["ID"]) == 120) {
+
+            vardump("is isset pickpoint");
+            vardump(isset($pickpoint));
+
+            if (isset($arProps["CDEK_TYPE"]) && !empty($arProps["CDEK_TYPE"]) && intval($arDelivery["ID"]) == 120 && !isset($pickpoint)) {
             	if ($arProps["CDEK_TYPE"] == 1) {
             		$cdekTypeInfo = "Доставка СДЭК : До пункта самовывоза <br>";
             	} else {
@@ -318,7 +324,6 @@ class MyEventHandlers
 				            	"<td></td>".
 				            	"<td colspan='2'>".$howToDelivery."</td>".
 				            "</tr>".
-				            $delveryDistanceAdmin.
 				            $undergroundDistanceAdmin.
 				            "<tr>".
 				            	"<td colspan='4'><strong>Стоимость доставки</strong>:</td>".
@@ -450,7 +455,6 @@ class MyEventHandlers
 				            	"<td colspan='3'><strong>Способ доставки</strong>:</td>".
 				            	"<td>".$howToDelivery."</td>".
 				            "</tr>".
-				            $delveryDistanceClient.
 				            $undergroundDistanceClient.
 				            "<tr>".
 				            	"<td colspan='3'><strong>Стоимость доставки</strong>:</td>".
@@ -489,7 +493,10 @@ class MyEventHandlers
 			$arFields['ADMIN_MSG'] = $adminmsg;
 			$arFields['CLIENT_EMAIL'] = $arProps["EMAIL"];
 			$arFields['CLIENT_MSG'] = $clientmsg;
-			
+
+			vardump($adminmsg);
+			die();
+
 		}else if($event==="USER_INFO"){
 			// vardump($arFields);
 
@@ -786,9 +793,24 @@ class MyClass {
 	}
 	function OnBeforeUserAddHandler(&$arFields){
 
-		vardump($arFields);
+		// vardump($arFields);
 
 	}
+
+	function OnBeforeUserUpdateHandler(&$arParams){
+
+		$newDiscount = $arParams["PERSONAL_WWW"];
+		$oldDiscount = $arParams["PERSONAL_ICQ"];
+
+		if ($newDiscount != $oldDiscount) {
+			// vardump($arParams);
+			// if(updateUserDiscount($arFields['ID'], $newDiscount)){
+			// 	die();
+			// 	$arParams["PERSONAL_ICQ"] = $arParams["PERSONAL_WWW"];
+			// }
+
+		}
+    }
 }
 
 function letsLogin($login, $password){
@@ -1289,6 +1311,124 @@ function updateOrderDate($ID = 0){
 		$result = $el->Update($arFields['ID'], Array("CODE" => $orderCount));
 	} 
 }
+
+// function updateUserDiscount($userID, $discountValue = null){
+
+// 	$db_res = CSaleDiscount::GetList( array("SORT" => "ASC"), array("LID" => 's1'), false, false, array('ID', 'NAME','ACTIONS','CONDITIONS', 'XML_ID','USER_GROUPS'));
+
+// 	$isUserRemoved = false;
+// 	$discountID = 0;
+// 	$arDiscount = array();
+// 	$discountList = array();
+
+// 	while ($discount = $db_res->Fetch()){
+
+// 		if ($discount['XML_ID'] == "PERSONAL_DISCOUNT"){
+
+// 			if ($discount['USER_GROUPS']) {
+// 				$discount['USER_GROUPS'] = array($discount['USER_GROUPS']);
+// 			} else {
+// 				$discount['USER_GROUPS'] = array("2");
+// 			}
+
+// 			$discountList[] = $discount;
+// 			$actions = unserialize($discount['ACTIONS']);
+// 			$conditions = unserialize($discount['CONDITIONS']);
+// 			$idList = $conditions['CHILDREN'][0]['DATA']['value'];
+
+// 			if($actions["CHILDREN"][0]["DATA"]["Value"] == $discountValue && !isset($arDiscount['ID'])){
+// 				$arDiscount = $discount;
+// 			}
+
+// 			if (!$isUserRemoved) {
+// 				foreach ($idList as $key => $id) {
+// 					if ($id == $userID) {
+
+// 						unset($idList[$key]);
+// 						$idList = array_unique($idList);
+
+// 						$conditions['CHILDREN'][0]['DATA']['value'] = $idList;
+// 						$discount['CONDITIONS'] = serialize($conditions);
+
+// 						if (!CSaleDiscount::Update($discount['ID'], $discount)) { 
+// 						    $ex = $APPLICATION->GetException();
+// 						    vardump($ex->GetString());
+// 						    die();
+// 						    return false;
+// 						} else {
+// 							vardump('remove ok from dicsount id = '.$discount['ID']);
+// 							$isUserRemoved = true;
+// 							break;
+// 						}
+// 					}
+// 				}
+// 			}
+// 		}
+// 	}
+
+// 	if(isset($arDiscount['ID'])){
+
+// 		$conditions = unserialize($arDiscount['CONDITIONS']);
+
+// 		$conditions['CHILDREN'][0]['DATA']['value'][] = $userID;
+// 		$conditions['CHILDREN'][0]['DATA']['value'] = array_unique($conditions['CHILDREN'][0]['DATA']['value']);
+// 		$arDiscount['CONDITIONS'] = serialize($conditions);
+// 		global $APPLICATION;
+
+// 		if (!CSaleDiscount::Update($arDiscount['ID'], $arDiscount)) { 
+// 		    $ex = $APPLICATION->GetException();
+// 		    vardump($ex->GetString());
+// 		    die();
+// 		    return false;
+// 		} else {
+// 			vardump('update ok to discount id = '.$arDiscount['ID']);
+// 			die();
+// 			return true;
+// 		}
+
+// 	} else {
+
+// 		CModule::IncludeModule('catalog');
+// 		global $APPLICATION;
+
+// 		$arDiscount = array(
+// 			"LID" => "s1",
+// 			"SITE_ID" => "s1",
+// 			"NAME"=> "Персональная скидка ".$discountValue."%",
+// 		    'ACTIVE' => 'Y',
+// 		    'LAST_DISCOUNT' => 'N',
+// 		    'LAST_LEVEL_DISCOUNT' => 'N',
+// 		    'CURRENCY' => 'RUB',
+// 		    'VALUE' => $discountValue,
+// 		);
+
+// 		if (!empty($discountList)) {
+// 			$arDiscount += $discountList[count($discountList)-1];
+// 		}
+
+// 		unset($arDiscount['ID']);
+
+// 		$actions = unserialize($arDiscount['ACTIONS']);
+// 		$actions["CHILDREN"][0]["DATA"]["Value"] = floatval($discountValue);
+
+// 		$conditions = unserialize($arDiscount['CONDITIONS']);
+// 		$conditions['CHILDREN'][0]['DATA']['value'] = array($userID);
+
+// 		$arDiscount['CONDITIONS'] = $conditions;
+// 		$arDiscount['ACTIONS'] = $actions;
+
+// 		if (!CSaleDiscount::Add($arDiscount)) { 
+// 	    	$ex = $APPLICATION->GetException();
+// 	    	vardump($ex->GetString());
+// 	    	die();
+// 	    	return false;
+// 		} else {
+// 			vardump('add ok');
+// 			die();
+// 			return true;
+// 		}
+// 	}
+// }
 
 getSectionChain();
 
