@@ -43,6 +43,10 @@ while ($arItems = $dbBasketItems->Fetch())
     // $arBasketItems[] = $arItems;
 }
 
+if( empty($ids) || !count($ids) ){
+	$ids = 0;
+}
+
 $GLOBALS["arrFilter2"] = array("ID" => $ids);
 
 // Печатаем массив, содержащий актуальную на текущий момент корзину
@@ -161,6 +165,7 @@ $GLOBALS["arrFilter2"] = array("ID" => $ids);
 			"WITH_CALLBACK" => ($isLast)?"Y":"N",
 			"CLASS" => "b-limit",
 			"CUSTOM_ORDER" => $ids,
+			"CUSTOM_MESSAGE" => "У вас пока нет любимых товаров"
 		),
 	false,
 	Array(

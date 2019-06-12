@@ -117,6 +117,10 @@ $arFilters = Array(
 <? else: ?>
 	<div class="b-not-result b-text">
 		<br>
+		<? if( $arParams["CUSTOM_MESSAGE"] ): ?>
+			<p><?=$arParams["CUSTOM_MESSAGE"]?></p>
+		<? else: ?>
 		<p>По Вашему запросу товаров не найдено.</p>
+		<? endif; ?>
 	</div>
 <? endif; ?>

@@ -43,20 +43,20 @@ else
 			if ($_REQUEST["show_canceled"] == 'Y')
 			{
 				?>
-				<h3><?= Loc::getMessage('SPOL_TPL_EMPTY_CANCELED_ORDER')?></h3>
+				<p><?= Loc::getMessage('SPOL_TPL_EMPTY_CANCELED_ORDER')?></p>
 				<?
 			}
 			else
 			{
 				?>
-				<h3><?= Loc::getMessage('SPOL_TPL_EMPTY_HISTORY_ORDER_LIST')?></h3>
+				<p><?= Loc::getMessage('SPOL_TPL_EMPTY_HISTORY_ORDER_LIST')?></p>
 				<?
 			}
 		}
 		else
 		{
 			?>
-			<h3><?= Loc::getMessage('SPOL_TPL_EMPTY_ORDER_LIST')?></h3>
+			<p><?= Loc::getMessage('SPOL_TPL_EMPTY_ORDER_LIST')?></p>
 			<?
 		}
 	}
