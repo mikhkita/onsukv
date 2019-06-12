@@ -414,7 +414,44 @@ switch ($action) {
 		}	
 
 		break;
+	case 'ADD2RESERVE':
+		$userID = $USER->GetID()?$USER->GetID():0;
 
+		if ($userID != 0) {
+
+			$arFilter = Array(
+				"IBLOCK_ID" => 9,
+				"ACTIVE" => "Y",
+				"CODE" => $_REQUEST["id"],
+				"PROPERTY_USER_VALUE" => $userID,
+			);
+
+			$res = CIBlockElement::GetList(array(), $arFilter, array(), false, array());
+
+			if (isset($res) && $res == 0) {
+
+				$el = new CIBlockElement;
+
+				$PROP["USER"]['VALUE'] = $userID;
+				$name = str_replace("_", " ", $_REQUEST["name"]);
+
+				$arLoadProductArray = Array(
+				  "IBLOCK_ID"      => 9,
+				  "PROPERTY_VALUES"=> $PROP,
+				  "NAME"           => $name,
+				  "CODE"           => $_REQUEST["id"],
+				  "ACTIVE"         => "Y",
+				);
+
+				if($PRODUCT_ID = $el->Add($arLoadProductArray))
+				  echo "success";
+				else
+				  echo "error";
+			} else {
+				echo "already reserved";
+			}
+		}
+		break;
 	default:
 		break;
 }

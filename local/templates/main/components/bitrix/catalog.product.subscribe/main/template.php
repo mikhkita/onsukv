@@ -46,14 +46,14 @@ $templateData['showSubscribe'] = $showSubscribe;
 $subscribeBtnName = !empty($arParams['MESS_BTN_SUBSCRIBE']) ? $arParams['MESS_BTN_SUBSCRIBE'] : Loc::getMessage('CPST_SUBSCRIBE_BUTTON_NAME');
 
 if($showSubscribe):?>
-	<span id="<?=htmlspecialcharsbx($arResult['BUTTON_ID'])?>"
+	<a href="/ajax/?action=ADD2RESERVE" id="<?=htmlspecialcharsbx($arResult['BUTTON_ID'])?>"
 			class="<?=htmlspecialcharsbx($arResult['BUTTON_CLASS'])?><? if($arResult['ALREADY_SUBSCRIBED']): ?> disabled<? endif; ?>"
 			data-item="<?=htmlspecialcharsbx($arResult['PRODUCT_ID'])?>"
 			style="<?=($arResult['DEFAULT_DISPLAY']?'':'display: none;')?>">
 		<span>
 			<?=$subscribeBtnName?>
 		</span>
-	</span>
+	</a>
 	<input type="hidden" id="<?=htmlspecialcharsbx($arResult['BUTTON_ID'])?>_hidden">
 
 	<script type="text/javascript">

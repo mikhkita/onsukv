@@ -2865,12 +2865,19 @@ div.modern-page-navigation a{
     overflow: hidden;
     border: 1px solid #e8e0d5;
 }
+.basket-checkout-container{
+	padding: 0;
+	border: unset;
+}
 .basket-coupon-block-field-description{
 	font: inherit;
 	font-size: 16px;
 	font-family: "MuseoSansCyrl-500";
-	color: inherit;
+	/*color: inherit;*/
 	margin-bottom: 8px;
+}
+.b-basket-checkbox{
+	color: #a1a1a1;
 }
 .basket-item-block-image{
 	max-width: 100px;
@@ -3353,7 +3360,7 @@ li.bx-inclinkspersonal-item {
 
 	.form-group{
 		display: table;
-		width: 100%;
+		width: 300px;
 	}
 
 	.main-profile-form-label.text-md-right, input[class*="col-"] {

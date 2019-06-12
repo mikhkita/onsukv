@@ -488,10 +488,6 @@ class MyEventHandlers
 			$arFields['CLIENT_EMAIL'] = $arProps["EMAIL"];
 			$arFields['CLIENT_MSG'] = $clientmsg;
 
-			vardump($adminmsg);
-			vardump($clientmsg);
-			die();
-
 		}else if($event==="USER_INFO"){
 			// vardump($arFields);
 
@@ -798,12 +794,14 @@ class MyClass {
 		$oldDiscount = $arParams["PERSONAL_ICQ"];
 
 		if ($newDiscount != $oldDiscount) {
-			// vardump($arParams);
-			// if(updateUserDiscount($arFields['ID'], $newDiscount)){
-			// 	die();
-			// 	$arParams["PERSONAL_ICQ"] = $arParams["PERSONAL_WWW"];
-			// }
+			if(updateUserDiscount($arParams['ID'], $newDiscount)){
+				$arParams["PERSONAL_ICQ"] = $arParams["PERSONAL_WWW"];
 
+				$msg = "Внимание!<br>".
+					"У пользователя ".$arParams['NAME']." ".$arParams['LAST_NAME']." ( ".$arParams['ID']." ) была измена персональная скидка с ".$oldDiscount."% на ".$newDiscount."%.";
+				
+				CEvent::Send("USER_PERSONAL_DISCOUNT_CHANGE", "s1", array('MSG' => $msg));
+			}
 		}
     }
 }
@@ -1307,123 +1305,145 @@ function updateOrderDate($ID = 0){
 	} 
 }
 
-// function updateUserDiscount($userID, $discountValue = null){
+function updateUserDiscount($userID, $discountValue = null){
 
-// 	$db_res = CSaleDiscount::GetList( array("SORT" => "ASC"), array("LID" => 's1'), false, false, array('ID', 'NAME','ACTIONS','CONDITIONS', 'XML_ID','USER_GROUPS'));
+	$db_res = CSaleDiscount::GetList( array("SORT" => "ASC"), array("LID" => 's1'), false, false, array('ID', 'NAME','ACTIONS','CONDITIONS', 'XML_ID','USER_GROUPS'));
 
-// 	$isUserRemoved = false;
-// 	$discountID = 0;
-// 	$arDiscount = array();
-// 	$discountList = array();
+	$isUserRemoved = false;
+	$discountID = 0;
+	$arDiscount = array();
+	$discountList = array();
 
-// 	while ($discount = $db_res->Fetch()){
+	while ($discount = $db_res->Fetch()){
 
-// 		if ($discount['XML_ID'] == "PERSONAL_DISCOUNT"){
+		if ($discount['XML_ID'] == "PERSONAL_DISCOUNT"){
 
-// 			if ($discount['USER_GROUPS']) {
-// 				$discount['USER_GROUPS'] = array($discount['USER_GROUPS']);
-// 			} else {
-// 				$discount['USER_GROUPS'] = array("2");
-// 			}
+			if ($discount['USER_GROUPS']) {
+				$discount['USER_GROUPS'] = array($discount['USER_GROUPS']);
+			} else {
+				$discount['USER_GROUPS'] = array("2");
+			}
 
-// 			$discountList[] = $discount;
-// 			$actions = unserialize($discount['ACTIONS']);
-// 			$conditions = unserialize($discount['CONDITIONS']);
-// 			$idList = $conditions['CHILDREN'][0]['DATA']['value'];
+			$discountList[] = $discount;
+			$actions = unserialize($discount['ACTIONS']);
+			$conditions = unserialize($discount['CONDITIONS']);
+			$idList = $conditions['CHILDREN'][0]['DATA']['value'];
 
-// 			if($actions["CHILDREN"][0]["DATA"]["Value"] == $discountValue && !isset($arDiscount['ID'])){
-// 				$arDiscount = $discount;
-// 			}
+			if($actions["CHILDREN"][0]["DATA"]["Value"] == $discountValue && !isset($arDiscount['ID'])){
+				$arDiscount = $discount;
+			}
 
-// 			if (!$isUserRemoved) {
-// 				foreach ($idList as $key => $id) {
-// 					if ($id == $userID) {
+			if (!$isUserRemoved) {
+				foreach ($idList as $key => $id) {
+					if ($id == $userID) {
 
-// 						unset($idList[$key]);
-// 						$idList = array_unique($idList);
+						unset($idList[$key]);
+						$idList = array_filter(array_unique($idList), 'userIdFilter');
 
-// 						$conditions['CHILDREN'][0]['DATA']['value'] = $idList;
-// 						$discount['CONDITIONS'] = serialize($conditions);
+						$conditions['CHILDREN'][0]['DATA']['value'] = $idList;
+						$discount['CONDITIONS'] = serialize($conditions);
 
-// 						if (!CSaleDiscount::Update($discount['ID'], $discount)) { 
-// 						    $ex = $APPLICATION->GetException();
-// 						    vardump($ex->GetString());
-// 						    die();
-// 						    return false;
-// 						} else {
-// 							vardump('remove ok from dicsount id = '.$discount['ID']);
-// 							$isUserRemoved = true;
-// 							break;
-// 						}
-// 					}
-// 				}
-// 			}
-// 		}
-// 	}
+						if (!CSaleDiscount::Update($discount['ID'], $discount)) { 
+						    $ex = $APPLICATION->GetException();
+						    vardump($ex->GetString());
+						    return false;
+						} else {
+							vardump('remove ok');
+							$isUserRemoved = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+	}
 
-// 	if(isset($arDiscount['ID'])){
+	if(isset($arDiscount['ID'])){
 
-// 		$conditions = unserialize($arDiscount['CONDITIONS']);
+		$conditions = unserialize($arDiscount['CONDITIONS']);
 
-// 		$conditions['CHILDREN'][0]['DATA']['value'][] = $userID;
-// 		$conditions['CHILDREN'][0]['DATA']['value'] = array_unique($conditions['CHILDREN'][0]['DATA']['value']);
-// 		$arDiscount['CONDITIONS'] = serialize($conditions);
-// 		global $APPLICATION;
+		$conditions['CHILDREN'][0]['DATA']['value'][] = $userID;
+		$conditions['CHILDREN'][0]['DATA']['value'] = array_filter(array_unique($conditions['CHILDREN'][0]['DATA']['value']), 'userIdFilter');
 
-// 		if (!CSaleDiscount::Update($arDiscount['ID'], $arDiscount)) { 
-// 		    $ex = $APPLICATION->GetException();
-// 		    vardump($ex->GetString());
-// 		    die();
-// 		    return false;
-// 		} else {
-// 			vardump('update ok to discount id = '.$arDiscount['ID']);
-// 			die();
-// 			return true;
-// 		}
+		if (!isset($conditions['CHILDREN'][0]['CLASS_ID'])) {
+			$conditions['CHILDREN'][0]['CLASS_ID'] = 'CondMainUserId';
+		}
 
-// 	} else {
+		if (!isset($conditions['CHILDREN'][0]['DATA']['logic'])) {
+			$conditions['CHILDREN'][0]['DATA']['logic'] = "Equal";
+		}
 
-// 		CModule::IncludeModule('catalog');
-// 		global $APPLICATION;
+		$arDiscount['CONDITIONS'] = serialize($conditions);
 
-// 		$arDiscount = array(
-// 			"LID" => "s1",
-// 			"SITE_ID" => "s1",
-// 			"NAME"=> "Персональная скидка ".$discountValue."%",
-// 		    'ACTIVE' => 'Y',
-// 		    'LAST_DISCOUNT' => 'N',
-// 		    'LAST_LEVEL_DISCOUNT' => 'N',
-// 		    'CURRENCY' => 'RUB',
-// 		    'VALUE' => $discountValue,
-// 		);
+		global $APPLICATION;
 
-// 		if (!empty($discountList)) {
-// 			$arDiscount += $discountList[count($discountList)-1];
-// 		}
+		if (!CSaleDiscount::Update($arDiscount['ID'], $arDiscount)) { 
+		    $ex = $APPLICATION->GetException();
+		    vardump($ex->GetString());
+		    return false;
+		} else {
+			vardump("update ok");
+			return true;
+		}
 
-// 		unset($arDiscount['ID']);
+	} else {
 
-// 		$actions = unserialize($arDiscount['ACTIONS']);
-// 		$actions["CHILDREN"][0]["DATA"]["Value"] = floatval($discountValue);
+		if ($discountValue != 0) {
+			CModule::IncludeModule('catalog');
+			global $APPLICATION;
+	
+			$arDiscount = array(
+				"LID" => "s1",
+				"SITE_ID" => "s1",
+				"NAME"=> "Персональная скидка ".$discountValue."%",
+			    'ACTIVE' => 'Y',
+			    'LAST_DISCOUNT' => 'N',
+			    'LAST_LEVEL_DISCOUNT' => 'N',
+			    'CURRENCY' => 'RUB',
+			    'VALUE' => $discountValue,
+			);
+	
+			if (!empty($discountList)) {
+				$arDiscount += $discountList[count($discountList)-1];
+			}
+	
+			unset($arDiscount['ID']);
+	
+			$actions = unserialize($arDiscount['ACTIONS']);
+			$actions["CHILDREN"][0]["DATA"]["Value"] = floatval($discountValue);
+	
+			$conditions = unserialize($arDiscount['CONDITIONS']);
+			$conditions['CHILDREN'][0]['DATA']['value'] = array($userID);
 
-// 		$conditions = unserialize($arDiscount['CONDITIONS']);
-// 		$conditions['CHILDREN'][0]['DATA']['value'] = array($userID);
+			if (!isset($conditions['CHILDREN'][0]['CLASS_ID'])) {
+				$conditions['CHILDREN'][0]['CLASS_ID'] = 'CondMainUserId';
+			}
 
-// 		$arDiscount['CONDITIONS'] = $conditions;
-// 		$arDiscount['ACTIONS'] = $actions;
+			if (!isset($conditions['CHILDREN'][0]['DATA']['logic'])) {
+				$conditions['CHILDREN'][0]['DATA']['logic'] = "Equal";
+			}
+	
+			$arDiscount['CONDITIONS'] = $conditions;
+			$arDiscount['ACTIONS'] = $actions;
+	
+	
+			if (!CSaleDiscount::Add($arDiscount)) { 
+		    	$ex = $APPLICATION->GetException();
+		    	vardump($ex->GetString());
+		    	return false;
+			} else {
+				vardump("add ok");
+				return true;
+			}
+		} else {
+			return true;
+		}
+	}
+}
 
-// 		if (!CSaleDiscount::Add($arDiscount)) { 
-// 	    	$ex = $APPLICATION->GetException();
-// 	    	vardump($ex->GetString());
-// 	    	die();
-// 	    	return false;
-// 		} else {
-// 			vardump('add ok');
-// 			die();
-// 			return true;
-// 		}
-// 	}
-// }
+function userIdFilter($var){
+	return ($var !== NULL && $var !== FALSE && $var !== '');
+}
 
 getSectionChain();
 
