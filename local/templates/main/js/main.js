@@ -479,6 +479,12 @@ $(document).ready(function(){
         }
     }
 
+    function trigger(id, event){
+        var evt = document.createEvent("HTMLEvents");
+        evt.initEvent(event, true, true); 
+        document.getElementById(id).dispatchEvent(evt);
+    }
+
     if( $("select#delivery").length ){
         var delTimer = null;
         $("select#delivery").change(function(){
@@ -493,17 +499,19 @@ $(document).ready(function(){
 
             $(".b-pickpoint, .b-cdek-choose, .b-order-addr-cont, #b-time-input, #b-mkad-input, #b-metro-input").hide();
 
-            if( isValidJSON(price) ){
-                var json = JSON.parse(price);
-                if( json.length ){
-                    price = 0;
-                }
-            }
+            // if( isValidJSON(price) ){
+            //     var json = JSON.parse(price);
+            //     if( json.length ){
+            //         price = 0;
+            //     }
+            // }
+            // alert(price);
             // console.log(price*1);
             // console.log(typeof price);
 
             if( $(this).val() !== "53" && $(this).val() !== "54" && $(this).val() !== "55" ){
                 $("#b-delivery-price-input").val( price*1 ).trigger("change");
+                // trigger("b-delivery-price-input", "change");
             }
 
             $(".b-delivery-info").hide();
@@ -583,7 +591,7 @@ $(document).ready(function(){
             }
         });
 
-        $("#b-delivery-price-input").change(function(){
+        $("#b-delivery-price-input").on("change", function(){
             var price = $(this).val();
 
             console.log($(this).val());
