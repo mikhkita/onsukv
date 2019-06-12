@@ -109,9 +109,6 @@ class MyEventHandlers
             	$saleSum += $item['DISCOUNT_PRICE']*$item['QUANTITY'];
 		    }
 
-		    vardump("arBasketItems");
-		    vardump($arBasketItems);
-
 		    $saleSum = round($saleSum);
 		    $saleCount = $sum - $saleSum;
 		    $discount = (100-(round($saleCount*100/$sum))."%");
@@ -206,9 +203,6 @@ class MyEventHandlers
 				    	   	        "<td>".$arProps["UNDERGROUND_DISTANCE"]."</td>".
 				                "</tr>";
             }
-
-            vardump("is isset pickpoint");
-            vardump(isset($pickpoint));
 
             if (isset($arProps["CDEK_TYPE"]) && !empty($arProps["CDEK_TYPE"]) && intval($arDelivery["ID"]) == 120 && !isset($pickpoint)) {
             	if ($arProps["CDEK_TYPE"] == 1) {
@@ -495,6 +489,7 @@ class MyEventHandlers
 			$arFields['CLIENT_MSG'] = $clientmsg;
 
 			vardump($adminmsg);
+			vardump($clientmsg);
 			die();
 
 		}else if($event==="USER_INFO"){

@@ -167,7 +167,7 @@
 						<div class="b-btn-container">
 							<a href="#" class="b-btn ajax">Отправить</a>
 						</div>
-						<a href="#b-popup-success" class="b-thanks-link fancy" style="display:none;"></a>
+						<a href="#b-popup-success-ask" class="b-thanks-link fancy" style="display:none;"></a>
 					</div>
 				</form>
 			</div>
@@ -342,6 +342,15 @@
 				<div class="b-popup-header">
 					<h3>Ошибка!</h3>
 					<p>Ваша заявка успешно отправлена.<br/>Наш менеджер свяжется с Вами в течение часа.</p>
+				</div>
+				<div class="b-btn-container">
+					<a href="#" class="b-btn ajax" onclick="$.fancybox.close(); return false;">Закрыть</a>
+				</div>
+			</div>
+			<div class="b-thanks b-popup" id="b-popup-success-ask">
+				<div class="b-popup-header">
+					<h3>Спасибо!</h3>
+					<p>Ваш вопрос успешно отправлен.<br/>Наш менеджер ответит Вам в ближайшее время.</p>
 				</div>
 				<div class="b-btn-container">
 					<a href="#" class="b-btn ajax" onclick="$.fancybox.close(); return false;">Закрыть</a>

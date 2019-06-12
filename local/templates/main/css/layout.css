@@ -2781,7 +2781,7 @@ div.modern-page-navigation a{
 
 	}
 	.b-thanks .b-btn-container{
-
+		text-align: center;
 	}
 .search-page form input[type="text"]{
     width: calc( 100% - 124px );
@@ -4078,6 +4078,7 @@ li.bx-inclinkspersonal-item {
 	opacity: 0;
 	visibility: hidden;
 	margin-bottom: 0;
+	width: 0;
 }
 .b-checkbox input + span + label,
 .b-checkbox input + label{
