@@ -13,6 +13,9 @@ body {
 	.b-preview-block .b-block-1{
 		width: 100%;
 	}
+	.b-input.b-mkad-input, .b-input.b-metro-input{
+		margin-top: 0;
+	}
 	.b-preview-block .b-block-2{
 		width: 100%;
 	}
@@ -23,8 +26,24 @@ body {
 	.b-input:nth-child(2n){
 		margin-right: 0;
 	}
+	.b-input.b-time-input{
+		margin-right: 24px;
+		margin-left: 0px;
+	}
+	.b-pickpoint{
+		margin-top: 0;
+	}
+	.b-cdek-punkt{
+		margin-top: 0;
+	}
 	.b-input-row{
 		margin-bottom: 0;
+	}
+	.b-first-input-row{
+		margin-bottom: -32px;
+	}
+	.b-delivery-input-row{
+		margin-bottom: 32px;
 	}
 	.b-order-addr{
 		margin: 0;
@@ -35,7 +54,7 @@ body {
 		margin-bottom: 32px;
 	}
 	.b-order-addr-new .b-addresss-item__room{
-		margin-right: 32px;
+		margin-right: 24px;
 	}
 	.order-adress-map-form .b-addresss-item__metro{
 		margin-left: 24px;

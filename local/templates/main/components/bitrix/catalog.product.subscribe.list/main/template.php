@@ -372,7 +372,7 @@ if (!empty($arResult['ITEMS']))
 else
 {
 	if(isset($arParams['GUEST_ACCESS'])):
-		echo '<h3>'.Loc::getMessage('CPSL_SUBSCRIBE_NOT_FOUND').'</h3>';
+		echo '<p>'.Loc::getMessage('CPSL_SUBSCRIBE_NOT_FOUND').'</p>';
 	endif;
 }
 ?>

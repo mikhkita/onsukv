@@ -94,7 +94,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
         <input type="hidden" name="save" value="Y">
         <!-- <input type="hidden" name="DELIVERY_ID" value="2"> -->
 
-        <div class="b-inputs b-input-row clearfix">
+        <div class="b-inputs b-input-row b-first-input-row clearfix">
             <div class="b-input<?=( isset($arUser["NAME"])?" not-empty":"")?>">
                 <input type="text" id="name" name="ORDER_PROP_1" value="<?=( isset($arUser["NAME"])?$arUser["NAME"]:"")?>" required>
                 <label for="name">Ваше имя <span class="required">*</span></label>
@@ -112,9 +112,10 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                 <label for="email">Ваш E-mail <span class="required">*</span></label>
             </div>
         </div>
-        <div class="b-inputs clearfix b-input-row">
+        <div class="b-inputs clearfix b-input-row b-delivery-input-row">
+            <h3 style="margin-bottom: 32px;">Доставка</h3>
             <div class="clearfix b-order-addr-input-cont">
-                <div class="b-input">
+                <div class="b-input b-wide-input">
                     <label for="last_name">Способ доставки <span class="required">*</span></label>
                     <select name="DELIVERY_ID" id="delivery" data-price="0" data-date="1" required>
                         <option value=""></option>
@@ -203,17 +204,17 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                     </select>
                 </div>
                 <div class="b-input b-time-input not-empty" style="display:none;" id="b-time-input">
-                    <label for="time">Время доставки<span class="required">*</span></label>
+                    <label for="time">Время доставки <span class="required">*</span></label>
                     <select name="ORDER_PROP_9" id="time" required>
                         
                     </select>
                 </div>
                 <div class="b-input b-mkad-input b-last-input" style="display:none;" id="b-mkad-input">
-                    <label for="mkad">Расстояние от МКАД<span class="required">*</span></label>
+                    <label for="mkad">Расстояние от МКАД <span class="required">*</span></label>
                     <input type="number" id="mkad" name="ORDER_PROP_10" required="">
                 </div>
-                <div class="b-input b-metro-input b-last-input" style="display:none;" id="b-metro-input">
-                    <label for="metro">Расстояние от метро<span class="required">*</span></label>
+                <div class="b-input b-metro-input b-wide-input b-last-input" style="display:none;" id="b-metro-input">
+                    <label for="metro">Расстояние от метро <span class="required">*</span></label>
                     <select name="ORDER_PROP_23" id="metro" required>
                         <option value=""></option>
                         <option value="до 2 км. (не более 7 остановок транспортом)">до 2 км. (не более 7 остановок транспортом)</option>
