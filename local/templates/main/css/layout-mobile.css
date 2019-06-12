@@ -588,6 +588,7 @@ p{
 		}
 	.b-personal-right .order-adress-map-form-content .b-addresss-item__metro{
 		max-width: 100%;
+		width: 100%;
 	}
 	.b-detail-count .b-basket-count{
 		display: inline-block;
