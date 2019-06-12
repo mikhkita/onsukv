@@ -716,6 +716,9 @@ p{
 	.b-order-history-column:not(:last-child){
 		margin-right: 0;
 	}
+	.order-adress-map-form .b-addresss-item__metro{
+		margin-left: 0;
+	}
 }
 
 @media screen and (max-width: 500px){

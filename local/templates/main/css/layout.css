@@ -4520,7 +4520,7 @@ h4.b-delivery-price{
 			margin-top: 20px;
 			width: 435px;
 		}
-		.order-adress-map-form-content .b-addresss-item__metro{
+		.b-order-addr-cont .b-addresss-item__metro{
     		width: calc(50% - 16px);
     		margin-left: 0;
     		margin-top: 40px;
