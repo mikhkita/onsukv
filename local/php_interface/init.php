@@ -204,7 +204,7 @@ class MyEventHandlers
 				                "</tr>";
             }
 
-            if (isset($arProps["CDEK_TYPE"]) && !empty($arProps["CDEK_TYPE"]) && intval($arDelivery["ID"]) == 120 && !isset($pickpoint)) {
+            if (isset($arProps["CDEK_TYPE"]) && !empty($arProps["CDEK_TYPE"]) && intval($arDelivery["ID"]) == 120) {
             	if ($arProps["CDEK_TYPE"] == 1) {
             		$cdekTypeInfo = "Доставка СДЭК : До пункта самовывоза <br>";
             	} else {

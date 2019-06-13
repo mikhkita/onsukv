@@ -11,36 +11,23 @@ $APPLICATION->SetTitle("Любимые товары");
 $arBasketItems = array();
 
 $dbBasketItems = CSaleBasket::GetList(
-        array(
-                "ID" => "ASC",
-                "ID" => "ASC"
-            ),
-        array(
-                "USER_ID" => $USER->GetID(),
-                "LID" => SITE_ID,
-                // "ORDER_ID" => "NULL"
-            ),
-        false,
-        false,
-        array("PRODUCT_ID")
-    );
+    array(
+            "ID" => "ASC",
+            "ID" => "ASC"
+        ),
+    array(
+            "USER_ID" => $USER->GetID(),
+            "LID" => SITE_ID,
+            "!ORDER_ID" => NULL
+        ),
+    false,
+    false,
+    array("PRODUCT_ID")
+);
+
 $ids = array();
-while ($arItems = $dbBasketItems->Fetch())
-{
-    // if (strlen($arItems["CALLBACK_FUNC"]) > 0)
-    // {
-    //     // CSaleBasket::UpdatePrice($arItems["ID"], 
-    //     //                          $arItems["CALLBACK_FUNC"], 
-    //     //                          $arItems["MODULE"], 
-    //     //                          $arItems["PRODUCT_ID"], 
-    //     //                          $arItems["QUANTITY"]);
-    //     print_r($arItems);
-    //     // $arItems = CSaleBasket::GetByID($arItems["ID"]);
-    // }
-
+while ($arItems = $dbBasketItems->Fetch()) {
     array_push($ids, $arItems["PRODUCT_ID"]);
-
-    // $arBasketItems[] = $arItems;
 }
 
 if( empty($ids) || !count($ids) ){
@@ -49,13 +36,21 @@ if( empty($ids) || !count($ids) ){
 
 $GLOBALS["arrFilter2"] = array("ID" => $ids);
 
-// Печатаем массив, содержащий актуальную на текущий момент корзину
-// echo "<pre>";
-// print_r($arBasketItems);
-// echo "</pre>";
+if( !isset($_REQUEST["ORDER_FIELD"]) ){
+	$_REQUEST["ORDER_FIELD"] = "NAME";
+}
+
+if( !isset($_REQUEST["ORDER_TYPE"]) ){
+	$_REQUEST["ORDER_TYPE"] = "ASC";
+}
 
 ?>
 <div class="b-catalog">
+	<div class="b-sort">
+		<div class="b-sort-block b-sort-text">Сортировать по:</div>
+		<div class="b-sort-block b-sort-field"><a href="?ORDER_FIELD=CATALOG_PRICE_1&ORDER_TYPE=<?=( ($_REQUEST["ORDER_TYPE"] == "DESC" || $_REQUEST["ORDER_FIELD"] != "CATALOG_PRICE_1")?"ASC":"DESC" )?>" class="<? if($_REQUEST["ORDER_FIELD"] == "CATALOG_PRICE_1"): ?>active <? endif; ?><? if($_REQUEST["ORDER_TYPE"] == "ASC"): ?>up <? endif; ?>icon-arrow">цене</a></div>
+		<div class="b-sort-block b-sort-field"><a href="?ORDER_FIELD=NAME&ORDER_TYPE=<?=( ($_REQUEST["ORDER_TYPE"] == "DESC" || $_REQUEST["ORDER_FIELD"] != "NAME")?"ASC":"DESC" )?>" class="<? if($_REQUEST["ORDER_FIELD"] == "NAME"): ?>active <? endif; ?><? if($_REQUEST["ORDER_TYPE"] == "ASC"): ?>up <? endif; ?> icon-arrow">названию</a></div>
+	</div>
 	<?
 	if( $GLOBALS["isWholesale"] ){
 		$GLOBALS["arrFilter2"] = array(
@@ -127,7 +122,7 @@ $GLOBALS["arrFilter2"] = array("ID" => $ids);
 			"PAGER_SHOW_ALWAYS" => "N",
 			"PAGER_TEMPLATE" => "main",
 			"PAGER_TITLE" => "Товары",
-			"PAGE_ELEMENT_COUNT" => 300,
+			"PAGE_ELEMENT_COUNT" => 64,
 			"PARTIAL_PRODUCT_PROPERTIES" => "N",
 			"PRICE_CODE" => array(0=>"PRICE",),
 			"PRICE_VAT_INCLUDE" => "N",
@@ -164,7 +159,7 @@ $GLOBALS["arrFilter2"] = array("ID" => $ids);
 			"WITH_REVIEWS" => ($isFirst)?"Y":"N",
 			"WITH_CALLBACK" => ($isLast)?"Y":"N",
 			"CLASS" => "b-limit",
-			"CUSTOM_ORDER" => $ids,
+			// "CUSTOM_ORDER" => $ids,
 			"CUSTOM_MESSAGE" => "У вас пока нет любимых товаров"
 		),
 	false,
