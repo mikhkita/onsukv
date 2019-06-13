@@ -8,8 +8,15 @@ $aMenuLinks = Array(
 		"" 
 	),
 	Array(
-		"Мои адреса", 
+		"Адреса доставки", 
 		"personal/addresses/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"История заказов", 
+		"personal/orders/", 
 		Array(), 
 		Array(), 
 		"" 
@@ -27,20 +34,13 @@ $aMenuLinks = Array(
 		Array(), 
 		Array(), 
 		"" 
-	),
-	Array(
-		"Мои заказы", 
-		"personal/orders/", 
-		Array(), 
-		Array(), 
-		"" 
-	),
-	Array(
-		"Подписки на товары", 
-		"personal/subscribe/", 
-		Array(), 
-		Array(), 
-		"" 
-	),
+	), 
+	// Array(
+	// 	"Подписки на товары", 
+	// 	"personal/subscribe/", 
+	// 	Array(), 
+	// 	Array(), 
+	// 	"" 
+	// ),
 );
 ?>

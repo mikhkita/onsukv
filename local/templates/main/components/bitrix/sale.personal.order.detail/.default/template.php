@@ -37,7 +37,7 @@ else
 		}
 	}
 	?>
-	<div class="container-fluid sale-order-detail">
+	<div class="sale-order-detail">
 		<div class="sale-order-detail-title-container">
 			<!-- <h1 class="sale-order-detail-title-element">
 				<?= Loc::getMessage('SPOD_LIST_MY_ORDER', array(

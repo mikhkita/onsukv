@@ -9,10 +9,10 @@ function mb_ucfirst($text) {
     return mb_strtoupper(mb_substr($text, 0, 1)) . mb_substr($text, 1);
 }
 
-$id = 129;
+// $id = 129;
 
 foreach( $file->Заказ as $item ){
-	// $id = $item->НомерЗаказа;
+	$id = intval($item->НомерЗаказа);
 	$arStatus = explode(",", $item->СтатусЗаказа, 2);
 	$currentStatus = strtolower($arStatus[0]);
 

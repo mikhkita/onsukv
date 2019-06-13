@@ -99,7 +99,7 @@
 
 			this.bindInitialEvents();
 
-			this.insertGiftMessages((parameters.result.allSum)*1+(parameters.result.DISCOUNT_PRICE_ALL)*1);
+			this.insertGiftMessages(parameters.result.allSum*1);
 		},
 
 		getTemplate: function(templateName)
@@ -1042,7 +1042,7 @@
 		checkMinPrice: function(totalData){
 			if( document.getElementById('b-basket-checkout-button') && typeof totalData.PRICE != "undefined" ){;
 				// alert(totalData.PRICE);
-				var priceWithoutDiscount = totalData.PRICE_WITHOUT_DISCOUNT_FORMATED.split(' руб.');
+				var priceWithoutDiscount = totalData.PRICE_FORMATED.split(' руб.');
 					priceWithoutDiscount = priceWithoutDiscount[0].replace(/\s+/g, '')*1;
 
 				var price = totalData.PRICE,

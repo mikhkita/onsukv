@@ -732,6 +732,16 @@ p{
 }
 
 @media screen and (max-width: 500px){
+	.sale-order-detail-total-payment-list-left{
+		width: calc(100% - 120px);
+	}
+	.sale-order-detail-total-payment-list-right{
+		width: 120px;
+	}
+	.b-text ul.sale-order-detail-total-payment-list-left li,
+	.b-text ul.sale-order-detail-total-payment-list-right li{
+		padding-left: 0px;
+	}
 	.b-footer-soc-container{
 		text-align: left;
 	}

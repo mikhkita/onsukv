@@ -119,7 +119,7 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 					});
 
 					if( !found ){
-						if( $("#city").val() != "" ){
+						if( $("#city").val() != "" && $("#city").val() != "Не выбрано" ){
 							$(".b-delivery-price").after('<span id="no_price_to_pocikpoint" class="red">По вашему адресу стоимость рассчитывается оператором</span>' );
 						}
 					}
@@ -412,7 +412,12 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 						var intPrice = price.substr( 0, price.length - 5).replace(/[\D\.]+/g,"");
 						// if( $("#b-delivery-price-input").val() != intPrice ){
 							$("#b-delivery-price-input").val( (intPrice)?intPrice:0 ).trigger("change");
-							$("#b-srok-delivery").text(date);
+							if( date === "Нет доставки." ){
+								$(".b-srok-delivery").hide();
+							}else{
+								$("#b-srok-delivery").text(date);
+								$(".b-srok-delivery").show();
+							}
 							$(".b-srok-delivery").show();
 						// }
 					}

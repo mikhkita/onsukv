@@ -3360,7 +3360,7 @@ li.bx-inclinkspersonal-item {
 
 	.form-group{
 		display: table;
-		width: 300px;
+		width: 100%;
 	}
 
 	.main-profile-form-label.text-md-right, input[class*="col-"] {
