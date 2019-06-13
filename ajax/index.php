@@ -421,6 +421,7 @@ switch ($action) {
 
 			$arFilter = Array(
 				"IBLOCK_ID" => 9,
+				"ACTIVE_DATE" => "Y",
 				"ACTIVE" => "Y",
 				"CODE" => $_REQUEST["id"],
 				"PROPERTY_USER_VALUE" => $userID,
