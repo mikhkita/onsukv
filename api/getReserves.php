@@ -14,8 +14,7 @@ $currentDate = $objDateTime->format("d.m.Y");
 foreach ($arFields as $arItem) {
 
 	$arItem['DATE_ACTIVE_TO'] = $currentDate;
-	vardump($currentDate);
-
+	
 	$el = new CIBlockElement;
 	$arLoadProductArray = $arItem; 
 	unset($arLoadProductArray['ID']);
