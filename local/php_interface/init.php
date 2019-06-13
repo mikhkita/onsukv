@@ -772,8 +772,11 @@ class MyClass {
 		$res = CIBlockElement::GetList(Array(), $arFilter, false, Array("nPageSize"=>1000), $arSelect);
 
 		while($ob = $res->GetNextElement()){
-			$arFields = $ob->GetFields();
-			updateOrderDate($arFields['ID']);
+			$arDates = $ob->GetFields();
+			if (!updateOrderDate($arDates['ID'])) {
+				// vardump("заказы всё");
+				// die();
+			}
 		}
 	}
 
@@ -823,12 +826,13 @@ function getUserByEmail($email){
 	return false;
 }
 
-function getOrderCountInDate($date){
+function getOrderCountInDate($date, $isAdd){
 
 	$arFilter = Array("PROPERTY_VAL_BY_CODE_DELIVERY_DATE" => date($date), "CANCELED" => "N");
 	$count = CSaleOrder::GetList(array("DATE_INSERT" => "ASC"), $arFilter, array());
 
-	return $count;
+	return $count = $isAdd ? $count+1 : $count ; 
+
 }
 
 function OnOrderUpdateHandler($ID, $arFields){ 
@@ -1300,8 +1304,16 @@ function updateOrderDate($ID = 0){
 		$el = new CIBlockElement;
 		$arFields = $ob->GetFields();
 		$arProps = $ob->GetProperties();
-		$orderCount = getOrderCountInDate($arProps['ORDER_DATE']["VALUE"]);
-		$result = $el->Update($arFields['ID'], Array("CODE" => $orderCount));
+		$isAdd = ($ID != 0) ? true : false;
+
+		$orderCount = getOrderCountInDate($arProps['ORDER_DATE']["VALUE"], $isAdd);
+
+		if ($orderCount <= intval($arFields['NAME'])) {
+			$result = $el->Update($arFields['ID'], Array("CODE" => $orderCount));
+			return true;
+		} else {
+			return false;
+		}
 	} 
 }
 
