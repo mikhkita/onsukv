@@ -18,7 +18,7 @@ $this->setFrameMode(true);?>
     		$arDate = $arItem['PROPERTIES']['ORDER_DATE']['VALUE'];
     		$date = date("d", strtotime($arDate))." ".getRusMonth(date("m", strtotime($arDate))).", ".getRusDayOfWeek(date("w", strtotime($arDate))); 
     		$isSunday = ( date("w", strtotime($arDate)) == 0 )?'data-isSunday="Y"':'data-isSunday="N"';
-    		$dataDisabled = ( $arItem['CODE'] == "Y" )? 'data-disabled="Y"': 'data-disabled="N"'; 
+    		$dataDisabled = ( $arItem['CODE'] >= $arItem['NAME'] )? 'data-disabled="Y"': 'data-disabled="N"'; 
     		if ($arItem['CODE'] == "Y" || date("w", strtotime($arDate)) == 0){
     			$disabled = "disabled";
     		}
