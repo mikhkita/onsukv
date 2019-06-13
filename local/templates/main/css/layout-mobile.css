@@ -458,7 +458,6 @@ p{
 
 
 
-
 @media screen and (max-width: 680px){
 	.b-review-info{
 		width: 150px;
@@ -728,6 +727,13 @@ p{
 	}
 	.order-adress-map-form .b-addresss-item__metro{
 		margin-left: 0;
+	}
+	.sale-order-detail-order-item-imgcontainer{
+		max-width: 110px;
+		margin: 0 auto;
+	}
+	.sale-order-detail-order-item-properties.bx-text-right .sale-order-detail-order-item-td-title{
+		text-align: right;
 	}
 }
 

@@ -26,7 +26,7 @@ $arFilters = Array(
 			$this->AddEditAction($arItem['ID'], $arItem['EDIT_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_EDIT"));
 			$this->AddDeleteAction($arItem['ID'], $arItem['DELETE_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_DELETE"), array("CONFIRM" => GetMessage('CT_BNL_ELEMENT_DELETE_CONFIRM')));
 			?>
-			<div class="b-catalog-item clearfix<? if( intval($arItem["CATALOG_QUANTITY"]) <= 0 ): ?> with-notice<? endif; ?>" id="<?=$this->GetEditAreaId($arItem['ID']);?>">
+			<div class="b-catalog-item clearfix<? if( intval($arItem["CATALOG_QUANTITY"]) <= 0 && !isAuth()): ?> with-notice<? endif; ?>" id="<?=$this->GetEditAreaId($arItem['ID']);?>">
 				<div class="b-catalog-back"></div>
 				<a href="<?=detailPageUrl($arItem["DETAIL_PAGE_URL"])?>" class="b-catalog-img" style="background-image:url('<?=$renderImage["src"]?>');"></a>
 				<div class="b-catalog-desc">
@@ -70,22 +70,16 @@ $arFilters = Array(
 								<a href="/ajax/?partial=1&ELEMENT_ID=<?=$arItem["ID"]?>&action=ADD2BASKET" class="b-btn icon-cart b-btn-to-cart"><span>В корзину</span></a>
 								<div class="b-error-max-count">Доступно: <?=$arItem["CATALOG_QUANTITY"]?> шт.</div>
 							<? else: ?>
-								<?$APPLICATION->IncludeComponent(
-								    "bitrix:catalog.product.subscribe",
-								    "main",
-								    Array(
-								        "BUTTON_CLASS" => "b-btn b-green-btn",
-								        "BUTTON_ID" => $arItem["ID"],
-								        "CACHE_TIME" => "3600",
-								        "CACHE_TYPE" => "A",
-								        "PRODUCT_ID" => $arItem["ID"]
-								    )
-								);?>
+								<? $isDisabled = (!isAuth())? "disabled": "" ; ?>
+								<a href="/ajax/?action=ADD2RESERVE" id="<?=$arItem["ID"]?>" class="b-btn b-green-btn bx-catalog-subscribe-button <?=$isDisabled?>" data-item="<?=$arItem["ID"]?>">
+									<span>Оставить заявку</span>
+								</a>
+								<a href="#b-popup-success-reserved" class="b-thanks-link fancy" style="display:none;"></a>
 							<? endif; ?>
 						</div>
 					</div>
-					<? if( intval($arItem["CATALOG_QUANTITY"]) <= 0 ): ?>
-						<div class="b-catalog-item-empty-text">Вы можете оставить заявку на данный товар. Когда товар будет в наличии, Вам придет автоматическое письмо на почту.</div>
+					<? if( intval($arItem["CATALOG_QUANTITY"]) <= 0 && !isAuth() ): ?>
+						<div class="b-catalog-item-empty-text">Авторизуйтесь, чтобы оставить заявку. Когда товар будет в наличии, Вам придет автоматическое письмо на почту.</div>
 					<? endif; ?>
 					<? if( $GLOBALS["isWholesale"] ): ?>
 						<? if( count($arItem["ITEM_PRICES"]) > 2 ): ?>

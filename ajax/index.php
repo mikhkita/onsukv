@@ -448,7 +448,7 @@ switch ($action) {
 				else
 				  echo "error";
 			} else {
-				echo "already reserved";
+				echo "already-reserved";
 			}
 		}
 		break;

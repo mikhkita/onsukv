@@ -349,8 +349,8 @@
 			</div>
 			<div class="b-thanks b-popup" id="b-popup-success-ask">
 				<div class="b-popup-header">
-					<h3>Спасибо!</h3>
-					<p>Ваш вопрос успешно отправлен.<br/>Наш менеджер ответит Вам в ближайшее время.</p>
+					<h3>Благодарим за ваш вопрос!</h3>
+					<p>В ближайшее время мы вам ответим</p>
 				</div>
 				<div class="b-btn-container">
 					<a href="#" class="b-btn ajax" onclick="$.fancybox.close(); return false;">Закрыть</a>
@@ -369,6 +369,24 @@
 				<div class="b-popup-header">
 					<h3>Спасибо!</h3>
 					<p>Ссылка для активации аккаунта была отправлена на Ваш e-mail.</p>
+				</div>
+				<div class="b-btn-container">
+					<a href="#" class="b-btn ajax" onclick="$.fancybox.close(); return false;">Закрыть</a>
+				</div>
+			</div>
+			<div class="b-thanks b-popup" id="b-popup-success-reserved">
+				<div class="b-popup-header">
+					<h3>Заявка оставлена!</h3>
+					<p>Когда товар будет в наличии, Вам придет автоматическое письмо на почту.</p>
+				</div>
+				<div class="b-btn-container">
+					<a href="#" class="b-btn ajax" onclick="$.fancybox.close(); return false;">Закрыть</a>
+				</div>
+			</div>
+			<div class="b-thanks b-popup" id="b-popup-error-reserved">
+				<div class="b-popup-header">
+					<h3>Произошла ошибка</h3>
+					<p>Попробуйте оставить заявку на товар позднее.</p>
 				</div>
 				<div class="b-btn-container">
 					<a href="#" class="b-btn ajax" onclick="$.fancybox.close(); return false;">Закрыть</a>
