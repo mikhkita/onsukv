@@ -57,7 +57,7 @@ if ( isset( $_GET['type'] ) )
 	if ( file_put_contents( $file_path, $file ) )
 	{
 		chmod( $file_path, 0777 );
-		echo 'Файл записан как ' . $file_path;
+		echo 'Файл записан как ' . $file_path . "\n";
 		file_put_contents( $_SERVER["DOCUMENT_ROOT"]."/1C_exchange/151BE65C.log", 'Файл записан как ' . $file_path . "\n\n", FILE_APPEND );
 
 		if ( $_GET['type'] === 'zak' )
@@ -72,6 +72,8 @@ if ( isset( $_GET['type'] ) )
 				$id = intval($item->НомерЗаказа);
 				$arStatus = explode(",", $item->СтатусЗаказа, 2);
 				$currentStatus = strtolower($arStatus[0]);
+				$additionalStatus = NULL;
+				$statusID = NULL;
 
 				switch ($currentStatus) {
 					case 'заказ удален':
@@ -102,14 +104,27 @@ if ( isset( $_GET['type'] ) )
 					$additionalStatus = mb_ucfirst(trim($additionalStatus[1]));
 				}
 
-				$order = Bitrix\Sale\Order::load($id);
-				$propertyCollection = $order->getPropertyCollection();
-				$obAdditionalStatus = $propertyCollection->getItemByOrderPropertyId(25);
+				if( $statusID !== NULL ){
+					$order = Bitrix\Sale\Order::load($id);
 
-				$order->setField("STATUS_ID", $statusID);
-				$obAdditionalStatus->setValue($additionalStatus);
+					if( $order ){
+						$propertyCollection = $order->getPropertyCollection();
+						$obAdditionalStatus = $propertyCollection->getItemByOrderPropertyId(25);
 
-				$order->save();
+						$order->setField("STATUS_ID", $statusID);
+						$obAdditionalStatus->setValue($additionalStatus);
+
+						$order->save();
+					}else{
+						echo "Order №".$id." not found\n";
+
+						file_put_contents( $_SERVER["DOCUMENT_ROOT"]."/1C_exchange/151BE65C.log", "Order №".$id." not found\n\n", FILE_APPEND );	
+					}
+				}else{
+					echo "Order №".$id." has undefined status: ".$currentStatus."\n";
+
+					file_put_contents( $_SERVER["DOCUMENT_ROOT"]."/1C_exchange/151BE65C.log", "Order №".$id." has undefined status: ".$currentStatus."\n\n", FILE_APPEND );
+				}
 			}
 		}
 		elseif ( $_GET['type'] === 'ost' )
@@ -151,7 +166,7 @@ if ( isset( $_GET['type'] ) )
 	}
 	else
 	{
-		echo 'Ошибка записи файла' . $file_path;
+		echo 'Ошибка записи файла' . $file_path. "\n";
 		file_put_contents( $_SERVER["DOCUMENT_ROOT"]."/1C_exchange/151BE65C.log", 'Ошибка записи файла' . $file_path . "\n\n", FILE_APPEND );
 	}
 

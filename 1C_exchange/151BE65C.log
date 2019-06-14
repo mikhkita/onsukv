@@ -1,0 +1,56 @@
+Getting data from 1c 2019-06-14T19:46:21+07:00
+
+$_GET = Array
+(
+)
+
+
+$_POST=Array
+(
+)
+
+
+$_FILES=Array
+(
+)
+
+
+$_SERVER=Array
+(
+    [REMOTE_USER] => 
+    [HTTP_HOST] => nevkusno.com
+    [HTTP_CONNECTION] => keep-alive
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate
+    [HTTP_ACCEPT_LANGUAGE] => ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7
+    [HTTP_COOKIE] => _ga=GA1.2.2125533065.1548475635; BX_USER_ID=3c63733834d308c47c77ba5ed7c1653d; BITRIX_SM_LOGIN=admin; BITRIX_SM_user_profile_open=reg; _ym_uid=155791615667878659; _ym_d=1557916156; BX_GEO_IP_::1=x%DA%ABVr%CA%2C%29%CA%AC%88%89%F1M%CC%CC%8B%89%09N-%2A%CBLN%8D%89qO%CD%F7%2C%00%F2%2B%0BR%2B%80l%25%ABj%A5%CC%02%25%2B%25%2B%2BC%25%1D%A5%9C%C4%BCt+%A7%A8%14%C8%CEH%CCK%C9I-r%CEI%2C.%06%8A%11i%5Em-%00bv%2BH; BITRIX_SM_SALE_UID=116; PHPSESSID=39tsat60cicmu89f919tdldf2o; BITRIX_SM_SOUND_LOGIN_PLAYED=Y; _ym_isad=1; BITRIX_CONVERSION_CONTEXT_s1=%7B%22ID%22%3A1%2C%22EXPIRE%22%3A1560531540%2C%22UNIQUE%22%3A%5B%22conversion_visit_day%22%2C%22sale_cart_add_day%22%2C%22sale_order_add_day%22%5D%7D
+    [PATH] => /usr/bin:/bin:/usr/sbin:/sbin
+    [SERVER_SIGNATURE] => 
+    [SERVER_SOFTWARE] => Apache
+    [SERVER_NAME] => nevkusno.com
+    [SERVER_ADDR] => ::1
+    [SERVER_PORT] => 80
+    [REMOTE_ADDR] => ::1
+    [DOCUMENT_ROOT] => /Volumes/DataSSD/mikhkita/sites/nevkusno
+    [SERVER_ADMIN] => you@example.com
+    [SCRIPT_FILENAME] => /Volumes/DataSSD/mikhkita/sites/nevkusno/6D7BFBAA.php
+    [REMOTE_PORT] => 57146
+    [GATEWAY_INTERFACE] => CGI/1.1
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [REQUEST_METHOD] => GET
+    [QUERY_STRING] => 
+    [REQUEST_URI] => /6D7BFBAA.php
+    [SCRIPT_NAME] => /6D7BFBAA.php
+    [PHP_SELF] => /6D7BFBAA.php
+    [REQUEST_TIME_FLOAT] => 1560516381.079
+    [REQUEST_TIME] => 1560516381
+    [argv] => Array
+        (
+        )
+
+    [argc] => 0
+)
+
+
