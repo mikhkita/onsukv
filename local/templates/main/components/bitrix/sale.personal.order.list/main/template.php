@@ -126,6 +126,8 @@ else
 			$discount = 0;
 			$tracking = "";
 			$operator = "";
+			$status = "";
+			
 			foreach($order["BASKET_ITEMS"] as $item){
 				$price += $item["BASE_PRICE"]*$item["QUANTITY"];
 				$discount += $item["DISCOUNT_PRICE"]*$item["QUANTITY"];
