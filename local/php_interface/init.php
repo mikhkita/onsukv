@@ -88,6 +88,8 @@ class MyEventHandlers
 		    		$item['BASE_PRICE'] = $item['DISCOUNT_PRICE'] = 0;
 		    	}
 
+		    	$item["TOTAL_QUANTITY"] += $item['QUANTITY'];
+
 		    	$itemsText.="<tr>".
             		"<td>".$item['PRODUCT_ID']."</td>".
             		"<td>".$item['NAME']."</td>".
@@ -188,9 +190,10 @@ class MyEventHandlers
 				    	   	        "<td>".$arProps["DELIVERY_TIME"]."</td>".
 				                "</tr>";
                 $deliveryTimeClient = "<tr>".
-					                "<td>Время доставки:</td>".
-				    	   	        "<td>".$arProps["DELIVERY_TIME"]."</td>".
-				                "</tr>";
+						                "<td>Время доставки:</td>".
+						                "<td></td>".
+					    	   	        "<td>".$arProps["DELIVERY_TIME"]."</td>".
+					                "</tr>";
             }
             if (isset($arProps["UNDERGROUND_DISTANCE"]) && !empty($arProps["UNDERGROUND_DISTANCE"])) {
 				$undergroundDistanceAdmin = "<tr>".

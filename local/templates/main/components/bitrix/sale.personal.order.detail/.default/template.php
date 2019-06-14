@@ -48,17 +48,17 @@ else
 		</div>
 		<?
 
-		$paymentChangeData = array();
-		$orderHeaderStatus = null;
-		$orderHeaderStatus = $arResult['STATUS_ID'];
 		$date = $arResult['DATE_INSERT']->format($arParams['ACTIVE_DATE_FORMAT']);
 		$arDate = explode(".", $date);
 		$date = $arDate[0]." ".getRusMonth($arDate[1])." ".$arDate[2];
-		foreach($order["BASKET_ITEMS"] as $item){
+
+		foreach($arResult["BASKET"] as $item){
 			$price += $item["BASE_PRICE"]*$item["QUANTITY"];
 			$discount += $item["DISCOUNT_PRICE"]*$item["QUANTITY"];
 		}
+		
 		$discount = round($discount);
+
 		$arOrder = Bitrix\Sale\Order::load($arResult['ID']);
 		$propertyCollection = $arOrder->getPropertyCollection();
 		$temp = $propertyCollection->getArray(); 
@@ -102,7 +102,7 @@ else
 					Статус: <div class="b-history-status"><?=$status?></div>
 				</div>
 				<div class="b-order-history-column-bottom">
-					Сумма без скидки: <?=round($arResult["PRODUCT_SUM"])?> руб.<br>
+					Сумма без скидки: <?=round($price)?> руб.<br>
 					<? if ($discount != 0 ): ?>
 						Скидка: <?=$discount?> руб.<br>
 					<? endif; ?>
@@ -271,7 +271,7 @@ else
 													<div class="sale-order-detail-order-item-td sale-order-detail-order-item-properties bx-text-right">
 														<div class="sale-order-detail-order-item-td-title col-xs-7 col-sm-5 visible-xs visible-sm"><?= Loc::getMessage('SPOD_ORDER_PRICE')?></div>
 														<div class="sale-order-detail-order-item-td-text">
-															<strong class="bx-price all"><?=round($basketItem['FORMATED_SUM'])?> руб.</strong>
+															<strong class="bx-price all"><?=round($basketItem['PRICE'] * $basketItem["QUANTITY"])?> руб.</strong>
 														</div>
 													</div>
 												</div>
