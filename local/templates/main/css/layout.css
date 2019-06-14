@@ -1787,6 +1787,9 @@ ul.accordion-list{
 				color: #f13d3d;
 				margin-bottom: 20px;
 			}
+			.b-catalog-item-empty-text.green{
+				color: #00a224;
+			}
 			.b-catalog-item .b-catalog-item-empty-text{
 				position: absolute;
 				left: 0px;

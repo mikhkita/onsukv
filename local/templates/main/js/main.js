@@ -413,8 +413,7 @@ $(document).ready(function(){
         if (!$(this).hasClass('disabled')) {
             var href = $(this).attr("href"),
                 id = $(this).attr("id"),
-                name = $(this).parents(".b-catalog-desc").find("h6 a").text(),
-                item = $(this).parents(".b-catalog-item"),
+                name = $(this).attr('data-name'),
                 $this = $(this);
 
             $this.addClass('disabled');
@@ -426,10 +425,10 @@ $(document).ready(function(){
                 url: url,
                 success: function(msg){
                     if(msg != "error"){
-                        item.find(".b-thanks-link").click();
+                        $this.siblings(".b-thanks-link").click();
                     } else {
                         $this.removeClass('disabled');
-                        item.find(".b-error-link").click();
+                        $this.siblings(".b-error-link").click();
                     }
                 },
                 error: function(){

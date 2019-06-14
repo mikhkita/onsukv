@@ -91,18 +91,17 @@ $APPLICATION->AddHeadString('<link rel="canonical" href="https://nevkusno.ru' . 
 					<div class="b-error-max-count">Доступно для заказа: <?=$arResult["CATALOG_QUANTITY"]?> шт.</div>
 				<? else: ?>
 					<div class="b-catalog-item-empty">Нет в наличии</div>
-					<div class="b-catalog-item-empty-text">Вы можете оставить заявку на данный товар.<br>Когда товар будет в наличии, Вам придет автоматическое письмо на почту.</div>
-					<?$APPLICATION->IncludeComponent(
-					    "bitrix:catalog.product.subscribe",
-					    "main",
-					    Array(
-					        "BUTTON_CLASS" => "b-btn b-green-btn",
-					        "BUTTON_ID" => $arResult["ID"],
-					        "CACHE_TIME" => "3600",
-					        "CACHE_TYPE" => "A",
-					        "PRODUCT_ID" => $arResult["ID"]
-					    )
-					);?>
+					<? if (!isAuth()): ?>
+						<div class="b-catalog-item-empty-text">Авторизуйтесь, чтобы оставить заявку. Когда товар будет в наличии, Вам автоматически придет письмо на почту.</div>
+					<? else: ?>	
+						<div class="b-catalog-item-empty-text green">Вы можете оставить заявку на данный товар.<br>Когда товар будет в наличии, Вам автоматически придет письмо на почту.</div>
+					<? endif; ?>
+					<? $isDisabled = (!isAuth())? "disabled": "" ; ?>
+					<a href="/ajax/?action=ADD2RESERVE" id="<?=$arResult["ID"]?>" class="b-btn b-green-btn bx-catalog-subscribe-button <?=$isDisabled?>" data-item="<?=$arResult["ID"]?>" data-name="<?=$arResult["NAME"]?>">
+						<span>Оставить заявку</span>
+					</a>
+					<a href="#b-popup-success-reserved" class="b-thanks-link fancy" style="display:none;"></a>
+					<a href="#b-popup-error-reserved" class="b-error-link fancy" style="display:none;"></a>
 				<? endif; ?>
 			</div>
 		</div>
