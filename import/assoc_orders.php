@@ -42,7 +42,7 @@ vardump($ORDER_ID);
 if($ex = $APPLICATION->GetException()) echo $ex->GetString(); 
 
 
-vardump($result);
+// vardump($result);
 die();
 
 $added = file_get_contents("orders/orders-result.txt");

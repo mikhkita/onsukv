@@ -15,6 +15,7 @@ foreach( $file->Заказ as $item ){
 	$id = intval($item->НомерЗаказа);
 	$arStatus = explode(",", $item->СтатусЗаказа, 2);
 	$currentStatus = strtolower($arStatus[0]);
+	$additionalStatus = NULL;
 
 	switch ($currentStatus) {
 		case 'заказ удален':
@@ -50,7 +51,10 @@ foreach( $file->Заказ as $item ){
 	$obAdditionalStatus = $propertyCollection->getItemByOrderPropertyId(25);
 
 	$order->setField("STATUS_ID", $statusID);
-	$obAdditionalStatus->setValue($additionalStatus);
+
+	if ($additionalStatus !== NULL) {
+		$obAdditionalStatus->setValue($additionalStatus);
+	}
 
 	$order->save();
 }
