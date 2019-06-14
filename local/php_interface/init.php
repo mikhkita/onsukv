@@ -88,6 +88,8 @@ class MyEventHandlers
 		    		$item['BASE_PRICE'] = $item['DISCOUNT_PRICE'] = 0;
 		    	}
 
+		    	$item["TOTAL_QUANTITY"] += $item['QUANTITY'];
+
 		    	$itemsText.="<tr>".
             		"<td>".$item['PRODUCT_ID']."</td>".
             		"<td>".$item['NAME']."</td>".

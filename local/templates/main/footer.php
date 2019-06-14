@@ -22,7 +22,7 @@
 				</div>
 				<div class="b-adv-item">
 					<div class="b-adv-icon"></div>
-					<div class="b-adv-text">15 лет успешной работы<br>на Российском рынке.</div>
+					<div class="b-adv-text">Гарантия качества: не понравился товар – вернем деньги.</div>
 				</div>
 				<div class="b-adv-item">
 					<div class="b-adv-icon"></div>
@@ -30,7 +30,7 @@
 				</div>
 				<div class="b-adv-item">
 					<div class="b-adv-icon"></div>
-					<div class="b-adv-text">Гарантия качества: не понравился товар – вернем деньги.</div>
+					<div class="b-adv-text">15 лет успешной работы<br>на Российском рынке.</div>
 				</div>
 			</div>
 		</div>
