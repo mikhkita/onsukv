@@ -44,7 +44,7 @@ $APPLICATION->SetTitle("Акции и скидки");
 	<br>
 	<p>Срок действия промокода - 6 месяцев после его согласования</p>
 </div>
-<div class="b-catalog-preview b-text">
+<div class="b-catalog-preview b-sale-container">
 <h3>Подарочные карты</h3>
 <p>
 	Подарите прекрасный подарок близкому, родному человеку, а может просто хорошему другу!<br>

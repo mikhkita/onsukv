@@ -584,7 +584,10 @@ p{
 		/*display: block;*/
 	}
 	.b-detail-btn-container{
-		margin-top: 10px;
+		/*margin-top: 10px;*/
+	}
+	.b-item-in-basket .b-detail-btn-container{
+		width: 100%;
 	}
 		.b-detail-btn-container p{
 			float: unset;
@@ -595,7 +598,7 @@ p{
 		max-width: 100%;
 		width: 100%;
 	}
-	.b-detail-count .b-basket-count{
+	.b-item-in-basket.b-detail-count .b-basket-count{
 		display: inline-block;
 	}
 	.b-right-button{
@@ -799,13 +802,17 @@ p{
 		top: 51%;
 	}
 
-	.b-logo{
+	.b-logo,
+	.b-logo.b-logo-1,
+	.b-logo.b-logo-2{
 		width: 128px;
 	}
 
 }
 @media screen and (max-width: 350px){
-	.b-logo{
+	.b-logo,
+	.b-logo.b-logo-1,
+	.b-logo.b-logo-2{
 		width: 94px;
 	}
 	.b-catalog-img,

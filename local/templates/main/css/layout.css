@@ -654,7 +654,7 @@ ul.accordion-list{
 }
 .mobile-catalog{
 	display: none;
-	padding: 33px 24px;
+	padding: 33px 24px 50px;
 }
 	.mobile-catalog ul{
 		
@@ -1612,6 +1612,9 @@ ul.accordion-list{
 	padding-top: 55px;
 	text-align: left;
 }	
+.b-sale-container h3{
+	margin-bottom: 8px;
+}
 .view-tab-block .b-catalog-preview{
 	padding-top: 8px;
 }
@@ -2732,6 +2735,11 @@ ul.accordion-list{
 		.b-item-in-basket .b-btn-to-cart{
 			display: none;
 		}
+		.b-item-in-basket .b-detail-btn-container{
+			display: inline-block;
+			vertical-align: middle;
+		    width: calc(100% - 130px);
+		}
 			.b-basket-count .b-input-cont{
 				text-align: center;
 				position: relative;
@@ -2765,8 +2773,8 @@ text-decoration: none !important;
 			top: 0px;
 			margin-right: 20px;
 			/* display: inline-block; */
-			margin-bottom: 5px;
-			margin-top: 5px;
+			margin-bottom: 6px;
+			margin-top: 6px;
 		}
 div.modern-page-navigation a{
 	color: #C8AD89;

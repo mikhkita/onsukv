@@ -379,7 +379,7 @@ switch ($action) {
 				    echo "0";
 				}
 			} else {
-				returnError("Пользователь с таким E-mail уже зарегестрирован.");
+				returnError("Пользователь с таким E-mail уже зарегистрирован.");
 			}
 		}else{
 			echo "0";

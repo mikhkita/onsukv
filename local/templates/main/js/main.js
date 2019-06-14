@@ -194,7 +194,6 @@ $(document).ready(function(){
 
     menuSlideout.on('open', function() {
         $('.mobile-menu').removeClass("hide");
-        $('.burger-menu').addClass("menu-on");
         $(".b-menu-overlay").show();
     });
 
@@ -206,6 +205,7 @@ $(document).ready(function(){
     menuSlideout.on('close', function() {
         setTimeout(function(){
             $("body").unbind("touchmove");
+            $("#mobile-catalog, #mobile-menu").hide();
             $(".b-menu-overlay").hide();
         },100);
     });
@@ -213,6 +213,7 @@ $(document).ready(function(){
     catalogSlideout.on('close', function() {
         setTimeout(function(){
             $("body").unbind("touchmove");
+            $("#mobile-catalog, #mobile-menu").hide();
             $(".b-menu-overlay").hide();
         },100);
     });
