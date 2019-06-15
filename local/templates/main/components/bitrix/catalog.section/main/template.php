@@ -83,7 +83,7 @@ $arFilters = Array(
 						<? if (!isAuth()): ?>
 							<div class="b-catalog-item-empty-text">Авторизуйтесь, чтобы оставить заявку. Когда товар будет в наличии, Вам автоматически придет письмо на почту.</div>
 						<? else: ?>	
-							<div class="b-catalog-item-empty-text green">Вы можете оставить заявку на данный товар.<br>Когда товар будет в наличии, Вам автоматически придет письмо на почту.</div>
+							<div class="b-catalog-item-empty-text green">Вы можете оставить заявку на данный товар. Когда товар будет в наличии, Вам автоматически придет письмо на почту.</div>
 						<? endif; ?>
 					<? endif; ?>
 					<? if( $GLOBALS["isWholesale"] ): ?>
