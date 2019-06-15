@@ -40,7 +40,7 @@ if (strlen($arResult["MESSAGE"]) > 0):?>
 				<select name="PROPERTY[31]">
 					<option value></option>
 					<? foreach ($arResult["PROPERTY_LIST_FULL"][31]['ENUM'] as $metro): ?>
-						<option value="<?=$metro['ID']?>"><?=$metro['VALUE']?></option>
+						<option value="<?=$metro['ID']?>"<? if( $arResult["ELEMENT_PROPERTIES"][31][0]['VALUE'] == $metro["ID"] ): ?> selected<? endif; ?>><?=$metro['VALUE']?></option>
 					<? endforeach; ?>
 				</select>
 			</div>

@@ -307,7 +307,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                     <h4>Адрес доставки:</h4>
                     <? foreach ($arResult["ADDRESSES"] as $key => $arAddress): ?>
                         <div class="b-checkbox">
-                            <input type="radio" id="addr-<?=$arAddress["ID"]?>" class="b-addr-radio" name="address" data-index="<?=$arAddress["INDEX"]?>" data-region="<?=$arAddress["REGION"]?>" data-city="<?=$arAddress["CITY"]?>" data-address="<?=$arAddress["ADDRESS"]?>" data-room="<?=$arAddress["ROOM"]?>">
+                            <input type="radio" id="addr-<?=$arAddress["ID"]?>" class="b-addr-radio" name="address" data-index="<?=$arAddress["INDEX"]?>" data-region="<?=$arAddress["REGION"]?>" data-city="<?=$arAddress["CITY"]?>" data-address="<?=$arAddress["ADDRESS"]?>" data-room="<?=$arAddress["ROOM"]?>" data-metro="<?=$arAddress["METRO"]?>">
                             <label for="addr-<?=$arAddress["ID"]?>"><?=$arAddress["INDEX"]?>, <?=$arAddress["ADDRESS"]?>, кв/оф. <?=$arAddress["ROOM"]?></label>
                         </div>
                     <? endforeach; ?>
@@ -337,7 +337,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                             </div>
                             <div class="b-addresss-item__metro b-input hide">
                                 <label for="metro-station">Выберите метро<span class="required">*</span></label>
-                                <select name="ORDER_PROP_28" required>
+                                <select name="ORDER_PROP_28" required id="metro-addr">
                                     <option value></option>
                                     <? foreach ($metroList as $metro): ?>
                                         <option value="<?=$metro['ID']?>"><?=$metro['VALUE']?></option>

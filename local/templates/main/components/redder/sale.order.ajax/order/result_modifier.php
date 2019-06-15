@@ -36,6 +36,7 @@ if( !empty($USER->GetID()) ){
 			"ROOM" => $arProps["ROOM"]["VALUE"],
 			"REGION" => $arProps["REGION"]["VALUE"],
 			"CITY" => $arProps["CITY"]["VALUE"],
+			"METRO" => $arProps["METRO"]["VALUE_ENUM_ID"],
 		);
 	}
 

@@ -7,7 +7,7 @@ $this->setFrameMode(true);
 		<?foreach($arResult["ITEMS"] as $arItem):?>
 		<div class="b-addresss-item-container">
 	        <div class="b-addresss-item">
-				<?=$arItem['PROPERTIES']['INDEX']['VALUE']?>, <?=$arItem['NAME']?>, кв/оф. <?=$arItem['PROPERTIES']['ROOM']['VALUE']?>
+				<?=$arItem['PROPERTIES']['INDEX']['VALUE']?>, <?=$arItem['NAME']?>, кв/оф. <?=$arItem['PROPERTIES']['ROOM']['VALUE']?><? if( $arItem['PROPERTIES']['METRO']['VALUE'] ): ?>, м. <?=$arItem['PROPERTIES']['METRO']['VALUE']?><? endif; ?>
 	        </div>
 	        <div>
 		        <a href="<?=detailPageUrl($arItem["DETAIL_PAGE_URL"])?>">Изменить</a>&nbsp;&nbsp;&nbsp;
