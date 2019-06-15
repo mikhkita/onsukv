@@ -377,7 +377,7 @@
 			<div class="b-thanks b-popup" id="b-popup-success-reserved">
 				<div class="b-popup-header">
 					<h3>Заявка оставлена!</h3>
-					<p>Когда товар будет в наличии, Вам придет автоматическое письмо на почту.</p>
+					<p>Когда товар будет в наличии, Вам автоматически придет письмо на почту.</p>
 				</div>
 				<div class="b-btn-container">
 					<a href="#" class="b-btn ajax" onclick="$.fancybox.close(); return false;">Закрыть</a>
