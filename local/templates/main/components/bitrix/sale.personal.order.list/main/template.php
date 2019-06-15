@@ -12,7 +12,7 @@ $this->addExternalCss("/bitrix/css/main/bootstrap.css");
 CJSCore::Init(array('clipboard', 'fx'));
 
 Loc::loadMessages(__FILE__);
-
+// vardump($arResult);
 
 if (!empty($arResult['ERRORS']['FATAL']))
 {
@@ -114,6 +114,7 @@ else
 
 	if ($_REQUEST["filter_history"] !== 'Y')
 	{
+
 		$paymentChangeData = array();
 		$orderHeaderStatus = null;
 		foreach ($arResult['ORDERS'] as $key => $order)

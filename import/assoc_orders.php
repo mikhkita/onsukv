@@ -1,6 +1,20 @@
 <?
 require_once($_SERVER['DOCUMENT_ROOT'] . "/bitrix/modules/main/include/prolog_before.php");
 
+use Bitrix\Main\Type\Date,
+	Bitrix\Main\Context,
+    Bitrix\Currency\CurrencyManager,
+    Bitrix\Sale\Order,
+    Bitrix\Sale\Basket,
+    Bitrix\Sale\Delivery,
+    Bitrix\Sale\PaySystem;
+
+global $USER;
+
+Bitrix\Main\Loader::includeModule("sale");
+Bitrix\Main\Loader::includeModule("catalog");
+
+
 // $userTable = \Bitrix\Main\UserTable::getMap();
 
 // echo "<pre>";
@@ -17,29 +31,166 @@ foreach ($values as $value) {
 
 $arFields = array(
 	"LID" => SITE_ID,
-	"ID" => 1230,
+	// "ID" => 1230,
 	"PERSON_TYPE_ID" => 1,
 	"PAYED" => "N",
 	"CANCELED" => "N",
 	"STATUS_ID" => "N",
 	"PRICE" => 279.32,
 	"CURRENCY" => "RUB",
-	"USER_ID" => 1,
+	"USER_ID" => 5244,
 	"PAY_SYSTEM_ID" => 2,
-	"PRICE_DELIVERY" => 0,
-	"DELIVERY_ID" => 120,
-	"DISCOUNT_VALUE" => 0,
+	"DISCOUNT_PRICE" => 10,
 	"TAX_VALUE" => 0.0,
-	"USER_DESCRIPTION" => ""
+	"USER_DESCRIPTION" => "",
+	"DATE_INSERT" => "12.08.2013 08:53:37",
 );
 
-// if (CModule::IncludeModule("statistic"))
-//    $arFields["STAT_GID"] = CStatistic::GetEventParam();
 
-$ORDER_ID = CSaleOrder::Add($arFields);
-vardump($ORDER_ID);
+// Установка кастомного ID
+$orderID = 141268;
+$GLOBALS["custom_order_id1"] = $orderID;
 
-if($ex = $APPLICATION->GetException()) echo $ex->GetString(); 
+// Создание заказа
+// $ORDER_ID = CSaleOrder::Add($arFields);
+// vardump($ORDER_ID);
+
+$order = Order::create(SITE_ID, 1);
+$order->setPersonTypeId(1);
+
+vardump($order->getAvailableFields());
+
+// Установка статуса
+$order->setField("STATUS_ID", "A");
+
+// Создаём корзину с одним товаром
+$basket = Basket::create(SITE_ID);
+$item = $basket->createItem('catalog', 13334);
+$item->setFields(array(
+    'QUANTITY' => 1,
+    'CURRENCY' => "RUB",
+    'LID' => SITE_ID,
+    'NAME' => "Товар",
+    'PRICE' => 100,
+    'BASE_PRICE' => 100,
+    'DETAIL_PAGE_URL' => "/product/".(13334)."/",
+    // 'PRODUCT_PROVIDER_CLASS' => '\CCatalogProductProvider',
+));
+$order->setBasket($basket);
+
+
+
+// Создаём одну отгрузку и устанавливаем способ доставки
+$shipmentCollection = $order->getShipmentCollection();
+$shipment = $shipmentCollection->createItem();
+$service = Delivery\Services\Manager::getById(120);
+$shipment->setFields(array(
+    'DELIVERY_ID' => $service['ID'],
+    'DELIVERY_NAME' => $service['NAME'],
+    'PRICE_DELIVERY' => 200,
+    'BASE_PRICE_DELIVERY' => 200,
+));
+$shipmentItemCollection = $shipment->getShipmentItemCollection();
+$shipmentItem = $shipmentItemCollection->createItem($item);
+$shipmentItem->setQuantity($item->getQuantity());
+
+// Устанавливаем свойства
+$propertyCollection = $order->getPropertyCollection();
+$propertyCollection->getItemByOrderPropertyId(1)->setValue("Михаил"); // Имя
+$propertyCollection->getItemByOrderPropertyId(2)->setValue("Китаев"); // Фамилия
+$propertyCollection->getItemByOrderPropertyId(3)->setValue("mike@kitaev.pro"); // E-mail
+$propertyCollection->getItemByOrderPropertyId(4)->setValue("+7 (999) 499-50-00"); // Телефон
+$propertyCollection->getItemByOrderPropertyId(6)->setValue("Y"); // Нужен звонок оператора или нет (Y/N)
+$propertyCollection->getItemByOrderPropertyId(7)->setValue("Пикопинт доставка"); // Адрес PickPoint
+$propertyCollection->getItemByOrderPropertyId(8)->setValue("15.06.2019"); // Дата доставки
+$propertyCollection->getItemByOrderPropertyId(9)->setValue("с 10 до 18"); // Время доставки
+$propertyCollection->getItemByOrderPropertyId(10)->setValue("более 5 километров"); // Расстояние от МКАД
+$propertyCollection->getItemByOrderPropertyId(14)->setValue("301"); // Квартира/офис
+$propertyCollection->getItemByOrderPropertyId(15)->setValue("г. Томск, ул. Дербышевский переулок, 26б"); // Адрес
+$propertyCollection->getItemByOrderPropertyId(16)->setValue("Томская область"); // Регион
+$propertyCollection->getItemByOrderPropertyId(18)->setValue("ТЦ Мирамикс"); // Название PickPoint
+$propertyCollection->getItemByOrderPropertyId(19)->setValue("123"); // ID PickPoint
+$propertyCollection->getItemByOrderPropertyId(20)->setValue("1"); // Тип доставки СДЭК
+$propertyCollection->getItemByOrderPropertyId(21)->setValue("Пункт такой-то"); // Информация СДЭК
+$propertyCollection->getItemByOrderPropertyId(22)->setValue("Томск"); // Город
+$propertyCollection->getItemByOrderPropertyId(23)->setValue("5"); // Расстояние от метро
+$propertyCollection->getItemByOrderPropertyId(24)->setValue("652723"); // Индекс
+$propertyCollection->getItemByOrderPropertyId(25)->setValue("узбек Сергеевич тел 1240913412"); // Дополнительный статус
+$propertyCollection->getItemByOrderPropertyId(26)->setValue("1749817984ASDFA"); // Номер отправления
+$propertyCollection->getItemByOrderPropertyId(27)->setValue("Анна П."); // Оператор
+$propertyCollection->getItemByOrderPropertyId(28)->setValue("Чистые Пруды"); // Метро
+$order->setField("USER_DESCRIPTION", "Комментарий");
+
+$order->save();
+
+// Установка кастомной даты
+$date = new Date("12.08.2013 08:53:37");
+$order->setField("DATE_INSERT", $date);
+
+$order->save();
+
+vardump($order->getId());
+
+// if( $ORDER_ID ){
+// 	$arFields = array(
+// 		"PRODUCT_ID" => 13334,
+// 		// "PRODUCT_PRICE_ID" => 0,
+// 		"PRICE" => 100,
+// 		"CURRENCY" => "RUB",
+// 		// "WEIGHT" => 530,
+// 		"QUANTITY" => 1,
+// 		"LID" => SITE_ID,
+// 		"DELIVERY_ID" => 120,
+// 		"DELAY" => "N",
+// 		"CAN_BUY" => "Y",
+// 		"ORDER_ID" => $orderID,
+// 		// "DISCOUNT_PRICE" => 10,
+// 		"NAME" => "Чемодан кожаный",
+// 		// "CALLBACK_FUNC" => "MyBasketCallback",
+// 		"MODULE" => "catalog",
+// 		// "NOTES" => "",
+// 		// "ORDER_CALLBACK_FUNC" => "MyBasketOrderCallback",
+// 		// "DETAIL_PAGE_URL" => "/".LANG."/detail.php?ID=51"
+// 	);
+
+// 	$result = CSaleBasket::Add($arFields);
+// 	vardump($result);
+// }
+
+// $order->save();
+
+
+// vardump($order->getDateInsert());
+
+
+// $siteId = Context::getCurrent()->getSite();
+// $currencyCode = CurrencyManager::getBaseCurrency();
+
+
+// // vardump($order->getId());
+// // $order->setPersonTypeId(1);
+// // $order->setField('CURRENCY', $currencyCode);
+// // if ($comment) {
+// //     $order->setField('USER_DESCRIPTION', $comment); // Устанавливаем поля комментария покупателя
+// // }
+
+// // Создаём корзину с одним товаром
+// $basket = Basket::create($siteId);
+// $item = $basket->createItem('catalog', 13334);
+// $item->setFields(array(
+//     'QUANTITY' => 1,
+//     'CURRENCY' => $currencyCode,
+//     'LID' => $siteId,
+//     'PRODUCT_PROVIDER_CLASS' => '\CCatalogProductProvider',
+// ));
+// $order->setBasket($basket);
+
+// // Сохраняем
+// // $order->doFinalAction(true);
+// $order->save();
+
+
+// if($ex = $APPLICATION->GetException()) echo $ex->GetString(); 
 
 
 // vardump($result);
