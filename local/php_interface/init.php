@@ -546,7 +546,7 @@ function OnSaleOrderSavedHandler(Main\Event $event){
 				"ROOM"				=> $_REQUEST["ORDER_PROP_14"],
 				"USER"				=> $order->getUserId(),
 				"CITY"				=> $_REQUEST["ORDER_PROP_22"],
-				"METRO"				=> $_REQUEST["ORDER_PROP_18"],
+				"METRO"				=> $_REQUEST["ORDER_PROP_28"],
 			),
 		);
 		if( $PRODUCT_ID = $el->Add($arLoadProductArray) ){
