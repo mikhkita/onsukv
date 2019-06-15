@@ -23,7 +23,7 @@ function LineBlockHeight(block){
 $(document).ready(function(){	
 
     if( $(".order-adress-map-form").length ){
-        $(".b-input input").each(function(){
+        $(".b-input input, .b-input select").each(function(){
             $(this).parents(".b-input").removeClass("focus");
             if( $(this).val() != "" && $(this).val() != "+7 (   )    -  -  " ){
                 $(this).parents(".b-input").addClass("not-empty");
@@ -555,6 +555,15 @@ $(document).ready(function(){
 
             $("#b-date-deliv").html("Дата доставки");
 
+            if( ["26", "27", "122", "53", "54", "55"].indexOf( $(this).val() ) !== -1 ){
+                $(".b-order-addr-cont").show();
+                if( !$(".b-addr-radio:checked").length ){
+                    $(".b-addr-radio").eq(0).prop("checked", true).trigger("change");
+                }else{
+                    $(".b-addr-radio:checked").trigger("change");
+                }
+            }
+
             switch ($(this).val()) {
                 case "26":
                     $("#time").html(
@@ -578,17 +587,9 @@ $(document).ready(function(){
                     $( window ).trigger( 'pickpoint_ready' );
                     break;
                 case "53":
-                    $("#b-date-deliv").html("Дата сборки");
                 case "54":
-                    $("#b-date-deliv").html("Дата сборки");
                 case "55":
                     $("#b-date-deliv").html("Дата сборки");
-                    $(".b-order-addr-cont").show();
-                    if( !$(".b-addr-radio:checked").length ){
-                        $(".b-addr-radio").eq(0).prop("checked", true).trigger("change");
-                    }else{
-                        $(".b-addr-radio:checked").trigger("change");
-                    }
                     break;
                 case "116":
                     $("#b-date-deliv").html("Дата сборки");
@@ -715,12 +716,15 @@ $(document).ready(function(){
                 region = $(this).attr("data-region"),
                 city = $(this).attr("data-city"),
                 room = $(this).attr("data-room"),
+                metro = $(this).attr("data-metro"),
                 value = $(this).val();
 
-            $(".basket-checkout-block-btn").addClass("loading");
+            if( ["120", "53", "54", "55"].indexOf( $("#delivery").val() ) !== -1 ){
+                $(".basket-checkout-block-btn").addClass("loading");
+            }
 
             if( value == "NEW" ){
-                address = index = region = room = "";   
+                address = index = region = room = metro = "";   
 
                 $(".b-order-addr-new").show();
                 $("#js-order-adress-map-input").trigger("focusin").focus();
@@ -733,6 +737,7 @@ $(document).ready(function(){
             $("#number-room-input").val(room);
             $("#postal-code").val(index);
             $("#region").val(region);
+            $("#metro-addr").val(metro);
 
             if( $("#delivery").val() == "120" ){
                 $("#city").trigger("change");

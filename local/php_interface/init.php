@@ -250,7 +250,7 @@ class MyEventHandlers
 							"<tr>".
 							    "<td>Способ обработки заказа: </td>".
 						        "<td></td>".
-					            "<td>".$processing."</strong></td>".
+					            "<td>".$processing."</td>".
 				            "</tr>".
 				            "<tr>".
 				                "<td>Дата заказа:</td>".
@@ -261,7 +261,7 @@ class MyEventHandlers
 				                "<td colspan='3'>&nbsp;</td>".
 			                "</tr>".
 				            "<tr>".
-				                "<td>".$deliveryDateText."</td>".
+				                "<td>Дата доставки:</td>".
 			                    "<td>&nbsp;</td>".
 			    	   	        "<td>".$arProps["DELIVERY_DATE"]."</td>".
 			                "</tr>".
