@@ -97,7 +97,7 @@ CModule::IncludeModule('iblock');
 			<li><a href="/discounts/" class="active icon-discount">Акции и скидки</a></li>
 			<li><a href="/">Главная</a></li>
 			<li><a href="/delivery/">Доставка и&nbsp;оплата</a></li>
-			<li><a href="#">Новые приходы</a></li>
+			<li><a href="/new/">Новые приходы</a></li>
 			<li><a href="/magazin/">Розничный магазин</a></li>
 			<li><a href="/rukovodstvo/">Связь с&nbsp;руководством</a></li>
 		</ul>

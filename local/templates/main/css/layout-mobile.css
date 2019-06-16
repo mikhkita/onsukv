@@ -219,6 +219,9 @@ p{
 .b-breadcrumbs{
 	margin-bottom: 20px;
 }
+	.b-breadcrumbs li{
+		font-size: 14px;
+	}
 .b-category-tiles{
 	margin-bottom: 16px;
 }

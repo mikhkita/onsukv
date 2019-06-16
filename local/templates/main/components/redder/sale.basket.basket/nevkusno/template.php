@@ -182,7 +182,7 @@ if (empty($arResult['ERROR_MESSAGE']))
 		$arGiftList = array();
 		$i = 0;
 		foreach($arDiscountList as $discountItem){
-			if(!$discountItem["SHORT_DESCRIPTION_STRUCTURE"]){ // если не скидка, а подарок
+			if(!$discountItem["SHORT_DESCRIPTION_STRUCTURE"] && $discountItem['ACTIVE'] == "Y"){ // если не скидка, а подарок
 				foreach($discountItem["CONDITIONS_LIST"]['CHILDREN'] as $CondBsktAmtGroup){
 					$arGiftList[$i]["LOGIC"] = $CondBsktAmtGroup["DATA"]["logic"];
 	    			$arGiftList[$i]["PRICE"] = $CondBsktAmtGroup["DATA"]["Value"];

@@ -3331,10 +3331,14 @@ li.bx-inclinkspersonal-item {
 		    color: #282828;
 			font-family: 'MuseoSansCyrl-300';
 		}
+			.b-news-text img{
+				max-width: 100%;
+			}
 		.b-news-item a{
 			color: #C8AD89;
 			text-decoration: underline;
 			font-family: 'MuseoSansCyrl-300';
+			word-wrap: break-word;
 		}
 		.b-news-item a:hover{
 			text-decoration: none;
