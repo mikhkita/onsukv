@@ -18,13 +18,30 @@ $APPLICATION->AddHeadString('<link rel="canonical" href="https://nevkusno.ru' . 
 ?>
 
 <? $renderImage = CFile::ResizeImageGet($arResult["DETAIL_PICTURE"], Array("width" => 1000, "height" => 1000), BX_RESIZE_IMAGE_PROPORTIONAL, false, $arFilters ); ?>
-<? $bigImage = CFile::ResizeImageGet($arResult["DETAIL_PICTURE"], Array("width" => 1600, "height" => 1600), BX_RESIZE_IMAGE_PROPORTIONAL, false, $arFilters ); ?>
+<? $bigImage = CFile::ResizeImageGet($arResult["DETAIL_PICTURE"], Array("width" => 1600, "height" => 1600), BX_RESIZE_IMAGE_PROPORTIONAL, false, $arFilters );
+
+	$arSelect = array("CODE");
+	$arFilter = Array("IBLOCK_ID"=>2, "ACTIVE" => "Y", "PROPERTY_PRODUCT_ID" => $arResult['ID']);
+	$res = CIBlockElement::GetList(Array(), $arFilter, false, Array("nPageSize"=>1000000), $arSelect);
+	while($ob = $res->GetNextElement()){
+		$arFields[] = $ob->GetFields();
+	}
+
+	$average_rating = 0;
+
+	foreach($arFields as $item){
+		$average_rating += $item['CODE']; 
+	}
+	
+	$average_rating = round($average_rating/count($arFields));
+?>
+
 
 <div class="b-detail clearfix">
 	<div class="b-detail-left">
 		<a href="<?=$bigImage["src"]?>" class="fancy-img"><img src="<?=$renderImage["src"]?>"></a>
 		<div class="b-stars-detail">
-			<div class="b-stars b-stars-<?=$arResult["AVERAGE_RATING"]?>">
+			<div class="b-stars b-stars-<?=$average_rating?>">
 				<div class="b-star"></div>
 				<div class="b-star"></div>
 				<div class="b-star"></div>
