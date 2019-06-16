@@ -26,11 +26,21 @@ AddEventHandler("catalog", "OnStoreProductUpdate", Array("MyClass", "OnStoreProd
 AddEventHandler("sale", "DiscountOnAfterUpdate", Array("MyClass", "DiscountOnAfterUpdateHandler"));
 AddEventHandler("main", "OnBeforeEventAdd", Array("MyEventHandlers", "OnBeforeEventAddHandler")); 
 AddEventHandler("sale", "OnOrderAdd", Array("MyClass", "OnOrderAddHandler"));
+// AddEventHandler("sale", "OnBeforeOrderAdd", Array("MyClass", "OnBeforeOrderAddHandler"));
 AddEventHandler("sale", "OnBeforeUserAdd", Array("MyClass", "OnBeforeUserAddHandler"));
 AddEventHandler("sale", "OnOrderDelete", Array("MyClass", "OnOrderDeleteHandler"));
 AddEventHandler("main", "OnBeforeUserUpdate", Array("MyClass", "OnBeforeUserUpdateHandler"));
 
-
+AddEventHandler('main','OnAdminTabControlBegin','RemoveYandexDirectTab');
+function RemoveYandexDirectTab(&$TabControl){
+   if ($GLOBALS['APPLICATION']->GetCurPage()=='/bitrix/admin/iblock_element_edit.php') {
+      foreach($TabControl->tabs as $Key => $arTab){
+         if($arTab['DIV']=='seo_adv_seo_adv') {
+            unset($TabControl->tabs[$Key]);
+         }
+      }
+   }
+}
 
 class MyEventHandlers 
 { 
@@ -547,7 +557,11 @@ function OnSaleOrderSavedHandler(Main\Event $event){
 				"ROOM"				=> $_REQUEST["ORDER_PROP_14"],
 				"USER"				=> $order->getUserId(),
 				"CITY"				=> $_REQUEST["ORDER_PROP_22"],
+<<<<<<< HEAD
 				"METRO"				=> $_REQUEST["METRO"],
+=======
+				"METRO"				=> $_REQUEST["ORDER_PROP_28"],
+>>>>>>> 6686de95cd88aa38626ecb5a06d863988eccd886
 			),
 		);
 		if( $PRODUCT_ID = $el->Add($arLoadProductArray) ){
@@ -556,6 +570,18 @@ function OnSaleOrderSavedHandler(Main\Event $event){
 			echo $el->LAST_ERROR;
 		}
 	}
+}
+
+Main\EventManager::getInstance()->addEventHandler(
+   'main',
+   'OnBeforeUserAdd',
+   'OnBeforeUserAddHandler1'
+);
+
+function OnBeforeUserAddHandler1(&$event){
+
+	$event["PERSONAL_PHONE"] = convertPhoneNumber($event["PERSONAL_PHONE"]);
+
 }
 
 Main\EventManager::getInstance()->addEventHandler(
@@ -771,6 +797,12 @@ class MyClass {
  //    		updateWholesale($arFields["ID"]);
  //    	}
  //    }
+    // function OnBeforeOrderAddHandler(&$arFields){
+    // 	$arFields["ORDER_PROP"][4] = convertPhoneNumber($arFields["ORDER_PROP"][4]);
+    // 	// vardump($arFields);
+    // 	// die();
+    // }
+
 	function OnOrderAddHandler($ID, $arFields){ 
 
 		$date = date("Y-m-d", strtotime($arFields["ORDER_PROP"][8]));
@@ -796,6 +828,7 @@ class MyClass {
 	function OnBeforeUserAddHandler(&$arFields){
 
 		// vardump($arFields);
+		// die();
 
 	}
 
@@ -808,6 +841,7 @@ class MyClass {
 			if(updateUserDiscount($arParams['ID'], $newDiscount)){
 				$arParams["PERSONAL_ICQ"] = $arParams["PERSONAL_WWW"];
 
+<<<<<<< HEAD
 				if (!empty($newDiscount) && (empty($oldDiscount) || $oldDiscount == '0') ) {
 					$msg = "Внимание!<br>".
 						"Пользователю ".$arParams['NAME']." ".$arParams['LAST_NAME']." ( ".$arParams['ID']." ) была добавлена персональная скидка ".$newDiscount."%.";
@@ -818,6 +852,10 @@ class MyClass {
 					$msg = "Внимание!<br>".
 					"У пользователя ".$arParams['NAME']." ".$arParams['LAST_NAME']." ( ".$arParams['ID']." ) была измена персональная скидка с ".$oldDiscount."% на ".$newDiscount."%.";
 				}
+=======
+				$msg = "Внимание!<br>".
+					"У пользователя ".$arParams['NAME']." ".$arParams['LAST_NAME']." ( ".$arParams['ID']." ) была изменена персональная скидка с ".$oldDiscount."% на ".$newDiscount."%.";
+>>>>>>> 6686de95cd88aa38626ecb5a06d863988eccd886
 				
 				CEvent::Send("USER_PERSONAL_DISCOUNT_CHANGE", "s1", array('MSG' => $msg));
 			}
@@ -1346,11 +1384,11 @@ function updateUserDiscount($userID, $discountValue = null){
 
 		if ($discount['XML_ID'] == "PERSONAL_DISCOUNT"){
 
-			if ($discount['USER_GROUPS']) {
-				$discount['USER_GROUPS'] = array($discount['USER_GROUPS']);
-			} else {
+			// if ($discount['USER_GROUPS']) {
+				// $discount['USER_GROUPS'] = $discount['USER_GROUPS'];
+			// } else {
 				$discount['USER_GROUPS'] = array("2");
-			}
+			// }
 
 			$discountList[] = $discount;
 			$actions = unserialize($discount['ACTIONS']);
