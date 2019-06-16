@@ -557,11 +557,7 @@ function OnSaleOrderSavedHandler(Main\Event $event){
 				"ROOM"				=> $_REQUEST["ORDER_PROP_14"],
 				"USER"				=> $order->getUserId(),
 				"CITY"				=> $_REQUEST["ORDER_PROP_22"],
-<<<<<<< HEAD
 				"METRO"				=> $_REQUEST["METRO"],
-=======
-				"METRO"				=> $_REQUEST["ORDER_PROP_28"],
->>>>>>> 6686de95cd88aa38626ecb5a06d863988eccd886
 			),
 		);
 		if( $PRODUCT_ID = $el->Add($arLoadProductArray) ){
@@ -841,7 +837,6 @@ class MyClass {
 			if(updateUserDiscount($arParams['ID'], $newDiscount)){
 				$arParams["PERSONAL_ICQ"] = $arParams["PERSONAL_WWW"];
 
-<<<<<<< HEAD
 				if (!empty($newDiscount) && (empty($oldDiscount) || $oldDiscount == '0') ) {
 					$msg = "Внимание!<br>".
 						"Пользователю ".$arParams['NAME']." ".$arParams['LAST_NAME']." ( ".$arParams['ID']." ) была добавлена персональная скидка ".$newDiscount."%.";
@@ -852,10 +847,6 @@ class MyClass {
 					$msg = "Внимание!<br>".
 					"У пользователя ".$arParams['NAME']." ".$arParams['LAST_NAME']." ( ".$arParams['ID']." ) была измена персональная скидка с ".$oldDiscount."% на ".$newDiscount."%.";
 				}
-=======
-				$msg = "Внимание!<br>".
-					"У пользователя ".$arParams['NAME']." ".$arParams['LAST_NAME']." ( ".$arParams['ID']." ) была изменена персональная скидка с ".$oldDiscount."% на ".$newDiscount."%.";
->>>>>>> 6686de95cd88aa38626ecb5a06d863988eccd886
 				
 				CEvent::Send("USER_PERSONAL_DISCOUNT_CHANGE", "s1", array('MSG' => $msg));
 			}
@@ -1519,5 +1510,22 @@ function convertPhoneNumber($str){
 }
 
 getSectionChain();
+
+if (!function_exists('custom_mail') && COption::GetOptionString("webprostor.smtp", "USE_MODULE") == "Y")
+{
+   function custom_mail($to, $subject, $message, $additional_headers='', $additional_parameters='')
+   {
+      if(CModule::IncludeModule("webprostor.smtp"))
+      {
+         $smtp = new CWebprostorSmtp("s1");
+         $result = $smtp->SendMail($to, $subject, $message, $additional_headers, $additional_parameters);
+
+         if($result)
+            return true;
+         else
+            return false;
+      }
+   }
+}
 
 ?>

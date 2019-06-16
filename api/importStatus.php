@@ -9,12 +9,14 @@ function mb_ucfirst($text) {
     return mb_strtoupper(mb_substr($text, 0, 1)) . mb_substr($text, 1);
 }
 
-// $id = 129;
+$id = 200;
 
 foreach( $file->Заказ as $item ){
-	$id = intval($item->НомерЗаказа);
+	// $id = intval($item->НомерЗаказа);
 	$arStatus = explode(",", $item->СтатусЗаказа, 2);
-	$currentStatus = strtolower($arStatus[0]);
+	$operator = str_replace("_", " ", $item->Автор);
+	$tracking = $item->НомерОтправления;
+	$currentStatus = mb_strtolower($arStatus[0], 'UTF-8');
 	$additionalStatus = NULL;
 
 	switch ($currentStatus) {
@@ -49,14 +51,19 @@ foreach( $file->Заказ as $item ){
 	$order = Bitrix\Sale\Order::load($id);
 	$propertyCollection = $order->getPropertyCollection();
 	$obAdditionalStatus = $propertyCollection->getItemByOrderPropertyId(25);
+	$obTracking = $propertyCollection->getItemByOrderPropertyId(26);
+	$obOperator = $propertyCollection->getItemByOrderPropertyId(27);
 
 	$order->setField("STATUS_ID", $statusID);
+	$obTracking->setValue($tracking);
+	$obOperator->setValue($operator);
 
 	if ($additionalStatus !== NULL) {
 		$obAdditionalStatus->setValue($additionalStatus);
 	}
 
 	$order->save();
+	die();
 }
 
 ?>

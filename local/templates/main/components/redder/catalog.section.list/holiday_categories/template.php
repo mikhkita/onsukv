@@ -16,7 +16,7 @@ $this->setFrameMode(true);
 <? $i = 0; ?>
 	<ul>
 		<?foreach($arResult["SECTIONS"] as $arItem):?>
-			<? if( $arItem["PICTURE"] && $i == 0): ?>
+			<? if( $arItem["PICTURE"] && $i == 0 && $arItem["UF_HIGHLIGHT"] == 1): ?>
 				<li class="b-with-image">
 					<a href="<?=detailPageUrl($arItem["SECTION_PAGE_URL"])?>" class="clearfix <? if( $GLOBALS["SECTION_ID"] == $arItem["ID"] ): ?>active icon-tick<? endif; ?><?=(($arItem["UF_HIGHLIGHT"])?" highlight":"")?>">
 						<img src="<?=$arItem["PICTURE"]["SRC"]?>" alt="">

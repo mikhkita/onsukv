@@ -67,7 +67,7 @@ $APPLICATION->SetTitle("Качество работы магазина");?>
 		"INCLUDE_SUBSECTIONS" => "N",
 		"MESSAGE_404" => "",
 		"NEWS_COUNT" => "10",
-		"PAGER_BASE_LINK" => "",
+		"PAGER_BASE_LINK" => "/reviews/quality/",
 		"PAGER_BASE_LINK_ENABLE" => "Y",
 		"PAGER_DESC_NUMBERING" => "N",
 		"PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",

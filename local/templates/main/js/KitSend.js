@@ -138,7 +138,8 @@ $(document).ready(function(){
 	whenScroll();
 
 	$(".fancy:not(.fancy-binded)").each(function(i,elem){
-		var $popup = $(elem).attr("href"),
+		var $popupID = $(elem).attr("href"),
+			$popup = $($popupID),
 			$this = $(elem);
 
 		$this.fancybox({
@@ -151,7 +152,7 @@ $(document).ready(function(){
 	      	},
 			beforeShow: function(){
 				$(".fancybox-wrap").addClass("beforeShow");
-				$popup.find(".custom-field").remove();
+				$($popup).find(".custom-field").remove();
 				if( $this.attr("data-value") ){
 					var name = getNextField($popup.find("form"));
 					$popup.find("form").append("<input type='hidden' class='custom-field' name='"+name+"' value='"+$this.attr("data-value")+"'/><input type='hidden' class='custom-field' name='"+name+"-name' value='"+$this.attr("data-name")+"'/>");
