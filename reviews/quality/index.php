@@ -8,9 +8,8 @@ $APPLICATION->SetTitle("Качество работы магазина");?>
 		<div class="b-stars-detail">
 			<div class="b-reviews-count">
 				<?
-				$reviews_count = 0;
-			    $element = GetIBlockElementList(3, 1834);
-			    while($arelement = $element->GetNext()) { $reviews_count++;   }
+				$arFilter = Array('IBLOCK'=> 3, 'SECTION_ID' => 4, 'ACTIVE' => 'Y');
+				$reviews_count = CIBlockElement::GetList(array("DATE_INSERT" => "ASC"), $arFilter, array());
 				?>
 				<p><?=$reviews_count?> <?=plural_form($reviews_count, array("отзыв", "отзыва", "отзывов"))?></p>
 			</div>
@@ -62,7 +61,7 @@ $APPLICATION->SetTitle("Качество работы магазина");?>
 		"FIELD_CODE" => array("NAME","PREVIEW_TEXT","DATE_CREATE",""),
 		"HIDE_LINK_WHEN_NO_DETAIL" => "N",
 		"IBLOCK_ID" => "3",
-		"IBLOCK_SECTION_ID" => "1834",
+		"IBLOCK_SECTION_ID" => "4",
 		"IBLOCK_TYPE" => "content",
 		"INCLUDE_IBLOCK_INTO_CHAIN" => "N",
 		"INCLUDE_SUBSECTIONS" => "N",
@@ -77,7 +76,7 @@ $APPLICATION->SetTitle("Качество работы магазина");?>
 		"PAGER_SHOW_ALWAYS" => "N",
 		"PAGER_TEMPLATE" => "main",
 		"PAGER_TITLE" => "Новости",
-		"PARENT_SECTION" => "",
+		"PARENT_SECTION" => "4",
 		"PARENT_SECTION_CODE" => "",
 		"PREVIEW_TRUNCATE_LEN" => "",
 		"PROPERTY_CODE" => array("PRODUCT_ID", "USER_ID"),

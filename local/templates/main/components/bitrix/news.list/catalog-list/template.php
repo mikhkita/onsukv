@@ -21,8 +21,8 @@ $month = " ";
 <? if(count($arResult["ITEMS"])): ?>
 	<div class="b-catalog-list clearfix <?=$arParams["CLASS"]?>">
 		<?foreach($arResult["ITEMS"] as $arItem):?>
-			<? if ($month != FormatDate('f', MakeTimeStamp($arItem["DATE_CREATE"]))):
-				$month = FormatDate('f', MakeTimeStamp($arItem["DATE_CREATE"])); ?>
+			<? if ($month !== FormatDate('f', MakeTimeStamp($arItem["CREATED_DATE"],"YYYY.MM.DD"))):
+				$month = FormatDate('f', MakeTimeStamp($arItem["CREATED_DATE"],"YYYY.MM.DD")); ?>
 			<h4><?=$month?></h4>
 			<?endif;?>
 			<div class="b-catalog-item-top">

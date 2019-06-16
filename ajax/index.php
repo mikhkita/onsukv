@@ -216,7 +216,7 @@ switch ($action) {
 				  "PROPERTY_VALUES"=> $PROP,
 				  "NAME"           => $_POST["name"],
 				  "CODE"		   => $userID,
-				  "ACTIVE"         => "Y",
+				  "ACTIVE"         => "N",
 				  "PREVIEW_TEXT"   => $_POST['comment'],
 				  "DATE_ACTIVE_FROM" => ConvertTimeStamp(time(), "FULL"),
 				  "PREVIEW_PICTURE" => CFile::MakeFileArray($_SERVER["DOCUMENT_ROOT"]."/upload/tmp/".$_POST["random_filename"])
@@ -230,15 +230,15 @@ switch ($action) {
 				$PROP["PACK_QUALITY"]['VALUE'] = $_POST["pack-quality"];
 				$PROP["COURIER_QUALITY"]['VALUE'] = $_POST["courier-quality"];
 
-				$round = round(($_POST["store-quality"] + $_POST["goods-quality"] + $_POST["manager-quality"] + $_POST["pack-quality"] + $_POST["courier-quality"])/5);
+				// $round = round(($_POST["store-quality"] + $_POST["goods-quality"] + $_POST["manager-quality"] + $_POST["pack-quality"] + $_POST["courier-quality"])/5);
 
 				$arLoadProductArray = Array(
 				  "IBLOCK_SECTION_ID" => $review_id,
 				  "IBLOCK_ID"      => 3,
 				  "PROPERTY_VALUES"=> $PROP,
 				  "NAME"           => $_POST["name"],
-				  "CODE"		   => $round,
-				  "ACTIVE"         => "Y",
+				  "CODE"		   => $userID,
+				  "ACTIVE"         => "N",
 				  "PREVIEW_TEXT"   => $_POST['comment'],
 				  "DATE_ACTIVE_FROM" => ConvertTimeStamp(time(), "FULL")
 				);

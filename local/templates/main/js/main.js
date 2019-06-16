@@ -609,6 +609,7 @@ $(document).ready(function(){
             }
 
             disableDates();
+
         });
 
         $("#cdek_type").change(function(){
@@ -631,10 +632,18 @@ $(document).ready(function(){
             }
         });
 
+        // $('input[name=address]').change(function(){
+        //     $('select[name=metro-addr]').trigger("change");
+        // })
+
+        $('#metro-addr').change(function(){
+            $('input[name=ORDER_PROP_28]').val($(this).find('option:selected').text());
+        });
+
         $("#b-delivery-price-input").on("change", function(){
             var price = $(this).val();
 
-            console.log($(this).val());
+            // console.log($(this).val());
 
             $("#b-delivery-price").html( price + " руб." );
 
@@ -737,7 +746,7 @@ $(document).ready(function(){
             $("#number-room-input").val(room);
             $("#postal-code").val(index);
             $("#region").val(region);
-            $("#metro-addr").val(metro);
+            $("#metro-addr").val(metro).trigger('change');
 
             if( $("#delivery").val() == "120" ){
                 $("#city").trigger("change");

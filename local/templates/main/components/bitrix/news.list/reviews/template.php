@@ -27,7 +27,7 @@ $this->setFrameMode(true);
 				<div class="b-review" id="<?=$this->GetEditAreaId($arItem['ID']);?>">
 					<div class="b-review-info">
 						<? if (isset($arItem['PROPERTIES']["STORE_QUALITY"])){
-							$stars = ($arItem['PROPERTIES']["STORE_QUALITY"]["VALUE"] + $arItem['PROPERTIES']["GOODS_QUALITY"]["VALUE"] + $arItem['PROPERTIES']["MANAGER_QUALITY"]["VALUE"] + $arItem['PROPERTIES']["PACK_QUALITY"]["VALUE"] + $arItem['PROPERTIES']["COURIER_QUALITY"]["VALUE"])/5;
+							$stars = round(($arItem['PROPERTIES']["STORE_QUALITY"]["VALUE"] + $arItem['PROPERTIES']["GOODS_QUALITY"]["VALUE"] + $arItem['PROPERTIES']["MANAGER_QUALITY"]["VALUE"] + $arItem['PROPERTIES']["PACK_QUALITY"]["VALUE"] + $arItem['PROPERTIES']["COURIER_QUALITY"]["VALUE"])/5);
 						} else {
 							$stars = $arItem["PROPERTIES"]["RATING"]["VALUE"];
 						} ?>
@@ -47,7 +47,7 @@ $this->setFrameMode(true);
 						</div>
 						<div class="b-review-image">
 							<? if( $arItem["PREVIEW_PICTURE"] ): ?>
-								<a href="<?=$renderBigImage["src"]?>" class="fancy-img"><img src="<?=$renderImage["src"]?>" alt=""></a>
+								<a href="<?=$renderBigImage["src"]?>" data-fancybox-href="<?=$renderBigImage["src"]?>" class="fancy-img"><img src="<?=$renderImage["src"]?>" alt=""></a>
 							<? endif; ?>
 						</div>
 					</div>

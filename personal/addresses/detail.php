@@ -13,7 +13,8 @@
 		$header = "Редактирование";
 	}
 	?>
-	<h1><?=$header?> адреса</h1>
+	<? $APPLICATION->SetTitle($header." адреса"); ?>
+
 	<?$APPLICATION->IncludeComponent(
 		"bitrix:iblock.element.add.form",
 		"addresses",

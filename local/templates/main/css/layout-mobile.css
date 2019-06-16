@@ -239,7 +239,7 @@ p{
 	.b-catalog-item.with-notice{
 		margin-bottom: 0px;
 	}
-	.b-catalog-item-empty-text{
+	.b-catalog-list .b-catalog-item-empty-text{
 		display: none;
 	}
 	.b-catalog-back{

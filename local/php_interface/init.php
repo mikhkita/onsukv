@@ -216,17 +216,17 @@ class MyEventHandlers
             }
 
             if (isset($arProps["ADDRESS_METRO"]) && !empty($arProps["ADDRESS_METRO"])) {
-
-				$properties = CIBlockPropertyEnum::GetList(Array("sort"=>"asc", "name"=>"asc"), Array("ACTIVE"=>"Y", "IBLOCK_ID"=>6, "CODE"=>"METRO", 'ID' => $arProps["ADDRESS_METRO"]));
-				while ($prop_fields = $properties->GetNext()){
-				  $metro = $prop_fields;
-				}
-
             	$metro = "<tr>".
 			                "<td nowrap='nowrap'>Метро: </td>".
 			                    "<td>&nbsp;</td>".
-			                    "<td>".$metro['VALUE']."</td>".
+			                    "<td>".$arProps["ADDRESS_METRO"]."</td>".
 		                "</tr>";
+            }
+
+            $cdekText = "";
+
+            if (intval($arDelivery['ID']) == 120) {
+            	$cdekText = "<b>Чтобы отследить свой заказ после сборки, войдите на сайт СДЭК, затем введите номер заказа</b><br><br>";
             }
 
 			$adminmsg = "<html>".
@@ -383,6 +383,7 @@ class MyEventHandlers
 					"<b>Благодарим за Ваш заказ во 'Вкусном магазине'!</b><br><br>".
 					"Способ обработки заказа: ".$processing."<br>".
 					$processinginfo.
+					$cdekText.
 					"<table border='0'>".
 						"<tbody>".
 							"<tr>".
@@ -546,7 +547,7 @@ function OnSaleOrderSavedHandler(Main\Event $event){
 				"ROOM"				=> $_REQUEST["ORDER_PROP_14"],
 				"USER"				=> $order->getUserId(),
 				"CITY"				=> $_REQUEST["ORDER_PROP_22"],
-				"METRO"				=> $_REQUEST["ORDER_PROP_18"],
+				"METRO"				=> $_REQUEST["METRO"],
 			),
 		);
 		if( $PRODUCT_ID = $el->Add($arLoadProductArray) ){
@@ -591,23 +592,27 @@ function OnAfterUserAddHandler1($event){
 
 	// print_r($event);
 	// die();
-
+	// vardump($_REQUEST);
 	// if( $_REQUEST["address"] == "NEW" ){
-		// $el = new CIBlockElement;
-		// $arLoadProductArray = Array(
-		// 	"IBLOCK_ID"      		=> 6,
-		// 	"NAME"					=> $_REQUEST["ORDER_PROP_15"],
-		// 	"PROPERTY_VALUES"		=> array(
-		// 		"INDEX"				=> $_REQUEST["ORDER_PROP_24"],
-		// 		"REGION"			=> $_REQUEST["ORDER_PROP_16"],
-		// 		"ROOM"				=> $_REQUEST["ORDER_PROP_14"],
-		// 		"USER"				=> $event["ID"],
-		// 		"CITY"				=> $_REQUEST["ORDER_PROP_22"],
-		// 		"METRO"				=> $_REQUEST["ORDER_PROP_18"],
-		// 	),
-		// );
-		// $PRODUCT_ID = $el->Add($arLoadProductArray);
+
+	// 	$el = new CIBlockElement;
+	// 	$arLoadProductArray = Array(
+	// 		"IBLOCK_ID"       	=> 6,
+	// 		"NAME"			 	=> $_REQUEST["ORDER_PROP_15"],
+	// 		"PROPERTY_VALUES" 	=> array(
+	// 		"INDEX"    		 	=> $_REQUEST["ORDER_PROP_24"],
+	// 		"REGION"    	 	=> $_REQUEST["ORDER_PROP_16"],
+	// 		"ROOM"    		 	=> $_REQUEST["ORDER_PROP_14"],
+	// 		"USER"    		 	=> $event["ID"],
+	// 		"CITY"    		 	=> $_REQUEST["ORDER_PROP_22"],
+	// 		"METRO"    		 	=> $_REQUEST["METRO"],
+	// 		),
+	// 	);
+	// 	$PRODUCT_ID = $el->Add($arLoadProductArray);
+	// 	vardump($PRODUCT_ID);
 	// }
+	
+	// die();
 }
 
 class SearchHandlers
@@ -803,8 +808,16 @@ class MyClass {
 			if(updateUserDiscount($arParams['ID'], $newDiscount)){
 				$arParams["PERSONAL_ICQ"] = $arParams["PERSONAL_WWW"];
 
-				$msg = "Внимание!<br>".
+				if (!empty($newDiscount) && (empty($oldDiscount) || $oldDiscount == '0') ) {
+					$msg = "Внимание!<br>".
+						"Пользователю ".$arParams['NAME']." ".$arParams['LAST_NAME']." ( ".$arParams['ID']." ) была добавлена персональная скидка ".$newDiscount."%.";
+				} elseif ((empty($newDiscount) || $newDiscount == '0') && !empty($oldDiscount)) {
+					$msg = "Внимание!<br>".
+						"У пользователя ".$arParams['NAME']." ".$arParams['LAST_NAME']." ( ".$arParams['ID']." ) была удалена персональная скидка ".$oldDiscount."%.";
+				} else{
+					$msg = "Внимание!<br>".
 					"У пользователя ".$arParams['NAME']." ".$arParams['LAST_NAME']." ( ".$arParams['ID']." ) была измена персональная скидка с ".$oldDiscount."% на ".$newDiscount."%.";
+				}
 				
 				CEvent::Send("USER_PERSONAL_DISCOUNT_CHANGE", "s1", array('MSG' => $msg));
 			}

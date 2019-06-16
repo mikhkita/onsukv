@@ -19,6 +19,7 @@ $APPLICATION->AddHeadString('<link rel="canonical" href="https://nevkusno.ru' . 
 
 <? $renderImage = CFile::ResizeImageGet($arResult["DETAIL_PICTURE"], Array("width" => 1000, "height" => 1000), BX_RESIZE_IMAGE_PROPORTIONAL, false, $arFilters ); ?>
 <? $bigImage = CFile::ResizeImageGet($arResult["DETAIL_PICTURE"], Array("width" => 1600, "height" => 1600), BX_RESIZE_IMAGE_PROPORTIONAL, false, $arFilters ); ?>
+
 <div class="b-detail clearfix">
 	<div class="b-detail-left">
 		<a href="<?=$bigImage["src"]?>" class="fancy-img"><img src="<?=$renderImage["src"]?>"></a>

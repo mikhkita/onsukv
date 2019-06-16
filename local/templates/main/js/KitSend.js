@@ -137,9 +137,10 @@ $(document).ready(function(){
 	$(window).scroll(whenScroll);
 	whenScroll();
 
-	$(".fancy:not(.fancy-binded)").each(function(){
-		var $popup = $($(this).attr("href")),
-			$this = $(this);
+	$(".fancy:not(.fancy-binded)").each(function(i,elem){
+		var $popup = $(elem).attr("href"),
+			$this = $(elem);
+
 		$this.fancybox({
 			padding : 0,
 			content : $popup,
@@ -207,8 +208,10 @@ $(document).ready(function(){
 		return false;
 	});
 
-	$(".fancy-img").fancybox({
-		padding : 0
+	$(document).on("mouseenter", ".fancy-img:not(.fancy-binded)", function(){
+		$(this).addClass('fancy-binded').fancybox({
+			padding : 0
+		});
 	});
 
 	$(".goal-click").click(function(){

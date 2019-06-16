@@ -132,12 +132,13 @@ else
 														<?= Loc::getMessage('SPOD_NAME')?>
 													</div>
 												</div>
+												<div class="sale-order-detail-order-item-nth-4p1"></div>
 												<div class="sale-order-detail-order-item-td sale-order-detail-order-item-properties bx-text-right" style="padding-bottom: 5px;">
 													<div class="sale-order-detail-order-item-td-title">
 														<?= Loc::getMessage('SPOD_PRICE')?>
 													</div>
 												</div>
-												<?
+												<?/*
 												if (strlen($arResult["SHOW_DISCOUNT_TAB"]))
 												{
 													?>
@@ -148,9 +149,8 @@ else
 														</div>
 													</div>
 													<?
-												}
+												}*/
 												?>
-												<div class="sale-order-detail-order-item-nth-4p1"></div>
 												<div class="sale-order-detail-order-item-td sale-order-detail-order-item-properties bx-text-right" style="padding-bottom: 5px;">
 													<div class="sale-order-detail-order-item-td-title">
 														<?= Loc::getMessage('SPOD_QUANTITY')?>
@@ -213,6 +213,7 @@ else
 															</div>
 														</div>
 													</div>
+													<div class="sale-order-detail-order-item-nth-4p1"></div>
 													<div class="sale-order-detail-order-item-td sale-order-detail-order-item-properties bx-text-right">
 														<div class="sale-order-detail-order-item-td-title col-xs-7 col-sm-5 visible-xs visible-sm">
 															<?= Loc::getMessage('SPOD_PRICE')?>
@@ -221,7 +222,7 @@ else
 															<strong class="bx-price"><?=$basketItem['BASE_PRICE_FORMATED']?></strong>
 														</div>
 													</div>
-													<?
+													<?/*
 													if (strlen($basketItem["DISCOUNT_PRICE_PERCENT_FORMATED"]))
 													{
 														?>
@@ -247,9 +248,8 @@ else
 															</div>
 														</div>
 														<?
-													}
+													}*/
 													?>
-													<div class="sale-order-detail-order-item-nth-4p1"></div>
 													<div class="sale-order-detail-order-item-td sale-order-detail-order-item-properties bx-text-right">
 														<div class="sale-order-detail-order-item-td-title col-xs-7 col-sm-5 visible-xs visible-sm">
 															<?= Loc::getMessage('SPOD_QUANTITY')?>
@@ -271,7 +271,7 @@ else
 													<div class="sale-order-detail-order-item-td sale-order-detail-order-item-properties bx-text-right">
 														<div class="sale-order-detail-order-item-td-title col-xs-7 col-sm-5 visible-xs visible-sm"><?= Loc::getMessage('SPOD_ORDER_PRICE')?></div>
 														<div class="sale-order-detail-order-item-td-text">
-															<strong class="bx-price all"><?=round($basketItem['PRICE'] * $basketItem["QUANTITY"])?> руб.</strong>
+															<strong class="bx-price all"><?=round($basketItem['BASE_PRICE'] * $basketItem["QUANTITY"])?> руб.</strong>
 														</div>
 													</div>
 												</div>
@@ -309,6 +309,10 @@ else
 								<?
 							}
 
+							if ($discount != 0 ):
+								 ?><li class="sale-order-detail-total-payment-list-left-item">Скидка:</li><? 
+							endif;
+
 							if (strlen($arResult["PRICE_DELIVERY_FORMATED"]))
 							{
 								?>
@@ -340,11 +344,16 @@ else
 
 							if ($arResult['PRODUCT_SUM_FORMATED'] != $arResult['PRICE_FORMATED'] && !empty($arResult['PRODUCT_SUM_FORMATED']))
 							{
-								?>
-								<li class="sale-order-detail-total-payment-list-right-item"><?=round($arResult['PRODUCT_SUM'])?> руб.</li>
-								<?
-							}
 
+								?>
+								<li class="sale-order-detail-total-payment-list-right-item"><?=round($price)?> руб.</li>
+							<?
+							}
+							?>
+							<? if ($discount != 0 ): ?>
+									<li class="sale-order-detail-total-payment-list-right-item"><?=round($discount)?> руб.</li>
+							<? endif; ?>
+							<?
 							if (strlen($arResult["PRICE_DELIVERY_FORMATED"]))
 							{
 								?>

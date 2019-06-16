@@ -337,7 +337,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                             </div>
                             <div class="b-addresss-item__metro b-input hide">
                                 <label for="metro-station">Выберите метро<span class="required">*</span></label>
-                                <select name="ORDER_PROP_28" required id="metro-addr">
+                                <select name="METRO" required id="metro-addr">
                                     <option value></option>
                                     <? foreach ($metroList as $metro): ?>
                                         <option value="<?=$metro['ID']?>"><?=$metro['VALUE']?></option>
@@ -346,6 +346,7 @@ if (strlen($_REQUEST['ORDER_ID']) > 0){
                             </div>
                         </div>
                         <input type="hidden" id="region" name="ORDER_PROP_16">
+                        <input type="hidden" id="metro-order" name="ORDER_PROP_28">
                         <input type="hidden" id="city" value="Не выбрано" name="ORDER_PROP_22">
                     </div>
                     <div id="map-address"></div>

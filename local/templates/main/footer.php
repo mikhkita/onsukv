@@ -222,9 +222,9 @@
 			<div class="b-popup b-review-popup" id="b-review-form">
 				<div class="b-popup-header"><h3>Оставьте отзыв</h3></div>
 				<?if ($urlArr[2] == "assortment"):?>
-				<form action="/ajax/?action=ADDREVIEW&review_id=1835" method="POST" id="b-form-review">
+				<form action="/ajax/?action=ADDREVIEW&review_id=5" method="POST" id="b-form-review">
 				<?elseif($urlArr[2] == "quality"):?>
-				<form action="/ajax/?action=ADDREVIEW&review_id=1834" method="POST" id="b-form-review">
+				<form action="/ajax/?action=ADDREVIEW&review_id=4" method="POST" id="b-form-review">
 				<?else:?>
 				<form action="/ajax/?action=ADDREVIEW&product_id=" method="POST" data-file-action="/local/templates/main/addFile.php" id="b-form-review">
 				<?endif;?>
